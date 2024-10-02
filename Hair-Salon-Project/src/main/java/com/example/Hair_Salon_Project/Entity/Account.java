@@ -12,10 +12,10 @@ import java.util.Date;
 @Getter
 @Setter
 @Entity
-public class User {
+public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    long userId;
+    long account_Id;
     String First_name;
     String Last_name;
     String Email;

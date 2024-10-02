@@ -11,7 +11,7 @@ public class Staff {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     long staff_id;
-    long user_id;
+    long account_Id;
     boolean staff_status;
     boolean is_manager;
     boolean is_active;
