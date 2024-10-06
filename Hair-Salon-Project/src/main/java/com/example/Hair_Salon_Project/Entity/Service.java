@@ -15,10 +15,14 @@ import java.util.Date;
 public class Service {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    long service_id;
-    String service_name;
-    float service_price;
-    Date Create_At;
-    Date Update_At;
+    private long service_id;
+
+    private String service_name;
+
+    private float service_price;
+
+    private Date Create_At;
+
+    private Date Update_At;
 
 }

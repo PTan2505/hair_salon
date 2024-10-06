@@ -12,11 +12,15 @@ import java.util.Date;
 public class Booking {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    long bookingId;
-    Date bookingDate;
-    Boolean status;
-    Date Create_At;
-    Date Update_At;
+    private long bookingId;
+
+    private Date bookingDate;
+
+    private Boolean status;
+
+    private Date Create_At;
+
+    private Date Update_At;
 
 
 
