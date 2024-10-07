@@ -5,36 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7ffbebf1-02bf-4003-ae42-4a1f63b4f29c" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Config/Filter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Config/SecurityConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Config/ThymeleafConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Model/AccountResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Model/EmailDetail.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Model/LoginRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Model/RegisterRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Repository/AccountRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Service/AuthenticationService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Service/EmailService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Service/TokenService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Hair-Salon-Project/src/main/resources/templates/welcome-template.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Hair-Salon-Project/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Hair-Salon-Project/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Api/AuthenticationAPI.java" beforeDir="false" afterPath="$PROJECT_DIR$/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Api/AuthenticationAPI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Api/CustomerAPI.java" beforeDir="false" afterPath="$PROJECT_DIR$/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Api/CustomerAPI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Api/ManagerAPI.java" beforeDir="false" afterPath="$PROJECT_DIR$/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Api/ManagerAPI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Api/StaffAPI.java" beforeDir="false" afterPath="$PROJECT_DIR$/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Api/StaffAPI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Api/StylistAPI.java" beforeDir="false" afterPath="$PROJECT_DIR$/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Api/StylistAPI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Api/SystemAdministratorAPI.java" beforeDir="false" afterPath="$PROJECT_DIR$/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Api/SystemAdministratorAPI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Entity/Account.java" beforeDir="false" afterPath="$PROJECT_DIR$/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Entity/Account.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Entity/Booking.java" beforeDir="false" afterPath="$PROJECT_DIR$/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Entity/Booking.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Entity/Role.java" beforeDir="false" afterPath="$PROJECT_DIR$/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Entity/Enums/Role.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Entity/Service.java" beforeDir="false" afterPath="$PROJECT_DIR$/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Entity/Service.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Entity/Staff.java" beforeDir="false" afterPath="$PROJECT_DIR$/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Entity/Staff.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Exception/AuthException.java" beforeDir="false" afterPath="$PROJECT_DIR$/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Exception/AuthenException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/HairSalonProjectApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/HairSalonProjectApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Hair-Salon-Project/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/Hair-Salon-Project/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
