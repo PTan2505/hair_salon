@@ -1,38 +1,47 @@
-import js from '@eslint/js'
-import globals from 'globals'
-import react from 'eslint-plugin-react'
-import reactHooks from 'eslint-plugin-react-hooks'
-import reactRefresh from 'eslint-plugin-react-refresh'
-
-export default [
-  { ignores: ['dist'] },
-  {
-    files: ['**/*.{js,jsx}'],
+// eslint.config.js
+export default {
     languageOptions: {
-      ecmaVersion: 2020,
-      globals: globals.browser,
-      parserOptions: {
-        ecmaVersion: 'latest',
-        ecmaFeatures: { jsx: true },
-        sourceType: 'module',
-      },
+        globals: {
+            // Define global variables
+            browser: true,
+            es2021: true,
+        },
+        parser: '@babel/eslint-parser',
+        parserOptions: {
+            ecmaVersion: 12,
+            sourceType: 'module',
+            ecmaFeatures: {
+                jsx: true,
+            },
+        },
     },
-    settings: { react: { version: '18.3' } },
-    plugins: {
-      react,
-      'react-hooks': reactHooks,
-      'react-refresh': reactRefresh,
-    },
+    extends: [
+        'eslint:recommended',
+        'plugin:react/recommended',
+        'plugin:import/errors',
+        'plugin:import/warnings',
+    ],
+    plugins: ['react', 'import'],
     rules: {
-      ...js.configs.recommended.rules,
-      ...react.configs.recommended.rules,
-      ...react.configs['jsx-runtime'].rules,
-      ...reactHooks.configs.recommended.rules,
-      'react/jsx-no-target-blank': 'off',
-      'react-refresh/only-export-components': [
-        'warn',
-        { allowConstantExport: true },
-      ],
+        'import/named': 'error',
+        'import/default': 'error',
+        'import/order': [
+            'error',
+            {
+                groups: [['builtin', 'external', 'internal']],
+                'newlines-between': 'always',
+            },
+        ],
+        'no-unused-vars': 'warn',
     },
-  },
-]
+    settings: {
+        react: {
+            version: 'detect',
+        },
+        'import/resolver': {
+            node: {
+                extensions: ['.js', '.jsx'],
+            },
+        },
+    },
+};

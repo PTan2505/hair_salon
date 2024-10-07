@@ -11,9 +11,11 @@
   will-change: filter;
   transition: filter 300ms;
 }
+
 .logo:hover {
   filter: drop-shadow(0 0 2em #646cffaa);
 }
+
 .logo.react:hover {
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
@@ -22,6 +24,7 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
@@ -39,4 +42,27 @@
 
 .read-the-docs {
   color: #888;
+}
+
+/* App.css */
+
+.layout-container {
+  display: flex;
+  min-height: 100vh;
+  /* Full height of the viewport */
+}
+
+.sidebar {
+  width: 250px;
+  background-color: #343a40;
+  /* Dark sidebar background */
+  min-height: 100vh;
+  /* Sidebar takes full height */
+}
+
+.main-content {
+  flex-grow: 1;
+  padding: 80px 0 0 125px;
+  width: 1200px;
+  /* Light background for content */
 }
