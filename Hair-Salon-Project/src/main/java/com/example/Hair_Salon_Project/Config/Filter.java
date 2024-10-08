@@ -38,7 +38,8 @@ public class Filter extends OncePerRequestFilter { // Filer run once each reques
             "/v3/api-docs/**",
             "/swagger-resources/**",
             "/api/login",
-            "/api/register"
+            "/api/register",
+            "/api/oauth2/redirect/google"
     );
 
     public boolean checkIsPublicAPI(String uri) {

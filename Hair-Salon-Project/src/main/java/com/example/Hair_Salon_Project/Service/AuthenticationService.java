@@ -22,6 +22,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AuthenticationService implements UserDetailsService {
@@ -71,7 +72,7 @@ public class AuthenticationService implements UserDetailsService {
                     authenticationManager.  authenticate(new UsernamePasswordAuthenticationToken( // xac thuc
                     // username , password (
                     // tu dong ma hoa password user va check tren database )
-                    loginRequest.getEmail() , loginRequest.getPassword() // go to loadUserByUsername(String phone)
+                    loginRequest.getPhone() , loginRequest.getPassword() // go to loadUserByUsername(String phone)
                             // to check username in db first -> so sanh password db with request password
 
             ));
@@ -106,5 +107,27 @@ public class AuthenticationService implements UserDetailsService {
         //phai get thong tin user tu database
 
         return accountRepository.findAccountById(account.getId());
+    }
+
+    public AccountResponse handleGoogleLogin(String email) {
+        Optional<Account> accountOptional = Optional.ofNullable(accountRepository.findByEmail(email));
+
+        Account account;
+        if (accountOptional.isPresent()) {
+            // Nếu tài khoản đã tồn tại, lấy tài khoản đó
+            account = accountOptional.get();
+        } else {
+            // Nếu chưa tồn tại, tạo tài khoản mới
+            account = new Account();
+            account.setEmail(email);
+            // Thiết lập các thuộc tính khác như mật khẩu, tên, vai trò, v.v.
+            account.setPassword("randomGeneratedPassword"); // Có thể sử dụng một mật khẩu ngẫu nhiên hoặc một cách bảo mật khác
+            account.setActive(true); // Đánh dấu tài khoản là hoạt động
+            // Lưu tài khoản mới vào cơ sở dữ liệu
+            accountRepository.save(account);
+        }
+
+        // Tạo và trả về AccountResponse
+        return new AccountResponse(account.getId(), account.getEmail(), account.getPhone());
     }
 }

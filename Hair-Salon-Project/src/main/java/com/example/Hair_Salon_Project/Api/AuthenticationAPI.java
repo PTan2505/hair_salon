@@ -8,10 +8,9 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
+import org.springframework.security.oauth2.core.user.OAuth2User;
+import org.springframework.web.bind.annotation.*;
 import io.swagger.v3.oas.annotations.Operation;
 
 @RestController
@@ -34,5 +33,17 @@ public class AuthenticationAPI {
         AccountResponse accountResponse = authenticationService.login(loginRequest);
         return ResponseEntity.ok(accountResponse);
     }
+    @GetMapping("/oauth2/redirect/google")
+    public ResponseEntity<AccountResponse> oauth2Google(OAuth2AuthenticationToken authentication) {
+        OAuth2User user = authentication.getPrincipal();
+        String email = user.getAttribute("email");
+
+        // Xử lý tài khoản người dùng: kiểm tra xem người dùng đã tồn tại chưa,
+        // nếu chưa thì có thể tạo tài khoản mới hoặc xử lý theo cách bạn muốn.
+        AccountResponse accountResponse = authenticationService.handleGoogleLogin(email);
+
+        return ResponseEntity.ok(accountResponse);
+    }
+
 
 }
