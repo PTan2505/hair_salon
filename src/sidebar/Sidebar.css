@@ -8,6 +8,7 @@
     background-color: black;
 }
 
+
 /* Style for custom pills */
 .custom-nav .nav-link {
     /* Custom background color */
@@ -15,7 +16,7 @@
     /* Custom text color */
     border-radius: 0.25rem;
     /* Round the pills */
-    margin-bottom: 10px;
+    margin: 5px;
     /* Space between pills */
     padding: 10px 20px;
     /* Custom padding */
