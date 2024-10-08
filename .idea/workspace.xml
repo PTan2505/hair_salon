@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="7ffbebf1-02bf-4003-ae42-4a1f63b4f29c" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Entity/Account.java" beforeDir="false" afterPath="$PROJECT_DIR$/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Entity/Account.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Model/LoginRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Model/LoginRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Repository/AccountRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Repository/AccountRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Service/AuthenticationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Service/AuthenticationService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Hair-Salon-Project/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/Hair-Salon-Project/src/main/resources/application.properties" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 0
+}</component>
+  <component name="ProjectId" id="2mpp6GUWE24vJUvKf77OseMe85q" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.HairSalonProjectApplication.executor": "Run",
+    "Application.Unnamed.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "Back__End",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "D:/thu/demo",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "reference.settings.project.maven.repository.indices"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\github\hair_salon\Hair-Salon-Project\src\main\resources" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.example.Hair_Salon_Project.Service" />
+      <recent name="com.example.Hair_Salon_Project.Config" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.HairSalonProjectApplication">
+    <configuration name="HairSalonProjectApplication" type="Application" factoryName="Application" nameIsGenerated="true">
+      <option name="ALTERNATIVE_JRE_PATH" value="22" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+      <option name="MAIN_CLASS_NAME" value="com.example.Hair_Salon_Project.HairSalonProjectApplication" />
+      <module name="Hair-Salon-Project" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Unnamed" type="Application" factoryName="Application" nameIsGenerated="true">
+      <option name="ALTERNATIVE_JRE_PATH" value="$USER_HOME$/.jdks/openjdk-22.0.2" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+      <option name="MAIN_CLASS_NAME" value="com.example.Hair_Salon_Project.HairSalonProjectApplication" />
+      <module name="Hair-Salon-Project" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Application.HairSalonProjectApplication" />
+      <item itemvalue="Application.Unnamed" />
+    </list>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="7ffbebf1-02bf-4003-ae42-4a1f63b4f29c" name="Changes" comment="" />
+      <created>1727783194691</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1727783194691</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="org.springframework.beans.factory.UnsatisfiedDependencyException" package="org.springframework.beans.factory" />
+          <option name="timeStamp" value="1" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>
