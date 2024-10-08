@@ -4,24 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7ffbebf1-02bf-4003-ae42-4a1f63b4f29c" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Config/JwtAuthenticationFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Config/OAuth2SuccessHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Config/SwaggerConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Service/CustomOAuth2UserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Hair-Salon-Project/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Hair-Salon-Project/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Api/AuthenticationAPI.java" beforeDir="false" afterPath="$PROJECT_DIR$/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Api/AuthenticationAPI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Config/Filter.java" beforeDir="false" afterPath="$PROJECT_DIR$/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Config/Filter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Config/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Entity/Account.java" beforeDir="false" afterPath="$PROJECT_DIR$/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Entity/Account.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Model/AccountResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Model/AccountResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Model/LoginRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Model/LoginRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Repository/AccountRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Repository/AccountRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Service/AuthenticationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Service/AuthenticationService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Service/TokenService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Service/TokenService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Hair-Salon-Project/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/Hair-Salon-Project/src/main/resources/application.properties" afterDir="false" />
-    </list>
+    <list default="true" id="7ffbebf1-02bf-4003-ae42-4a1f63b4f29c" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
