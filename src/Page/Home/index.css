@@ -1,0 +1,546 @@
+/* Global Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  color: #333;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+/* Navbar */
+.navbar {
+  background-color: #DEC7A6;
+  padding: 15px 0;
+  border-bottom: 1px solid #DEC7A6;
+}
+
+.navbar .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar-brand {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-brand img {
+  width: 50px;
+  margin-right: 10px;
+}
+
+.navbar-brand span {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #000000;
+}
+
+.navbar-menu {
+  display: flex;
+  gap: 20px;
+}
+
+.navbar-menu a {
+  text-decoration: none;
+  font-size: 1rem;
+  color: #333;
+  padding: 10px;
+}
+
+.navbar-menu a:hover {
+  color: #0074d9;
+}
+
+.navbar-contact .contact-btn {
+  background-color: black;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 20px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.navbar-contact .contact-btn:hover {
+  background-color: #005bb5;
+}
+
+/* Hero Section */
+.hero {
+  position: relative;
+  height: 80vh;
+  background: url('https://i.pinimg.com/originals/fe/b3/14/feb3144bc6e890a08ec063cd7c9912e0.jpg') no-repeat center center/cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: white;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 700px;
+}
+
+.hero-content h1 {
+  font-size: 3rem;
+  margin-bottom: 20px;
+}
+
+.hero-content p {
+  font-size: 1.2rem;
+  margin-bottom: 30px;
+}
+
+.hero-buttons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+}
+
+.btn-primary, .btn-secondary {
+  padding: 10px 25px;
+  font-size: 1rem;
+  border-radius: 30px;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.btn-primary {
+  background-color: white;
+  color: black;
+}
+
+.btn-secondary {
+  background-color: transparent;
+  border: 2px solid white;
+  color: white;
+}
+
+.btn {
+  background-color: #ffc107;
+  color: black;
+  border-radius: 30px;
+  text-decoration: none;
+  padding: 10px 25px;
+}
+
+/* Contact Info Section */
+
+.contact-link {
+  text-decoration: none; /* Removes underline */
+  color: inherit; /* Inherits text color */
+}
+
+.contact-link:hover {
+  color: blue; /* Change color on hover */
+}
+
+
+.contact-info {
+  padding: 60px 0;
+  background-color: #DEC7A6;
+  text-align: center;
+}
+
+.contact-box {
+  background-color: bisque;
+  padding: 40px 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.contact-info img {
+  width: 50px;
+  margin-bottom: 10px;
+}
+
+.row {
+  display: flex;
+  justify-content: space-around;
+  gap: 20px;
+}
+
+.col {
+  flex: 1;
+  text-align: center;
+}
+
+/* Services Section */
+.services {
+  padding: 60px 0;
+  background-color: #DEC7A6;
+}
+
+.services h2 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+}
+
+.services p {
+  font-size: 1rem;
+  margin-bottom: 10px;
+}
+
+.services .row {
+  display: flex;
+  justify-content: space-around;
+  gap: 20px;
+}
+
+.services .col {
+  background-color: bisque;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.services .col img {
+  width: 80px;
+  margin-bottom: 15px;
+}
+
+.services .col h3 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+.services .col p {
+  font-size: 1rem;
+  margin-bottom: 5px;
+}
+
+.services .btn {
+  padding: 10px 20px;
+  background-color: #0074d9;
+  color: #DEC7A6;
+  border-radius: 30px;
+  text-decoration: none;
+}
+
+.services .btn:hover {
+  background-color: #005bb5;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+/* Why Choose Us Section */
+.why-choose-us {
+  padding: 60px 0;
+  text-align: center;
+  background-color: bisque;
+}
+
+.why-choose-us img {
+  width: 50px;
+  margin-bottom: 15px;
+}
+
+.why-choose-us h4 {
+  font-weight: bold;
+  margin: 10px 0;
+}
+
+.rating {
+  border: 1px solid #ccc; /* Hoặc màu bạn muốn */
+  padding: 20px;
+  margin: 10px;
+  border-radius: 5px;
+}
+
+.rating h1 {
+  font-size: 48px; /* Kích thước chữ lớn hơn */
+  color: #ffcc00; /* Màu vàng cho đánh giá */
+}
+
+.rating h4 {
+  margin-bottom: 5px; /* Khoảng cách giữa tiêu đề và số điểm */
+}
+
+.rating p {
+  margin: 5px 0; /* Khoảng cách giữa các phần tử trong đánh giá */
+}
+
+.image-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px; /* Adjust as needed */
+}
+
+.image-wrapper img {
+  width: 100px; /* Set width to your desired size */
+  height: 100px; /* Set height to your desired size */
+  border-radius: 50%; /* Makes the image circular */
+  object-fit: cover; /* Ensures the image covers the entire area */
+}
+
+
+/* Appointment Section */
+.appointment {
+  padding: 60px 0;
+  background-color: #DEC7A6;
+}
+
+.appointment-wrapper {
+  display: flex;
+  justify-content: space-between;
+  gap: 30px; /* Space between description and form */
+}
+
+.description {
+  flex: 1; /* Takes 50% of the width */
+  padding-right: 20px;
+  text-align: left;
+}
+
+.description h2 {
+  font-size: 2rem;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+.description p {
+  font-size: 1.1rem;
+  margin-bottom: 15px;
+  line-height: 1.6;
+}
+
+.description ul {
+  list-style-type: disc;
+  margin-left: 20px;
+}
+
+.description ul li {
+  margin-bottom: 10px;
+  font-size: 1rem;
+}
+
+/* Form Container */
+.form-container {
+  flex: 1; /* Takes the remaining 50% */
+}
+
+.form-container h2 {
+  font-size: 2rem;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+/* Form Styling */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.form input,
+.form textarea {
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #DEC7A6;
+  border-radius: 5px;
+  width: 100%;
+}
+
+.form textarea {
+  resize: vertical;
+  height: 100px;
+}
+
+.form button {
+  padding: 12px;
+  font-size: 1.1rem;
+  border-radius: 30px;
+  background-color: #ffc107;
+  border: none;
+  cursor: pointer;
+}
+
+.form button:hover {
+  background-color: #ff9800;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .appointment-wrapper {
+    flex-direction: column;
+  }
+
+  .description, .form-container {
+    flex: 1;
+    padding-right: 0;
+  }
+}
+
+
+
+/* Footer */
+.footer {
+  background-color: #333;
+  color: #DEC7A6;
+  text-align: left; /* Align text to the left for a more formal look */
+  padding: 40px 0; /* Increased padding for more space */
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap; /* Ensure items wrap on smaller screens */
+  padding: 0 15px; /* Adds some padding to the sides */
+}
+
+.footer-info,
+.footer-links,
+.footer-social {
+  flex: 1; /* Take equal space */
+  min-width: 250px; /* Minimum width for better layout */
+  margin-bottom: 20px; /* Space below each section */
+}
+
+.footer-info h4,
+.footer-links h4,
+.footer-social h4 {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+  color: #ffc107; /* Highlighted color for headings */
+}
+
+.footer-link {
+  color: #DEC7A6;
+  text-decoration: none;
+  font-size: 0.9rem;
+  display: block; /* Make links block elements for easier clicking */
+  margin-bottom: 5px; /* Space between links */
+  transition: color 0.3s ease;
+}
+
+.footer-link:hover {
+  color: #ffc107; /* Change color on hover */
+}
+
+.footer-social {
+  text-align: center; /* Center the social icons */
+}
+
+.social-icons {
+  display: flex;
+  justify-content: center; /* Center the icons */
+  gap: 15px; /* Space between icons */
+}
+
+.footer-bottom {
+  text-align: center; /* Center the copyright text */
+  padding: 15px 0;
+  border-top: 1px solid #444; /* Top border for separation */
+}
+
+.footer-bottom p {
+  margin: 0; /* Remove margin for copyright */
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .footer-content {
+    flex-direction: column; /* Stack items on smaller screens */
+    align-items: center; /* Center items */
+  }
+}
+
+
+/* Container for the entire section */
+.services-container{
+  background-color: #DEC7A6 ;
+}
+.contact-box1 {
+  display: flex; /* Use flexbox for layout */
+  justify-content: space-between; /* Space out text and image */
+  align-items: center; /* Center align items vertically */
+  max-width: 1200px; /* Max width of the container */
+  margin: 0 auto; /* Center the container on the page */
+  padding: 40px; /* Spacing around the content */
+  background-color: bisque; /* Background color */
+  border-radius: 10px; /* Rounded corners for better aesthetics */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+/* Text section styling */
+.text-section {
+  flex: 1; /* Take remaining space */
+  padding-right: 20px; /* Spacing between text and image */
+}
+
+/* Heading styling */
+.text-section h1 {
+  font-size: 2.5rem; /* Larger font size */
+  font-weight: bold; /* Bold text */
+  margin-bottom: 20px; /* Space below the heading */
+}
+
+/* Paragraph styling */
+.text-section p {
+  font-size: 1.2rem; /* Standard paragraph size */
+  color: #4a4a4a; /* Darker text color for readability */
+  margin-bottom: 30px; /* Space below paragraph */
+}
+
+/* Statistics section */
+.stats {
+  display: flex; /* Align stats horizontally */
+  gap: 40px; /* Space between stat items */
+}
+
+/* Individual stat item styling */
+.stat-item {
+  text-align: center; /* Center align text */
+}
+
+.stat-value {
+  font-size: 2rem; /* Larger value size */
+  font-weight: bold; /* Bold text */
+  color: #2c3e50; /* Dark blue-gray color */
+}
+
+.stat-label {
+  font-size: 1rem; /* Standard label size */
+  color: #4a4a4a; /* Darker text color */
+}
+
+/* Image section styling */
+.image-section {
+  flex: 1; /* Take remaining space */
+  display: flex; /* Flex container for image */
+  justify-content: center; /* Center the image */
+  align-items: center; /* Vertically center the image */
+}
+
+.image-section img {
+  width: 100%; /* Responsive image */
+  max-width: 500px; /* Max width for the image */
+  border-radius: 10px; /* Rounded corners for the image */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+}
