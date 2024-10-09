@@ -1,5 +1,8 @@
 import React from "react";
 import "./index.css";
+import "./reviewlist";
+import "./servicelist";
+import ServicesList from "./servicelist";
 
 function ServiceWebsite() {
   return (
@@ -117,77 +120,7 @@ function ServiceWebsite() {
       </div>
 
       {/* Services Section */}
-      <section id="services" className="services">
-        <div className="container text-center">
-          <h2>Our Professional Salon Services</h2>
-          <p>
-            We provide a wide range of services to cater to your grooming and
-            beauty needs. Visit us for an exceptional salon experience.
-          </p>
-
-          <div className="row">
-            <div className="col">
-              <img
-                src="https://s3-alpha-sig.figma.com/img/5f40/4d69/2679a85df54164abecc5272cd44ac619?Expires=1729468800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=fMfu6X7IJzVECc~UG3Z~GRHXeRjFo39hCh6MsQ81pG6xuAYHm1DQfdkqmsCOAPNAcB3U~xR2OFEJ5YOdI9cFeCngAzoqE0p-HiOO6VB3S3WBA9S3F2ZrEoFUWr3ObzJGuBShg4l9XutY7xGWL1VlzzZyh8AU3ujrF~MFZSw7oRQJU1dbFlKIO0NZTXM7l1k03x7thDhlbnQo41rKZW137ilblDm4Rp5cwr0iEfJcmtvdcuaaLqBu4ypK8qv1dnPGc0FvMs3A1hE7JmjZyGAFdYm1ZAUgU5Q0eh3kZIF69Aj-G95OuGqc6KV0dP5DDFpJTHW5IV70o0Fam1348HOFSA__"
-                alt="Haircut"
-              />
-              <h3>Haircut</h3>
-              <p>Stylish cuts tailored to your look</p>
-              <p>
-                <strong>Price:</strong> $25
-              </p>
-              <p>
-                <strong>Time:</strong> 30 mins
-              </p>
-            </div>
-
-            <div className="col">
-              <img
-                src="https://s3-alpha-sig.figma.com/img/15b1/687d/75cd43a3e2cd26af0a43b68d0888a88f?Expires=1728864000&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=EsAC6BRxyr2shhXvJWwHpQf82O37q~zrmYfD1ANPHyJXcoFu6K7OMMdLZ0~zNCvqltW22aXAgzD~TIyuQOA4~WfTqUVI88V6aFQ8Thpa4m1jpMNLVPuJh4DGlQNfrjc~UDzL1VDkYAkgGpFSmFGGlUFWT2dN4SnevjG-YU7L99Q2LWS32~zLscoCZ1WgbHOElz-~vQH6Q6igv1nBX5ZOdfTtV9YqCPrPM05M1pOcDHSOc5MTnNxEhAuJSg4Y4tHhIPAY-SecTkPCZaBsn4sI03mCFSnzEeGcTg89fkFtlFyMG3pnfzmlAh-~i7uP8DCkJ9hKKAXbW~W0WTwshpVDCQ__"
-                alt="Shave"
-              />
-              <h3>Shave</h3>
-              <p>Smooth and clean shaving experience</p>
-              <p>
-                <strong>Price:</strong> $15
-              </p>
-              <p>
-                <strong>Time:</strong> 20 mins
-              </p>
-            </div>
-
-            <div className="col">
-              <img
-                src="https://s3-alpha-sig.figma.com/img/e46e/54eb/cf5f0ac994c4140c7c32945ff9293186?Expires=1728864000&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=atTBNHnJL1M2ShYX~WiumK-AbUZ625B~N9vb6eFYbh5P1bv0~uZ9BxIBD5g8kmE3GdCR9PkgTnbuv5gvyS6y7VGxdI4bCyqNe38KP6aTkzwiGxgL4BEpdWEwnesPwkPnhdXkVjI7gkhVcL6xXNc-8SxtQ7P6sF6DiPuJBnwT8ZyFf-oUOTPH7kUqT0OWNkNYC5AxXcwBcmaxy163E8M7kfn1L~VFSPgSUBW0rmDJ2ClbqIMIvhvL3zc1xKyk6cBqWQyQfmWp8yzqLzNE39KrakW1WM5ndKYZC132qdPLLVD0ozTkI7O2zdSRbFrZ633oig5df-biauxjFdKM3ous8A__"
-                alt="Beard Trim"
-              />
-              <h3>Beard Trim</h3>
-              <p>Perfectly groomed beard trims</p>
-              <p>
-                <strong>Price:</strong> $20
-              </p>
-              <p>
-                <strong>Time:</strong> 25 mins
-              </p>
-            </div>
-
-            <div className="col">
-              <img
-                src="https://s3-alpha-sig.figma.com/img/9c23/c022/02d55a4ceb6b377fa4afc458721226e4?Expires=1728864000&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=CZ50k1ZH2HJPksZboDFiXm1Ru1OOGnkxumgyg3dsWI-ip-WWKT-msX5~2zi5FqbS91yB0qYo9sCRuYkPW9dubzOkGkOHQzZbFxkhGi7OnVr64sRihc2M9tRccdQ~KEO3RgI9niRQt69d2JTgpv2v-6hFmRr2Fm5xPogGkMFQeM06g8Z~fBSwZUjz8OKtEJqy-CjguiNNOxPxBtgiixPHbvYCRL7Qh9mrXvaSGsiVYKay5o0kL4ihyMyXSeM9jUlhQPQbB47n40Qxk1tPHOXVaoTDqN3jfWCpzc~zel-bEasN3kGCiUaeL41f8Acf66hOQffCLt8f5zbq6I9nhvCq0w__"
-                alt="Shampoo"
-              />
-              <h3>Shampoo</h3>
-              <p>Relaxing hair wash and scalp massage</p>
-              <p>
-                <strong>Price:</strong> $80
-              </p>
-              <p>
-                <strong>Time:</strong> 120 mins
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
+      <servicelist />
 
       {/* Why Choose Us Section */}
       <section className="why-choose-us">
@@ -229,75 +162,8 @@ function ServiceWebsite() {
               </p>
             </div>
           </div>
-          <div className="row">
-            <div className="col">
-              <div className="rating">
-                <img
-                  src="https://www.pngall.com/wp-content/uploads/13/Google-Logo.png"
-                  alt="google logo"
-                />
-                <h4>GOOGLE</h4>
-                <h1>4.9</h1>
-                <p>196 reviews</p>
-              </div>
-            </div>
-            <div className="col">
-              <div className="rating">
-                <img
-                  src="https://tse1.mm.bing.net/th?id=OIP.7ZulDOu_l9QD5oVPGl4FOQHaHa&pid=Api&P=0&h=220"
-                  alt="google logo"
-                />
-                <h4>TRIPADVISOR</h4>
-                <h1>5.0</h1>
-                <p>196 reviews</p>
-              </div>
-            </div>
-          </div>
-          <div className="col">
-            <div className="rating">
-              <div className="image-wrapper">
-                <img
-                  src="https://s3-alpha-sig.figma.com/img/845c/0a7e/76a09dd9880480e7c59f7385cde7161f?Expires=1728864000&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=RrpiaeaB0bYtVsfRJBR9zSYkIyCCqGF-krArQKhdJylbj1caRLcXLMBp237tW~Yk-G9Rn9ome3jAf8IkNhUtZCQgeUKmzImYN4aqxyVW1osVR4fVbBfLrbrlVZpAWyjNVkAZn04Tzeh0ejYr6lnsl-dwq9N1T-RZUQVcggeJ5lFiI~dlJgmKg0ii-fg9hVuhnIoYdRkKb3DtvfOxcEUmtvqPuanyypg7jeKmccYT2SMbp34WHvikHR2Ai6E9Ri5B24iKljrNQyye74zzp8qROZMJcRxItRi2Wc60SDhjGCQJBbQYzKqmx1U21WWZfZsbmeXdW4Zpq~Nub74HAymldQ__"
-                  alt="Profile"
-                />
-              </div>
-              <p>
-                THE BEST BARBER SERVICES
-                <br />
-                <small>
-                  Et proin ut in dignissim sem non a nullam magna lectus urna et
-                  dui quam tellus imperdiet sit purus at fringilla scelerisque
-                  diam amet fermentum orci fringilla aliquet nulla lectus erat
-                  eu auctor
-                </small>
-              </p>
-              <p>Thomas</p>
-              <div className="rating">
-                <img
-                  src="https://tse3.mm.bing.net/th?id=OIP.a29kCmEBy6k8EiQG5Sf-AQHaFj&pid=Api&P=0&h=220"
-                  alt="Star"
-                />
-                <img
-                  src="https://tse3.mm.bing.net/th?id=OIP.a29kCmEBy6k8EiQG5Sf-AQHaFj&pid=Api&P=0&h=220"
-                  alt="Star"
-                />
-                <img
-                  src="https://tse3.mm.bing.net/th?id=OIP.a29kCmEBy6k8EiQG5Sf-AQHaFj&pid=Api&P=0&h=220"
-                  alt="Star"
-                />
-                <img
-                  src="https://tse3.mm.bing.net/th?id=OIP.a29kCmEBy6k8EiQG5Sf-AQHaFj&pid=Api&P=0&h=220"
-                  alt="Star"
-                />
-                <img
-                  src="https://tse3.mm.bing.net/th?id=OIP.a29kCmEBy6k8EiQG5Sf-AQHaFj&pid=Api&P=0&h=220"
-                  alt="Star"
-                />
-                <p>5.0 / 5</p>
-              </div>
-            </div>
-          </div>
         </div>
+        <reviewlist />
       </section>
 
       {/* Appointment Section */}
