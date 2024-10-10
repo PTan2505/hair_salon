@@ -1,0 +1,13 @@
+/* AppointmentRequests.css */
+.custom-dropdown-item {
+    color: #333;
+    /* Default text color */
+}
+
+
+.custom-active {
+    background-color: #DEC7A6 !important;
+    /* Active background color */
+    color: black !important;
+    /* Active text color */
+}

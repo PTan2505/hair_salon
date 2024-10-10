@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { CustomerContext } from './CustomerContext';
+import { CustomerContext } from '../context/CustomerContext';
 import { Table, Form, Button, Spinner, Dropdown } from 'react-bootstrap';
 import { customerList } from '../data/Customer'; // Import the customerList data
 
@@ -8,9 +8,8 @@ const CustomerManagement = () => {
     const [selectedCustomers, setSelectedCustomers] = useState([]); // State to manage individual checkbox selections
 
     useEffect(() => {
-        // Set the customer state with the list of customers
         setCustomer(customerList);
-    }, [setCustomer]);
+    }, [setCustomer, customerList]);
 
     // Handle null or undefined customer state
     const customerArray = customer || []; // Fallback to empty array if customer is null or undefined

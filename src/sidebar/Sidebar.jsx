@@ -12,8 +12,8 @@ function Sidebar({ role }) {
                 {role === 'admin' && (
                     <>
                         <h5 style={{ color: '#DEC7A6', padding: '10px', borderBottom: 'double', borderTop: 'double', margin: '20px' }}>Appointment</h5>
-                        <Nav.Link as={Link} to={'/appointmentRequest'} eventKey={'link-1'} className="custom-navlink">Appointment Request</Nav.Link>
-                        <Nav.Link as={Link} to={'/customerManagement'} eventKey={'link-2'} className="custom-navlink">Appointment</Nav.Link>
+                        <Nav.Link as={Link} to={'/appointment/request'} eventKey={'appointmentRequest'} className="custom-navlink">Appointment Request</Nav.Link>
+                        <Nav.Link as={Link} to={'/appointment/view'} eventKey={'viewAppointment'} className="custom-navlink">Appointment</Nav.Link>
                         <Nav.Link as={Link} to={'/home'} eventKey={'link-3'} className="custom-navlink">History</Nav.Link>
 
                         <h5 style={{ color: '#DEC7A6', padding: '10px', borderBottom: 'double', borderTop: 'double', margin: '20px' }}>Management</h5>
