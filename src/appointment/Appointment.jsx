@@ -160,7 +160,7 @@ const Appointment = () => {
                                                     Accepted
                                                 </div>
                                                 :
-                                                request.status === status.accepted ?
+                                                request.status === status.canceled ?
                                                     <div style={{ backgroundColor: '#cf2626', color: 'white', borderRadius: '1rem' }}>
                                                         Canceled
                                                     </div>

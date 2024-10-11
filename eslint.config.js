@@ -33,6 +33,7 @@ export default {
             },
         ],
         'no-unused-vars': 'warn',
+        'import/no-unresolved': 'error',
     },
     settings: {
         react: {

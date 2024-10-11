@@ -27,7 +27,6 @@ export const CustomerProvider = ({ children }) => {
 
         loadCustomers();
 
-
         const interval = setInterval(() => {
             loadCustomers();
         }, 10000);
@@ -37,14 +36,15 @@ export const CustomerProvider = ({ children }) => {
     }, [customers]);
 
     const handleDeleteCustomer = async (id) => {
-        const updatedCustomers = customers.map(customer =>
-            customer.id === id ? { ...customer, status: false } : customer
-        );
-
-        setCustomers(updatedCustomers);
 
         try {
             await deleteCustomer(id);
+            const updatedCustomers = customers.map(customer =>
+                customer.id === id ? { ...customer, is_active: false } : customer
+            );
+
+            setCustomers(updatedCustomers);
+
         } catch (error) {
             console.error('Failed to delete customer:', error);
         }

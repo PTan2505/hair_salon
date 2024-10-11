@@ -36,15 +36,14 @@ export const AppointmentProvider = ({ children }) => {
     }, [appointments]);
 
     const handleStatusUpdate = async (id, newStatus) => {
-
-        const updatedAppointments = appointments.map(appointment =>
-            appointment.id === id ? { ...appointment, status: newStatus } : appointment
-        );
-
-        setAppointments(updatedAppointments);
-
         try {
             await updateAppointmentStatus(id, newStatus);
+
+            const updatedAppointments = appointments.map(appointment =>
+                appointment.id === id ? { ...appointment, status: newStatus } : appointment
+            );
+
+            setAppointments(updatedAppointments);
         } catch (error) {
             console.error('Failed to update appointment:', error);
         }
