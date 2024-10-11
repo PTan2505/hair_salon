@@ -5,17 +5,14 @@ import './index.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter } from 'react-router-dom';
 import { CustomerProvider } from './context/CustomerContext';
-import { SortProvider } from './context/SortContext.jsx';
-import { AppointmentContext, AppointmentProvider } from './context/AppointmentContext.jsx';
+import { AppointmentProvider } from './context/AppointmentContext.jsx';
 
 createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <BrowserRouter>
       <CustomerProvider>
         <AppointmentProvider>
-          <SortProvider>
-            <App />
-          </SortProvider>
+          <App />
         </AppointmentProvider>
       </CustomerProvider>
     </BrowserRouter>

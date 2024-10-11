@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Nav, Dropdown, NavbarText } from 'react-bootstrap';
 import './Sidebar.css'; // Optional CSS for styling
 import { Link } from 'react-router-dom';
@@ -8,17 +8,17 @@ function Sidebar({ role }) {
 
     return (
         <div className="sidebar">
-            <Nav className="flex-column custom-nav" defaultActiveKey={'/'}>
+            <Nav className="flex-column custom-nav" defaultActiveKey={'appointmentRequest'}>
                 {role === 'admin' && (
                     <>
                         <h5 style={{ color: '#DEC7A6', padding: '10px', borderBottom: 'double', borderTop: 'double', margin: '20px' }}>Appointment</h5>
-                        <Nav.Link as={Link} to={'/appointment/request'} eventKey={'appointmentRequest'} className="custom-navlink">Appointment Request</Nav.Link>
-                        <Nav.Link as={Link} to={'/appointment/view'} eventKey={'viewAppointment'} className="custom-navlink">Appointment</Nav.Link>
-                        <Nav.Link as={Link} to={'/home'} eventKey={'link-3'} className="custom-navlink">History</Nav.Link>
+                        <Nav.Link as={Link} to={'/appointment/waiting'} eventKey={'appointmentRequest'} className="custom-navlink">Appointment Request</Nav.Link>
+                        <Nav.Link as={Link} to={'/appointment/accepted'} eventKey={'viewAppointment'} className="custom-navlink">Appointment</Nav.Link>
+                        <Nav.Link as={Link} to={'/appointment/all'} eventKey={'link-3'} className="custom-navlink">All Appointment</Nav.Link>
 
                         <h5 style={{ color: '#DEC7A6', padding: '10px', borderBottom: 'double', borderTop: 'double', margin: '20px' }}>Management</h5>
                         <Nav.Link as={Link} to={'/'} eventKey={'/'} className="custom-navlink">Home</Nav.Link>
-                        <Nav.Link as={Link} to={'/customerManagement'} eventKey={'link-4'} className="custom-navlink">Client</Nav.Link>
+                        <Nav.Link as={Link} to={'/customer'} eventKey={'customer'} className="custom-navlink">Client</Nav.Link>
                         <Nav.Link as={Link} to={'/home'} eventKey={'link-5'} className="custom-navlink">Service</Nav.Link>
 
                         <Nav.Link as={Link} to={'/home'} eventKey={'link-6'} className="custom-navlink">Staff</Nav.Link>

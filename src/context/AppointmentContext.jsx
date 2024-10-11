@@ -9,47 +9,49 @@ export const AppointmentContext = createContext();
 // Create a provider component
 export const AppointmentProvider = ({ children }) => {
     const [appointments, setAppointments] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const loadAppointments = async () => {
+            setLoading(true);
             try {
                 const data = await fetchAppointments();
-                setAppointments(data);
+                if (JSON.stringify(data) !== JSON.stringify(appointments)) {
+                    setAppointments(data);
+                }
             } catch (error) {
                 console.error('Error loading appointments:', error);
+            } finally {
+                setLoading(false);
             }
         };
 
         loadAppointments();
 
-        // Set up a polling interval (e.g., every 10 seconds)
         const interval = setInterval(() => {
             loadAppointments();
-        }, 5000); // Fetches every 10 seconds
+        }, 10000);
 
-        // Cleanup the interval when the component unmounts
         return () => clearInterval(interval);
-    }, []);
+    }, [appointments]);
 
     const handleStatusUpdate = async (id, newStatus) => {
 
+        const updatedAppointments = appointments.map(appointment =>
+            appointment.id === id ? { ...appointment, status: newStatus } : appointment
+        );
+
+        setAppointments(updatedAppointments);
+
         try {
-            // Call the API to update the appointment status in the backend
-            const updatedAppointment = await updateAppointmentStatus(id, newStatus);
-
-            // Once the update is successful, update the local state
-            const updatedAppointments = appointments.map(appointment =>
-                appointment.id === id ? { ...appointment, status: newStatus } : appointment
-            );
-
-            setAppointments(updatedAppointments); // Update the state to reflect changes
+            await updateAppointmentStatus(id, newStatus);
         } catch (error) {
             console.error('Failed to update appointment:', error);
         }
     }
 
     return (
-        <AppointmentContext.Provider value={{ appointments, setAppointments, handleStatusUpdate }}>
+        <AppointmentContext.Provider value={{ appointments, setAppointments, handleStatusUpdate, loading }}>
             {children}
         </AppointmentContext.Provider>
     );
