@@ -1,12 +1,15 @@
 package com.example.Hair_Salon_Project.Service;
 
 import com.example.Hair_Salon_Project.Entity.Account;
+import com.example.Hair_Salon_Project.Entity.Enums.Role;
+import com.example.Hair_Salon_Project.Entity.Staff;
 import com.example.Hair_Salon_Project.Exception.DuplicateEntity;
 import com.example.Hair_Salon_Project.Model.AccountResponse;
 import com.example.Hair_Salon_Project.Model.LoginRequest;
 import com.example.Hair_Salon_Project.Model.RegisterRequest;
 import com.example.Hair_Salon_Project.Model.EmailDetail;
 import com.example.Hair_Salon_Project.Repository.AccountRepository;
+import com.example.Hair_Salon_Project.Repository.StaffRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,12 +44,32 @@ public class AuthenticationService implements UserDetailsService {
     @Autowired
     EmailService emailService;
 
+    @Autowired
+    StaffRepository staffRepository;
+
     public AccountResponse register(RegisterRequest registerRequest) {
         Account newAccount = modelMapper.map(registerRequest, Account.class);
         try {
             newAccount.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
             newAccount.setActive(true);
             accountRepository.save(newAccount);
+
+            // New code to handle staff registration
+            if (registerRequest.getRole() != null && registerRequest.getRole() == Role.STAFF) {
+                Staff newStaff = new Staff();
+                newStaff.setAccount(newAccount);
+                newStaff.setFirstName(registerRequest.getFirstName());
+                newStaff.setLastName(registerRequest.getLastName());
+                newStaff.setGender(registerRequest.getGender());
+                newStaff.setEmail(registerRequest.getEmail());
+                newStaff.setPhone(registerRequest.getPhone());
+                newStaff.setRole(registerRequest.getRole());
+                newStaff.setCreateDate(registerRequest.getCreateDate());
+                newStaff.setStatus(true); // Set default status or any other logic
+                newStaff.setActive(true); // Set default active status
+                staffRepository.save(newStaff); // Save the staff information
+            }
+
             EmailDetail emailDetail = new EmailDetail();
             emailDetail.setAccount(newAccount);
             emailDetail.setSubject("Hello world");

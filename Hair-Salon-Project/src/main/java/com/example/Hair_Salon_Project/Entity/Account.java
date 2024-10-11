@@ -28,17 +28,14 @@ public class Account implements UserDetails {
     private String email;
     private String password;
 
-    @Pattern(regexp = "(84|0[3|5|7|8|9])+(\\d{8})\\b" , message = "Invalid phone number")
-    @Column(unique = true)
     private String phone;
 
-    @Temporal(TemporalType.DATE)
     private Date birthday;
 
     private String gender;
     private boolean active;
 
-    @Temporal(TemporalType.TIMESTAMP)
+
     private Date createDate;
 
     @Temporal(TemporalType.TIMESTAMP)
@@ -50,6 +47,14 @@ public class Account implements UserDetails {
     @OneToMany(mappedBy = "account")
     @JsonIgnore
     List<Booking> bookings;
+
+    @OneToMany(mappedBy = "account")
+    @JsonIgnore
+    List<Feedback> feedbacks;
+
+    @OneToMany(mappedBy = "account")
+    @JsonIgnore
+    List<Bill> bills;
 
     private int point;
 

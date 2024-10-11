@@ -10,27 +10,36 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-public class Service {
+public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     private String type;
 
-    private String service_name;
+    private String productName;
 
-    private float service_price;
+    private float productPrice;
 
     private int point;
 
     private String image;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date Create_At;
+    private Date createDate;
 
     @Temporal(TemporalType.TIMESTAMP)
-    private Date Update_At;
+    private Date updateDate;
 
-    @OneToMany(mappedBy = "service") // Một nhân viên có thể có nhiều booking
+    @OneToMany(mappedBy = "product") // Một nhân viên có thể có nhiều booking
     private List<Booking> bookings;
+
+    @PrePersist
+    protected void onCreate() {
+        this.createDate = new Date();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        this.updateDate = new Date();
+    }
 }

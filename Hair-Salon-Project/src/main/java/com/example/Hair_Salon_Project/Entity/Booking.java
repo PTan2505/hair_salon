@@ -21,11 +21,10 @@ public class Booking {
 
     private String status;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date Create_At;
+    private Date createDate;
 
     @Temporal(TemporalType.TIMESTAMP)
-    private Date Update_At;
+    private Date updateDate;
 
     @ManyToOne
     @JoinColumn(name = "account_id")
@@ -36,9 +35,18 @@ public class Booking {
     private Staff staff;
 
     @ManyToOne
-    @JoinColumn(name = "service_id")
-    private Service service;
+    @JoinColumn(name = "product_id")
+    private Product product;
 
+    @PrePersist
+    protected void onCreate() {
+        this.createDate = new Date();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        this.updateDate = new Date();
+    }
 
 
 

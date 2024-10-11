@@ -4,5 +4,6 @@ public enum Role {
     CUSTOMER, // 0
     STAFF,
     STYLIST,
-    MANAGER// 1
+    MANAGER,
+    SYSTEMAD
 }

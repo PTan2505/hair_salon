@@ -22,18 +22,46 @@ public class Staff {
     @JoinColumn(name = "account_id", referencedColumnName = "id")
     private Account account;
 
-    private boolean staff_status;
-    private boolean is_active;
+    private String firstName;
+
+    private String lastName;
+
+    private String gender;
+
+    private String email;
+
+    private String phone;
+
+    private boolean status;
+
+    private boolean active;
+
+
+    private Date createDate;
 
     @Temporal(TemporalType.TIMESTAMP)
-    private Date created_at;
+    private Date updateDate;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date updated_at;
-
-    Role role ;
+    @Enumerated(EnumType.STRING)
+    Role role;
 
     @OneToMany(mappedBy = "staff")
     @JsonIgnore
     List<Booking> bookings;
+
+    @OneToMany(mappedBy = "staff")
+    @JsonIgnore
+    List<Bill> bills;
+
+    @PrePersist
+    protected void onCreate() {
+        this.createDate = new Date();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        this.updateDate = new Date();
+    }
+
+
 }

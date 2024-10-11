@@ -8,4 +8,5 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/")
 @SecurityRequirement(name="api")// để sử dụng token tren swagger
 public class StylistAPI {
+
 }
