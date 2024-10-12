@@ -74,7 +74,7 @@ public class AuthenticationService implements UserDetailsService {
 
         try {
             // Kiểm tra xem tài khoản có tồn tại không
-            Account account = accountRepository.findAccountByEmail(loginRequest.getEmail());
+            Account account = accountRepository.findByEmail(loginRequest.getEmail());
             if (account == null) {
                 throw new EntityNotFoundException("Email not found");
             }
@@ -101,7 +101,7 @@ public class AuthenticationService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        Account account = accountRepository.findAccountByEmail(email);
+        Account account = accountRepository.findByEmail(email);
         if (account == null) {
             throw new UsernameNotFoundException("User not found with email: " + email);
         }
