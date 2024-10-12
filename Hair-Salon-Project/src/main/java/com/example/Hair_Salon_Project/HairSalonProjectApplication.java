@@ -12,9 +12,11 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 
-@OpenAPIDefinition(info = @Info(title = "Hair API", version = "1.0", description = "Information"))
+@OpenAPIDefinition(info = @Info(title = "Hair API", version = "1.0", description = "Information")
+
+)
 @SecurityScheme(name = "api", scheme = "bearer", type = SecuritySchemeType.HTTP, in = SecuritySchemeIn.HEADER)//custom lai de test token tren swagger
-@SpringBootApplication(exclude = { SecurityAutoConfiguration.class })
+@SpringBootApplication
 
 public class HairSalonProjectApplication {
 

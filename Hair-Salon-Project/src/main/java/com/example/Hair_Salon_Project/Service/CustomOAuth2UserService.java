@@ -9,16 +9,15 @@ import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
-/**
- * Service để xử lý thông tin người dùng từ Google
- */
 @Service
 public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
+    private final AccountRepository accountRepository;
+
     @Autowired
-    private AccountRepository accountRepository;
+    public CustomOAuth2UserService(AccountRepository accountRepository) {
+        this.accountRepository = accountRepository;
+    }
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
@@ -30,25 +29,8 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         String lastName = oAuth2User.getAttribute("family_name");
 
         // Kiểm tra xem người dùng đã tồn tại chưa
-        Optional<Account> userOptional = Optional.ofNullable(accountRepository.findAccountByEmail(email));
-        Account account;
-        if (userOptional.isPresent()) {
-            account = userOptional.get();
-            // Cập nhật thông tin nếu cần
-            account.setFirstName(firstName);
-            account.setLastName(lastName);
-            accountRepository.save(account);
-        } else {
-            // Tạo tài khoản mới
-            account = new Account();
-            account.setEmail(email);
-            account.setFirstName(firstName);
-            account.setLastName(lastName);
-            // Bạn có thể đặt các trường mặc định khác như role, active, etc.
-            account.setActive(true);
-            accountRepository.save(account);
-        }
-
+        // Không cần tạo hoặc cập nhật tài khoản ở đây
+        // Việc này được thực hiện trong OAuth2SuccessHandler
         return oAuth2User;
     }
 }

@@ -1,42 +1,37 @@
 package com.example.Hair_Salon_Project.Entity;
 
 import jakarta.persistence.*;
-
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Getter
 @Setter
-public class Booking {
+public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    String note;
+    private String type;
 
-    private Date bookingDate;
+    private String productName;
 
-    private String status;
+    private float productPrice;
+
+    private int point;
+
+    private String image;
 
     private Date createDate;
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date updateDate;
 
-    @ManyToOne
-    @JoinColumn(name = "account_id")
-    private Account account;
-
-    @ManyToOne
-    @JoinColumn(name = "staff_id")
-    private Staff staff;
-
-    @ManyToOne
-    @JoinColumn(name = "product_id")
-    private Product product;
+    @OneToMany(mappedBy = "product") // Một nhân viên có thể có nhiều booking
+    private List<Booking> bookings;
 
     @PrePersist
     protected void onCreate() {
@@ -47,8 +42,4 @@ public class Booking {
     protected void onUpdate() {
         this.updateDate = new Date();
     }
-
-
-
-
 }

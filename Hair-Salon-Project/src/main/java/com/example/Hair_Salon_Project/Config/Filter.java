@@ -9,6 +9,8 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -25,6 +27,8 @@ import java.util.List;
 @Component // publish to be a library for using Autowired
 public class Filter extends OncePerRequestFilter { // Filer run once each request approach
 
+    private static final Logger logger = LoggerFactory.getLogger(Filter.class);
+
 
     @Autowired
     TokenService tokenService;
@@ -39,7 +43,9 @@ public class Filter extends OncePerRequestFilter { // Filer run once each reques
             "/swagger-resources/**",
             "/api/login",
             "/api/register",
-            "/api/oauth2/redirect/google"
+            "/api/oauth2/redirect/google/**",
+            "/api/forgot-password",
+            "/api/reset-password"
     );
 
     public boolean checkIsPublicAPI(String uri) {
@@ -49,6 +55,8 @@ public class Filter extends OncePerRequestFilter { // Filer run once each reques
         return AUTH_PERMISSION.stream().anyMatch(pattern ->  matcher.match(pattern, uri));// nếu match -> true ; else -> false
 
     }
+
+    private static final String TOKEN_PREFIX = "Bearer ";
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -69,12 +77,14 @@ public class Filter extends OncePerRequestFilter { // Filer run once each reques
             Account account;
             try{
                 account = tokenService.getAccountByToken(token);
-            }catch (ExpiredJwtException e){
-                handlerExceptionResolver.resolveException(request,response,null,new AuthenException("Expired token"));
+            } catch (ExpiredJwtException e) {
+                handleAuthenticationException(request, response, "Expired token");
                 return;
-            }catch (MalformedJwtException e){
-                //token sai dinh dang / format
-                handlerExceptionResolver.resolveException(request,response,null,new AuthenException("Invalid token format"));
+            } catch (MalformedJwtException e) {
+                handleAuthenticationException(request, response, "Invalid token format");
+                return;
+            } catch (Exception e) {
+                handleAuthenticationException(request, response, "Authentication failed");
                 return;
             }
             //=> token chuẩn -> cho phép truy cập , lưu lại thông tin của account này trong mot phien lam viec do , khi response về thì
@@ -90,12 +100,16 @@ public class Filter extends OncePerRequestFilter { // Filer run once each reques
 
     }
 
+    private void handleAuthenticationException(HttpServletRequest request, HttpServletResponse response, String message) {
+        handlerExceptionResolver.resolveException(request, response, null, new AuthenException(message));
+    }
+
     public String getTokenFromRequest(HttpServletRequest request) {
         String authHeader = request.getHeader("Authorization");
-        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-            return null;
+        if (authHeader != null && authHeader.startsWith(TOKEN_PREFIX)) {
+            return authHeader.substring(TOKEN_PREFIX.length());
         }
-        return authHeader.substring(7);  // Extract token after "Bearer "
+        return null;
     }
 
 

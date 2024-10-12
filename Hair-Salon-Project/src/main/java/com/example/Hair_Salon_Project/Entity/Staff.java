@@ -1,11 +1,13 @@
 package com.example.Hair_Salon_Project.Entity;
 
 import com.example.Hair_Salon_Project.Entity.Enums.Role;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Getter
@@ -14,21 +16,52 @@ public class Staff {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long staff_id;
+    private long id;
 
     @OneToOne
     @JoinColumn(name = "account_id", referencedColumnName = "id")
     private Account account;
 
-    private boolean staff_status;
-    private boolean is_manager;
-    private boolean is_active;
+    private String firstName;
+
+    private String lastName;
+
+    private String gender;
+
+    private String email;
+
+    private String phone;
+
+    private boolean status;
+
+    private boolean active;
+
+
+    private Date createDate;
 
     @Temporal(TemporalType.TIMESTAMP)
-    private Date created_at;
+    private Date updateDate;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date updated_at;
+    @Enumerated(EnumType.STRING)
+    Role role;
 
-    Role role ;
+    @OneToMany(mappedBy = "staff")
+    @JsonIgnore
+    List<Booking> bookings;
+
+    @OneToMany(mappedBy = "staff")
+    @JsonIgnore
+    List<Bill> bills;
+
+    @PrePersist
+    protected void onCreate() {
+        this.createDate = new Date();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        this.updateDate = new Date();
+    }
+
+
 }
