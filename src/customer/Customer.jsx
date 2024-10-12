@@ -3,8 +3,12 @@ import { CustomerContext } from "../context/CustomerContext";
 import { Table, Form, Button, Spinner, Dropdown, Modal } from "react-bootstrap";
 import { SlOptionsVertical } from "react-icons/sl";
 import { PiSmileySad } from "react-icons/pi";
+import { NoticficationContext } from "../context/NoticficationContext";
+import { NoticeType } from "../shared/status";
+import { useParams } from "react-router-dom";
 
 const Customer = () => {
+  const { endpoint } = useParams();
   const { customers, handleDeleteCustomer, loading } =
     useContext(CustomerContext);
   const [sortOption, changeSortOption] = useState("");
@@ -12,6 +16,9 @@ const Customer = () => {
   const [currentRequest, setCurrentRequest] = useState(null);
   const [selectedCustomers, setSelectedCustomers] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
+  const { handleShowNotice } = useContext(NoticficationContext);
+
+  const noticeType = NoticeType;
 
   const allCustomersSelected =
     customers.length > 0 && selectedCustomers.length === customers.length;
@@ -40,6 +47,7 @@ const Customer = () => {
   const handleDelete = (id) => {
     handleDeleteCustomer(id);
     setShowModal(false);
+    handleShowNotice(noticeType.red, "Customer has been deleted!!!");
   };
 
   const filteredCustomers = customers.filter(
@@ -83,7 +91,9 @@ const Customer = () => {
   return (
     <div>
       <div className="d-flex justify-content-between align-items-center my-4">
-        <h2 className="mb-0">Customer Management</h2>
+        <h2 className="mb-0">
+          {endpoint === "customer" ? "Customer Management" : "Staff Management"}
+        </h2>
       </div>
       <div
         className="d-flex align-items-center my-4"
@@ -93,7 +103,7 @@ const Customer = () => {
           <Form className="d-flex">
             <Form.Control
               type="text"
-              placeholder="Search customer by name/phone"
+              placeholder="Search by name/phone"
               className="me-2"
               aria-label="Search"
               value={searchQuery}
