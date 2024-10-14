@@ -30,7 +30,7 @@ export const AppointmentProvider = ({ children }) => {
     }, 10000);
 
     return () => clearInterval(interval);
-  }, [appointments]);
+  }, []);
 
   const handleStatusUpdate = async (id, newStatus) => {
     try {
@@ -50,7 +50,7 @@ export const AppointmentProvider = ({ children }) => {
 
   return (
     <AppointmentContext.Provider
-      value={{ appointments, setAppointments, handleStatusUpdate, loading }}
+      value={{ appointments, handleStatusUpdate, loading }}
     >
       {children}
     </AppointmentContext.Provider>

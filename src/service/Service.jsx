@@ -1,64 +1,24 @@
 import React, { useContext, useState } from "react";
-import { CustomerContext } from "../context/CustomerContext";
-import { Table, Form, Button, Spinner, Dropdown, Modal } from "react-bootstrap";
+import { ServiceContext } from "../context/ServiceContext";
+import { Button, Dropdown, Form, Spinner, Table } from "react-bootstrap";
 import { SlOptionsVertical } from "react-icons/sl";
 import { PiSmileySad } from "react-icons/pi";
-import { NoticficationContext } from "../context/NoticficationContext";
-import { useParams } from "react-router-dom";
-import { ModalTypeList, NoticeTypeList } from "../shared/constant";
 import { ModalContext } from "../context/ModalContext";
+import { ModalTypeList } from "../shared/constant";
 
-const Customer = () => {
-  const { endpoint } = useParams();
-  const { customers, handleDeleteCustomer, loading } =
-    useContext(CustomerContext);
+export default function Service() {
+  const { services, handleAddService, loading } = useContext(ServiceContext);
+  const { setModalType, setShowModal } = useContext(ModalContext);
   const [sortOption, changeSortOption] = useState("");
-  const [selectedCustomers, setSelectedCustomers] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
-  const { handleShowNotice } = useContext(NoticficationContext);
-  const { setObject, setShowModal, setModalType } = useContext(ModalContext);
 
-  const noticeType = NoticeTypeList;
   const ModalType = ModalTypeList;
 
-  const allCustomersSelected =
-    customers.length > 0 && selectedCustomers.length === customers.length;
-
-  const handleSelectAll = () => {
-    if (allCustomersSelected) {
-      setSelectedCustomers([]); // Deselect all
-    } else {
-      setSelectedCustomers(customers.map((cust) => cust.id)); // Select all customer IDs
-    }
-  };
-
-  const handleSelectCustomer = (id) => {
-    if (selectedCustomers.includes(id)) {
-      setSelectedCustomers(selectedCustomers.filter((custId) => custId !== id)); // Deselect the customer
-    } else {
-      setSelectedCustomers([...selectedCustomers, id]); // Select the customer
-    }
-  };
-
-  const handleShowModal = (request) => {
-    setObject(request);
-    setModalType(ModalType.customerDetail);
-    setShowModal(true);
-  };
-
-  const handleDelete = (id) => {
-    handleDeleteCustomer(id);
-    setShowModal(false);
-    handleShowNotice(noticeType.red, "Customer has been deleted!!!");
-  };
-
-  const filteredCustomers = customers.filter(
-    (cust) =>
-      cust.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      cust.phone.toLowerCase().includes(searchQuery.toLowerCase())
+  const filteredServices = services.filter((cust) =>
+    cust.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  const sortedCustomers = [...filteredCustomers].sort((a, b) => {
+  const sortedServices = [...filteredServices].sort((a, b) => {
     switch (sortOption) {
       case "no-asc":
         return a.id - b.id;
@@ -93,9 +53,21 @@ const Customer = () => {
   return (
     <div>
       <div className="d-flex justify-content-between align-items-center my-4">
-        <h2 className="mb-0">
-          {endpoint === "customer" ? "Customer Management" : "Staff Management"}
-        </h2>
+        <h2 className="mb-0">Service Management</h2>
+        <Button
+          style={{
+            backgroundColor: "#DEC7A6",
+            borderColor: "#DEC7A6",
+            color: "black",
+          }}
+          onClick={() => {
+            setModalType(ModalType.addService);
+            setShowModal(true);
+            console.log(services);
+          }}
+        >
+          Add Service
+        </Button>
       </div>
       <div
         className="d-flex align-items-center my-4"
@@ -105,14 +77,14 @@ const Customer = () => {
           <Form className="d-flex">
             <Form.Control
               type="text"
-              placeholder="Search by name/phone"
+              placeholder="Search by name"
               className="me-2"
               aria-label="Search"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               onKeyDown={(e) => {
                 if (e.key === "Enter") {
-                  e.preventDefault(); // Prevent the form submission
+                  e.preventDefault();
                 }
               }}
             />
@@ -153,7 +125,6 @@ const Customer = () => {
               ? "Point (High to Low)"
               : "Sort By"}
           </Dropdown.Toggle>
-
           <Dropdown.Menu>
             <Dropdown.Item
               className={`custom-dropdown-item ${
@@ -254,51 +225,44 @@ const Customer = () => {
           </Dropdown.Menu>
         </Dropdown>
       </div>
-      {sortedCustomers.length > 0 ? (
+      {sortedServices.length > 0 ? (
         <>
           <Table striped borderless hover>
             <thead>
               <tr>
-                <th style={{ width: "50px" }}>
-                  <Form.Check
-                    type="checkbox"
-                    checked={allCustomersSelected} // Automatically checked if all are selected
-                    onChange={handleSelectAll} // Toggle all selections
-                  />
-                </th>
                 <th style={{ width: "50px" }}>No</th>
                 <th style={{ width: "20%" }}>Name</th>
-                <th style={{ width: "20%" }}>Email</th>
-                <th style={{ width: "20%" }}>Phone</th>
-                <th style={{ width: "100px" }}>Active</th>
+                <th style={{ width: "20%" }}>Type</th>
+                <th style={{ width: "20%" }}>Price</th>
                 <th style={{ width: "10%" }}>Point</th>
+                <th style={{ width: "10%" }}>Time</th>
+                <th style={{ width: "100px" }}>Active</th>
                 <th style={{ width: "50px" }}></th>
               </tr>
             </thead>
             <tbody>
-              {sortedCustomers.map((cust) => (
-                <tr key={cust.id}>
+              {sortedServices.map((service) => (
+                <tr key={service.id}>
                   <td style={{ alignContent: "center", height: "100px" }}>
-                    <Form.Check
-                      type="checkbox"
-                      checked={selectedCustomers.includes(cust.id)} // Check if the customer is selected
-                      onChange={() => handleSelectCustomer(cust.id)} // Handle individual selection
-                    />
+                    {service.id}
                   </td>
                   <td style={{ alignContent: "center", height: "100px" }}>
-                    {cust.id}
+                    {service.name}
                   </td>
                   <td style={{ alignContent: "center", height: "100px" }}>
-                    {cust.name}
+                    {service.type}
                   </td>
                   <td style={{ alignContent: "center", height: "100px" }}>
-                    {cust.email}
+                    {service.price}
                   </td>
                   <td style={{ alignContent: "center", height: "100px" }}>
-                    {cust.phone}
+                    {service.point}
                   </td>
                   <td style={{ alignContent: "center", height: "100px" }}>
-                    {cust.is_active === true ? (
+                    {service.time}
+                  </td>
+                  <td style={{ alignContent: "center", height: "100px" }}>
+                    {service.isActive === true ? (
                       <div
                         style={{
                           backgroundColor: "green",
@@ -323,9 +287,6 @@ const Customer = () => {
                     )}
                   </td>
                   <td style={{ alignContent: "center", height: "100px" }}>
-                    {cust.point}
-                  </td>
-                  <td style={{ alignContent: "center", height: "100px" }}>
                     <Dropdown>
                       <Dropdown.Toggle
                         variant="link"
@@ -339,12 +300,8 @@ const Customer = () => {
                         />
                       </Dropdown.Toggle>
                       <Dropdown.Menu>
-                        <Dropdown.Item onClick={() => handleShowModal(cust)}>
-                          View Information
-                        </Dropdown.Item>
-                        <Dropdown.Item onClick={() => handleDelete(cust.id)}>
-                          Delete
-                        </Dropdown.Item>
+                        <Dropdown.Item onClick={() => {}}>Edit</Dropdown.Item>
+                        <Dropdown.Item onClick={() => {}}>Delete</Dropdown.Item>
                       </Dropdown.Menu>
                     </Dropdown>
                   </td>
@@ -365,6 +322,4 @@ const Customer = () => {
       )}
     </div>
   );
-};
-
-export default Customer;
+}

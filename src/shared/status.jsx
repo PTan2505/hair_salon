@@ -8,9 +8,3 @@ export const AppointmentStatus = {
 export const CustomerStatus = {
   delete: "delete",
 };
-
-export const NoticeType = {
-  red: "danger",
-  green: "success",
-  yellow: "warning",
-};

@@ -84,8 +84,8 @@ function Sidebar({ role }) {
             </Nav.Link>
             <Nav.Link
               as={Link}
-              to={"/home"}
-              eventKey={"link-5"}
+              to={"/service"}
+              eventKey={"/service"}
               className="custom-navlink"
             >
               Service

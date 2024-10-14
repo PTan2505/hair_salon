@@ -5,6 +5,7 @@ import Sidebar from "../sidebar/Sidebar";
 import Customer from "./customer/Customer";
 import Appointment from "./appointment/Appointment";
 import React from "react";
+import Service from "./service/Service";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
               path={"/appointment/:endpoint"}
               element={<Appointment />}
             ></Route>
+            <Route path={"/service"} element={<Service />}></Route>
           </Routes>
         </div>
       </div>
