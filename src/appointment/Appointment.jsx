@@ -1,38 +1,24 @@
 import React, { useContext, useState } from "react";
 import { Table, Button, Modal, Dropdown, Spinner, Form } from "react-bootstrap";
-import "./Appointment.css"; // Import your CSS file
+import "./Appointment.css";
 import { AppointmentContext } from "../context/AppointmentContext";
 import { useParams } from "react-router-dom";
 import { PiSmileySad } from "react-icons/pi";
 import { AppointmentStatus } from "../shared/status";
-import { ModalTypeList } from "../shared/constant";
 import { ModalContext } from "../context/ModalContext";
+import { splitDate, splitTime } from "../shared/splitDateTime";
+import { sortData } from "../shared/sortData";
+import AppointmentDetail from "../shared/Modal/AppointmentDetail";
+import SortDropdown from "../shared/SortDropdown";
 
 const Appointment = () => {
   const { endpoint } = useParams();
   const { appointments, loading } = useContext(AppointmentContext);
-  const { setShowModal, setObject, setModalType } = useContext(ModalContext);
-  const [sortOption, changeSortOption] = useState("");
+  const { setShowModal, showModal } = useContext(ModalContext);
+  const [sortOption, changeSortOption] = useState("no-desc");
   const [searchQuery, setSearchQuery] = useState("");
 
   const status = AppointmentStatus;
-  const ModalType = ModalTypeList;
-
-  const handleShowModal = (request) => {
-    setObject(request);
-    setModalType(ModalType.appointmentDetail);
-    setShowModal(true);
-  };
-
-  const splitDate = (date) => {
-    const dateObj = new Date(date);
-    return dateObj.toLocaleDateString();
-  };
-
-  const splitTime = (date) => {
-    const dateObj = new Date(date);
-    return dateObj.toLocaleTimeString();
-  };
 
   const appointmentFilterList = appointments.filter((appo) => {
     return endpoint === status.waiting
@@ -48,28 +34,7 @@ const Appointment = () => {
       appintment.stylist.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  const sortedAppointments = [...filteredAppointment].sort((a, b) => {
-    switch (sortOption) {
-      case "date-asc":
-        return a.date - b.date;
-      case "date-desc":
-        return b.date - a.date;
-      case "name-asc":
-        return a.customer.localeCompare(b.customer);
-      case "name-desc":
-        return b.customer.localeCompare(a.customer);
-      // case 'time-asc':
-      //     return Date(`${a.date} ${a.time}`) - Date(`${b.date} ${b.time}`);
-      // case 'time-desc':
-      //     return Date(`${b.date} ${b.time}`) - Date(`${a.date} ${a.time}`);
-      case "stylist-asc":
-        return a.stylist.localeCompare(b.stylist);
-      case "stylist-desc":
-        return b.stylist.localeCompare(a.stylist);
-      default:
-        return 0;
-    }
-  });
+  const sortedAppointments = sortData(filteredAppointment, sortOption);
 
   return (
     <div>
@@ -106,97 +71,11 @@ const Appointment = () => {
         <span style={{ fontWeight: "bold", margin: "5px", textWrap: "nowrap" }}>
           Sort By :
         </span>
-        <Dropdown>
-          <Dropdown.Toggle
-            variant="outline-dark"
-            id="dropdown-basic"
-            style={{ width: "170px" }}
-          >
-            {sortOption === "date-asc"
-              ? "Date (Oldest first)"
-              : sortOption === "date-desc"
-              ? "Date (Newest first)"
-              : sortOption === "name-asc"
-              ? "Customer (A-Z)"
-              : sortOption === "name-desc"
-              ? "Customer (Z-A)"
-              : sortOption === "time-asc"
-              ? "Time (Earliest first)"
-              : sortOption === "time-desc"
-              ? "Time (Latest first)"
-              : sortOption === "stylist-asc"
-              ? "Stylist (A-Z)"
-              : sortOption === "stylist-desc"
-              ? "Stylist (Z-A)"
-              : "Sort By"}
-          </Dropdown.Toggle>
-          <Dropdown.Menu>
-            <Dropdown.Item
-              className={`custom-dropdown-item ${
-                sortOption === "date-asc" ? "custom-active" : ""
-              }`}
-              onClick={() => changeSortOption("date-asc")}
-            >
-              Date (Oldest first)
-            </Dropdown.Item>
-            <Dropdown.Item
-              className={`custom-dropdown-item ${
-                sortOption === "date-desc" ? "custom-active" : ""
-              }`}
-              onClick={() => changeSortOption("date-desc")}
-            >
-              Date (Newest first)
-            </Dropdown.Item>
-            <Dropdown.Item
-              className={`custom-dropdown-item ${
-                sortOption === "name-asc" ? "custom-active" : ""
-              }`}
-              onClick={() => changeSortOption("name-asc")}
-            >
-              Customer (A-Z)
-            </Dropdown.Item>
-            <Dropdown.Item
-              className={`custom-dropdown-item ${
-                sortOption === "name-desc" ? "custom-active" : ""
-              }`}
-              onClick={() => changeSortOption("name-desc")}
-            >
-              Customer (Z-A)
-            </Dropdown.Item>
-            <Dropdown.Item
-              className={`custom-dropdown-item ${
-                sortOption === "time-asc" ? "custom-active" : ""
-              }`}
-              onClick={() => changeSortOption("time-asc")}
-            >
-              Time (Earliest first)
-            </Dropdown.Item>
-            <Dropdown.Item
-              className={`custom-dropdown-item ${
-                sortOption === "time-desc" ? "custom-active" : ""
-              }`}
-              onClick={() => changeSortOption("time-desc")}
-            >
-              Time (Latest first)
-            </Dropdown.Item>
-            <Dropdown.Item
-              className={`custom-dropdown-item ${
-                sortOption === "stylist-asc" ? "custom-active" : ""
-              }`}
-              onClick={() => changeSortOption("stylist-asc")}
-            >
-              Stylist (A-Z)
-            </Dropdown.Item>
-            <Dropdown.Item
-              className={`custom-dropdown-item ${
-                sortOption === "stylist-desc" ? "custom-active" : ""
-              }`}
-              onClick={() => changeSortOption("stylist-desc")}
-            >
-              Stylist (Z-A)
-            </Dropdown.Item>
-          </Dropdown.Menu>
-        </Dropdown>
+        <SortDropdown
+          sortOption={sortOption}
+          changeSortOption={changeSortOption}
+          page={"appointment"}
+        />
       </div>
       {sortedAppointments.length > 0 ? (
         <Table striped borderless hover>
@@ -212,86 +91,93 @@ const Appointment = () => {
             </tr>
           </thead>
           <tbody>
-            {sortedAppointments.map((request) => (
-              <tr key={request.id}>
-                <td style={{ alignContent: "center", height: "100px" }}>
-                  {request.customer}
-                </td>
-                <td style={{ alignContent: "center", height: "100px" }}>
-                  {request.stylist}
-                </td>
-                <td style={{ alignContent: "center", height: "100px" }}>
-                  {splitDate(request.date)}
-                </td>
-                <td style={{ alignContent: "center", height: "100px" }}>
-                  {splitTime(request.date)}
-                </td>
-                <td
-                  style={{
-                    alignContent: "center",
-                    height: "100px",
-                    padding: "0 30px",
-                  }}
-                >
-                  {request.note}
-                </td>
-                <td style={{ alignContent: "center", height: "100px" }}>
-                  {request.status === false ? (
-                    <div
-                      style={{
-                        backgroundColor: "darkgrey",
-                        color: "white",
-                        borderRadius: "1rem",
-                      }}
-                    >
-                      Waiting...
-                    </div>
-                  ) : request.status === status.accepted ? (
-                    <div
-                      style={{
-                        backgroundColor: "#ffc107",
-                        color: "black",
-                        borderRadius: "1rem",
-                      }}
-                    >
-                      Accepted
-                    </div>
-                  ) : request.status === status.canceled ? (
-                    <div
-                      style={{
-                        backgroundColor: "#cf2626",
-                        color: "white",
-                        borderRadius: "1rem",
-                      }}
-                    >
-                      Canceled
-                    </div>
-                  ) : (
-                    <div
-                      style={{
-                        backgroundColor: "green",
-                        color: "white",
-                        borderRadius: "1rem",
-                      }}
-                    >
-                      Done
-                    </div>
-                  )}
-                </td>
-                <td style={{ alignContent: "center", height: "100px" }}>
-                  <Button
+            {sortedAppointments.map((appointment) => (
+              <>
+                <AppointmentDetail
+                  object={appointment}
+                  showModal={showModal}
+                  setShowModal={setShowModal}
+                />
+                <tr key={appointment.id}>
+                  <td style={{ alignContent: "center", height: "100px" }}>
+                    {appointment.customer}
+                  </td>
+                  <td style={{ alignContent: "center", height: "100px" }}>
+                    {appointment.stylist}
+                  </td>
+                  <td style={{ alignContent: "center", height: "100px" }}>
+                    {splitDate(appointment.date)}
+                  </td>
+                  <td style={{ alignContent: "center", height: "100px" }}>
+                    {splitTime(appointment.date)}
+                  </td>
+                  <td
                     style={{
-                      backgroundColor: "#DEC7A6",
-                      color: "black",
-                      borderColor: "#DEC7A6",
-                      borderRadius: "2rem",
+                      alignContent: "center",
+                      height: "100px",
+                      padding: "0 30px",
                     }}
-                    onClick={() => handleShowModal(request)}
                   >
-                    Review
-                  </Button>
-                </td>
-              </tr>
+                    {appointment.note}
+                  </td>
+                  <td style={{ alignContent: "center", height: "100px" }}>
+                    {appointment.status === false ? (
+                      <div
+                        style={{
+                          backgroundColor: "darkgrey",
+                          color: "white",
+                          borderRadius: "1rem",
+                        }}
+                      >
+                        Waiting...
+                      </div>
+                    ) : appointment.status === status.accepted ? (
+                      <div
+                        style={{
+                          backgroundColor: "#ffc107",
+                          color: "black",
+                          borderRadius: "1rem",
+                        }}
+                      >
+                        Accepted
+                      </div>
+                    ) : appointment.status === status.canceled ? (
+                      <div
+                        style={{
+                          backgroundColor: "#cf2626",
+                          color: "white",
+                          borderRadius: "1rem",
+                        }}
+                      >
+                        Canceled
+                      </div>
+                    ) : (
+                      <div
+                        style={{
+                          backgroundColor: "green",
+                          color: "white",
+                          borderRadius: "1rem",
+                        }}
+                      >
+                        Done
+                      </div>
+                    )}
+                  </td>
+                  <td style={{ alignContent: "center", height: "100px" }}>
+                    <Button
+                      style={{
+                        backgroundColor: "#DEC7A6",
+                        color: "black",
+                        borderColor: "#DEC7A6",
+                        borderRadius: "2rem",
+                      }}
+                      onClick={() => setShowModal(true)}
+                    >
+                      Review
+                    </Button>
+                  </td>
+                </tr>
+              </>
             ))}
           </tbody>
         </Table>

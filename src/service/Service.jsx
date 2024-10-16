@@ -4,54 +4,39 @@ import { Button, Dropdown, Form, Spinner, Table } from "react-bootstrap";
 import { SlOptionsVertical } from "react-icons/sl";
 import { PiSmileySad } from "react-icons/pi";
 import { ModalContext } from "../context/ModalContext";
-import { ModalTypeList } from "../shared/constant";
+import AddService from "../shared/Modal/AddService";
+import { sortData } from "../shared/sortData";
+import SortDropdown from "../shared/SortDropdown";
+import EditService from "../shared/Modal/EditService";
 
 export default function Service() {
-  const { services, handleAddService, loading } = useContext(ServiceContext);
-  const { setModalType, setShowModal } = useContext(ModalContext);
-  const [sortOption, changeSortOption] = useState("");
+  const { services, loading } = useContext(ServiceContext);
+  const { showModal, setShowModal } = useContext(ModalContext);
+  const [sortOption, changeSortOption] = useState("no-desc");
   const [searchQuery, setSearchQuery] = useState("");
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [editObject, setEditObject] = useState("");
 
-  const ModalType = ModalTypeList;
+  const handleEdit = (service) => {
+    setEditObject(service);
+    setShowEditModal(true);
+    console.log(service);
+  };
 
   const filteredServices = services.filter((cust) =>
     cust.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  const sortedServices = [...filteredServices].sort((a, b) => {
-    switch (sortOption) {
-      case "no-asc":
-        return a.id - b.id;
-      case "no-desc":
-        return b.id - a.id;
-      case "name-asc":
-        return a.name.localeCompare(b.name);
-      case "name-desc":
-        return b.name.localeCompare(a.name);
-      case "email-asc":
-        return a.email.localeCompare(b.email);
-      case "email-desc":
-        return b.email.localeCompare(a.email);
-      case "phone-asc":
-        return a.phone.localeCompare(b.phone);
-      case "phone-desc":
-        return b.phone.localeCompare(a.phone);
-      case "active-asc":
-        return Number(b.is_active) - Number(a.is_active);
-      case "active-desc":
-        return Number(a.is_active) - Number(b.is_active);
-      case "point-asc":
-        return a.point - b.point;
-      case "point-desc":
-        return b.point - a.point;
-
-      default:
-        return 0;
-    }
-  });
+  const sortedServices = sortData(filteredServices, sortOption);
 
   return (
     <div>
+      <AddService showModal={showModal} setShowModal={setShowModal} />
+      <EditService
+        object={editObject}
+        showModal={showEditModal}
+        setShowModal={setShowEditModal}
+      />
       <div className="d-flex justify-content-between align-items-center my-4">
         <h2 className="mb-0">Service Management</h2>
         <Button
@@ -61,9 +46,7 @@ export default function Service() {
             color: "black",
           }}
           onClick={() => {
-            setModalType(ModalType.addService);
             setShowModal(true);
-            console.log(services);
           }}
         >
           Add Service
@@ -93,137 +76,11 @@ export default function Service() {
         <span style={{ fontWeight: "bold", margin: "5px", textWrap: "nowrap" }}>
           Sort By :
         </span>
-        <Dropdown>
-          <Dropdown.Toggle
-            variant="outline-dark"
-            id="dropdown-basic"
-            style={{ width: "170px" }}
-          >
-            {sortOption === "no-asc"
-              ? "No (Ascending)"
-              : sortOption === "no-desc"
-              ? "No (Descending)"
-              : sortOption === "name-asc"
-              ? "Name (A-Z)"
-              : sortOption === "name-desc"
-              ? "Name (Z-A)"
-              : sortOption === "email-asc"
-              ? "Email (A-Z)"
-              : sortOption === "email-desc"
-              ? "Email (Z-A)"
-              : sortOption === "phone-asc"
-              ? "Phone (A-Z)"
-              : sortOption === "phone-desc"
-              ? "Phone (Z-A)"
-              : sortOption === "active-asc"
-              ? "Active (Yes first)"
-              : sortOption === "active-desc"
-              ? "Active (No first)"
-              : sortOption === "point-asc"
-              ? "Point (Low to High)"
-              : sortOption === "point-desc"
-              ? "Point (High to Low)"
-              : "Sort By"}
-          </Dropdown.Toggle>
-          <Dropdown.Menu>
-            <Dropdown.Item
-              className={`custom-dropdown-item ${
-                sortOption === "no-asc" ? "custom-active" : ""
-              }`}
-              onClick={() => changeSortOption("no-asc")}
-            >
-              No (Ascending)
-            </Dropdown.Item>
-            <Dropdown.Item
-              className={`custom-dropdown-item ${
-                sortOption === "no-desc" ? "custom-active" : ""
-              }`}
-              onClick={() => changeSortOption("no-desc")}
-            >
-              No (Descending)
-            </Dropdown.Item>
-            <Dropdown.Item
-              className={`custom-dropdown-item ${
-                sortOption === "name-asc" ? "custom-active" : ""
-              }`}
-              onClick={() => changeSortOption("name-asc")}
-            >
-              Name (A-Z)
-            </Dropdown.Item>
-            <Dropdown.Item
-              className={`custom-dropdown-item ${
-                sortOption === "name-desc" ? "custom-active" : ""
-              }`}
-              onClick={() => changeSortOption("name-desc")}
-            >
-              Name (Z-A)
-            </Dropdown.Item>
-            <Dropdown.Item
-              className={`custom-dropdown-item ${
-                sortOption === "email-asc" ? "custom-active" : ""
-              }`}
-              onClick={() => changeSortOption("email-asc")}
-            >
-              Email (A-Z)
-            </Dropdown.Item>
-            <Dropdown.Item
-              className={`custom-dropdown-item ${
-                sortOption === "email-desc" ? "custom-active" : ""
-              }`}
-              onClick={() => changeSortOption("email-desc")}
-            >
-              Email (Z-A)
-            </Dropdown.Item>
-            <Dropdown.Item
-              className={`custom-dropdown-item ${
-                sortOption === "phone-asc" ? "custom-active" : ""
-              }`}
-              onClick={() => changeSortOption("phone-asc")}
-            >
-              Phone (A-Z)
-            </Dropdown.Item>
-            <Dropdown.Item
-              className={`custom-dropdown-item ${
-                sortOption === "phone-desc" ? "custom-active" : ""
-              }`}
-              onClick={() => changeSortOption("phone-desc")}
-            >
-              Phone (Z-A)
-            </Dropdown.Item>
-            <Dropdown.Item
-              className={`custom-dropdown-item ${
-                sortOption === "active-asc" ? "custom-active" : ""
-              }`}
-              onClick={() => changeSortOption("active-asc")}
-            >
-              Active (Yes first)
-            </Dropdown.Item>
-            <Dropdown.Item
-              className={`custom-dropdown-item ${
-                sortOption === "active-desc" ? "custom-active" : ""
-              }`}
-              onClick={() => changeSortOption("active-desc")}
-            >
-              Active (No first)
-            </Dropdown.Item>
-            <Dropdown.Item
-              className={`custom-dropdown-item ${
-                sortOption === "point-asc" ? "custom-active" : ""
-              }`}
-              onClick={() => changeSortOption("point-asc")}
-            >
-              Point (Low to High)
-            </Dropdown.Item>
-            <Dropdown.Item
-              className={`custom-dropdown-item ${
-                sortOption === "point-desc" ? "custom-active" : ""
-              }`}
-              onClick={() => changeSortOption("point-desc")}
-            >
-              Point (High to Low)
-            </Dropdown.Item>
-          </Dropdown.Menu>
-        </Dropdown>
+        <SortDropdown
+          sortOption={sortOption}
+          changeSortOption={changeSortOption}
+          page={"service"}
+        />
       </div>
       {sortedServices.length > 0 ? (
         <>
@@ -262,7 +119,7 @@ export default function Service() {
                     {service.time}
                   </td>
                   <td style={{ alignContent: "center", height: "100px" }}>
-                    {service.isActive === true ? (
+                    {service.is_active === true ? (
                       <div
                         style={{
                           backgroundColor: "green",
@@ -300,7 +157,9 @@ export default function Service() {
                         />
                       </Dropdown.Toggle>
                       <Dropdown.Menu>
-                        <Dropdown.Item onClick={() => {}}>Edit</Dropdown.Item>
+                        <Dropdown.Item onClick={() => handleEdit(service)}>
+                          Edit
+                        </Dropdown.Item>
                         <Dropdown.Item onClick={() => {}}>Delete</Dropdown.Item>
                       </Dropdown.Menu>
                     </Dropdown>

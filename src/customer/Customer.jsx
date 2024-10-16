@@ -1,25 +1,24 @@
 import React, { useContext, useState } from "react";
 import { CustomerContext } from "../context/CustomerContext";
-import { Table, Form, Button, Spinner, Dropdown, Modal } from "react-bootstrap";
+import { Table, Form, Spinner, Dropdown, Modal } from "react-bootstrap";
 import { SlOptionsVertical } from "react-icons/sl";
 import { PiSmileySad } from "react-icons/pi";
-import { NoticficationContext } from "../context/NoticficationContext";
 import { useParams } from "react-router-dom";
-import { ModalTypeList, NoticeTypeList } from "../shared/constant";
 import { ModalContext } from "../context/ModalContext";
+import { ToastContainer } from "react-toastify";
+import { sortData } from "../shared/sortData";
+import SortDropdown from "../shared/SortDropdown";
+import CustomerDetail from "../shared/Modal/CustomerDetail";
+import { toastError, toastSuccess } from "../shared/toastify";
 
 const Customer = () => {
   const { endpoint } = useParams();
   const { customers, handleDeleteCustomer, loading } =
     useContext(CustomerContext);
-  const [sortOption, changeSortOption] = useState("");
+  const [sortOption, changeSortOption] = useState("no-desc");
   const [selectedCustomers, setSelectedCustomers] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
-  const { handleShowNotice } = useContext(NoticficationContext);
-  const { setObject, setShowModal, setModalType } = useContext(ModalContext);
-
-  const noticeType = NoticeTypeList;
-  const ModalType = ModalTypeList;
+  const { setShowModal, showModal } = useContext(ModalContext);
 
   const allCustomersSelected =
     customers.length > 0 && selectedCustomers.length === customers.length;
@@ -40,16 +39,10 @@ const Customer = () => {
     }
   };
 
-  const handleShowModal = (request) => {
-    setObject(request);
-    setModalType(ModalType.customerDetail);
-    setShowModal(true);
-  };
-
   const handleDelete = (id) => {
     handleDeleteCustomer(id);
     setShowModal(false);
-    handleShowNotice(noticeType.red, "Customer has been deleted!!!");
+    toastSuccess("Delete Customer Successfully");
   };
 
   const filteredCustomers = customers.filter(
@@ -58,40 +51,11 @@ const Customer = () => {
       cust.phone.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  const sortedCustomers = [...filteredCustomers].sort((a, b) => {
-    switch (sortOption) {
-      case "no-asc":
-        return a.id - b.id;
-      case "no-desc":
-        return b.id - a.id;
-      case "name-asc":
-        return a.name.localeCompare(b.name);
-      case "name-desc":
-        return b.name.localeCompare(a.name);
-      case "email-asc":
-        return a.email.localeCompare(b.email);
-      case "email-desc":
-        return b.email.localeCompare(a.email);
-      case "phone-asc":
-        return a.phone.localeCompare(b.phone);
-      case "phone-desc":
-        return b.phone.localeCompare(a.phone);
-      case "active-asc":
-        return Number(b.is_active) - Number(a.is_active);
-      case "active-desc":
-        return Number(a.is_active) - Number(b.is_active);
-      case "point-asc":
-        return a.point - b.point;
-      case "point-desc":
-        return b.point - a.point;
-
-      default:
-        return 0;
-    }
-  });
+  const sortedCustomers = sortData(filteredCustomers, sortOption);
 
   return (
     <div>
+      <ToastContainer />
       <div className="d-flex justify-content-between align-items-center my-4">
         <h2 className="mb-0">
           {endpoint === "customer" ? "Customer Management" : "Staff Management"}
@@ -121,138 +85,11 @@ const Customer = () => {
         <span style={{ fontWeight: "bold", margin: "5px", textWrap: "nowrap" }}>
           Sort By :
         </span>
-        <Dropdown>
-          <Dropdown.Toggle
-            variant="outline-dark"
-            id="dropdown-basic"
-            style={{ width: "170px" }}
-          >
-            {sortOption === "no-asc"
-              ? "No (Ascending)"
-              : sortOption === "no-desc"
-              ? "No (Descending)"
-              : sortOption === "name-asc"
-              ? "Name (A-Z)"
-              : sortOption === "name-desc"
-              ? "Name (Z-A)"
-              : sortOption === "email-asc"
-              ? "Email (A-Z)"
-              : sortOption === "email-desc"
-              ? "Email (Z-A)"
-              : sortOption === "phone-asc"
-              ? "Phone (A-Z)"
-              : sortOption === "phone-desc"
-              ? "Phone (Z-A)"
-              : sortOption === "active-asc"
-              ? "Active (Yes first)"
-              : sortOption === "active-desc"
-              ? "Active (No first)"
-              : sortOption === "point-asc"
-              ? "Point (Low to High)"
-              : sortOption === "point-desc"
-              ? "Point (High to Low)"
-              : "Sort By"}
-          </Dropdown.Toggle>
-
-          <Dropdown.Menu>
-            <Dropdown.Item
-              className={`custom-dropdown-item ${
-                sortOption === "no-asc" ? "custom-active" : ""
-              }`}
-              onClick={() => changeSortOption("no-asc")}
-            >
-              No (Ascending)
-            </Dropdown.Item>
-            <Dropdown.Item
-              className={`custom-dropdown-item ${
-                sortOption === "no-desc" ? "custom-active" : ""
-              }`}
-              onClick={() => changeSortOption("no-desc")}
-            >
-              No (Descending)
-            </Dropdown.Item>
-            <Dropdown.Item
-              className={`custom-dropdown-item ${
-                sortOption === "name-asc" ? "custom-active" : ""
-              }`}
-              onClick={() => changeSortOption("name-asc")}
-            >
-              Name (A-Z)
-            </Dropdown.Item>
-            <Dropdown.Item
-              className={`custom-dropdown-item ${
-                sortOption === "name-desc" ? "custom-active" : ""
-              }`}
-              onClick={() => changeSortOption("name-desc")}
-            >
-              Name (Z-A)
-            </Dropdown.Item>
-            <Dropdown.Item
-              className={`custom-dropdown-item ${
-                sortOption === "email-asc" ? "custom-active" : ""
-              }`}
-              onClick={() => changeSortOption("email-asc")}
-            >
-              Email (A-Z)
-            </Dropdown.Item>
-            <Dropdown.Item
-              className={`custom-dropdown-item ${
-                sortOption === "email-desc" ? "custom-active" : ""
-              }`}
-              onClick={() => changeSortOption("email-desc")}
-            >
-              Email (Z-A)
-            </Dropdown.Item>
-            <Dropdown.Item
-              className={`custom-dropdown-item ${
-                sortOption === "phone-asc" ? "custom-active" : ""
-              }`}
-              onClick={() => changeSortOption("phone-asc")}
-            >
-              Phone (A-Z)
-            </Dropdown.Item>
-            <Dropdown.Item
-              className={`custom-dropdown-item ${
-                sortOption === "phone-desc" ? "custom-active" : ""
-              }`}
-              onClick={() => changeSortOption("phone-desc")}
-            >
-              Phone (Z-A)
-            </Dropdown.Item>
-            <Dropdown.Item
-              className={`custom-dropdown-item ${
-                sortOption === "active-asc" ? "custom-active" : ""
-              }`}
-              onClick={() => changeSortOption("active-asc")}
-            >
-              Active (Yes first)
-            </Dropdown.Item>
-            <Dropdown.Item
-              className={`custom-dropdown-item ${
-                sortOption === "active-desc" ? "custom-active" : ""
-              }`}
-              onClick={() => changeSortOption("active-desc")}
-            >
-              Active (No first)
-            </Dropdown.Item>
-            <Dropdown.Item
-              className={`custom-dropdown-item ${
-                sortOption === "point-asc" ? "custom-active" : ""
-              }`}
-              onClick={() => changeSortOption("point-asc")}
-            >
-              Point (Low to High)
-            </Dropdown.Item>
-            <Dropdown.Item
-              className={`custom-dropdown-item ${
-                sortOption === "point-desc" ? "custom-active" : ""
-              }`}
-              onClick={() => changeSortOption("point-desc")}
-            >
-              Point (High to Low)
-            </Dropdown.Item>
-          </Dropdown.Menu>
-        </Dropdown>
+        <SortDropdown
+          sortOption={sortOption}
+          changeSortOption={changeSortOption}
+          page={"customer"}
+        />
       </div>
       {sortedCustomers.length > 0 ? (
         <>
@@ -277,78 +114,91 @@ const Customer = () => {
             </thead>
             <tbody>
               {sortedCustomers.map((cust) => (
-                <tr key={cust.id}>
-                  <td style={{ alignContent: "center", height: "100px" }}>
-                    <Form.Check
-                      type="checkbox"
-                      checked={selectedCustomers.includes(cust.id)} // Check if the customer is selected
-                      onChange={() => handleSelectCustomer(cust.id)} // Handle individual selection
-                    />
-                  </td>
-                  <td style={{ alignContent: "center", height: "100px" }}>
-                    {cust.id}
-                  </td>
-                  <td style={{ alignContent: "center", height: "100px" }}>
-                    {cust.name}
-                  </td>
-                  <td style={{ alignContent: "center", height: "100px" }}>
-                    {cust.email}
-                  </td>
-                  <td style={{ alignContent: "center", height: "100px" }}>
-                    {cust.phone}
-                  </td>
-                  <td style={{ alignContent: "center", height: "100px" }}>
-                    {cust.is_active === true ? (
-                      <div
-                        style={{
-                          backgroundColor: "green",
-                          color: "white",
-                          borderRadius: "1rem",
-                          margin: "30px",
-                        }}
-                      >
-                        Active
-                      </div>
-                    ) : (
-                      <div
-                        style={{
-                          backgroundColor: "#cf2626",
-                          color: "white",
-                          borderRadius: "1rem",
-                          margin: "30px",
-                        }}
-                      >
-                        No Active
-                      </div>
-                    )}
-                  </td>
-                  <td style={{ alignContent: "center", height: "100px" }}>
-                    {cust.point}
-                  </td>
-                  <td style={{ alignContent: "center", height: "100px" }}>
-                    <Dropdown>
-                      <Dropdown.Toggle
-                        variant="link"
-                        id="dropdown-custom-components"
-                        bsPrefix="icon-dropdown-toggle" // Custom class to remove arrow styling
-                        style={{ border: "none" }}
-                      >
-                        <SlOptionsVertical
-                          size={20}
-                          style={{ color: "black" }}
-                        />
-                      </Dropdown.Toggle>
-                      <Dropdown.Menu>
-                        <Dropdown.Item onClick={() => handleShowModal(cust)}>
-                          View Information
-                        </Dropdown.Item>
-                        <Dropdown.Item onClick={() => handleDelete(cust.id)}>
-                          Delete
-                        </Dropdown.Item>
-                      </Dropdown.Menu>
-                    </Dropdown>
-                  </td>
-                </tr>
+                <>
+                  <CustomerDetail
+                    object={cust}
+                    showModal={showModal}
+                    setShowModal={setShowModal}
+                  />
+                  <tr key={cust.id}>
+                    <td style={{ alignContent: "center", height: "100px" }}>
+                      <Form.Check
+                        type="checkbox"
+                        checked={selectedCustomers.includes(cust.id)} // Check if the customer is selected
+                        onChange={() => handleSelectCustomer(cust.id)} // Handle individual selection
+                      />
+                    </td>
+                    <td style={{ alignContent: "center", height: "100px" }}>
+                      {cust.id}
+                    </td>
+                    <td style={{ alignContent: "center", height: "100px" }}>
+                      {cust.name}
+                    </td>
+                    <td style={{ alignContent: "center", height: "100px" }}>
+                      {cust.email}
+                    </td>
+                    <td style={{ alignContent: "center", height: "100px" }}>
+                      {cust.phone}
+                    </td>
+                    <td style={{ alignContent: "center", height: "100px" }}>
+                      {cust.is_active === true ? (
+                        <div
+                          style={{
+                            backgroundColor: "green",
+                            color: "white",
+                            borderRadius: "1rem",
+                            margin: "30px",
+                          }}
+                        >
+                          Active
+                        </div>
+                      ) : (
+                        <div
+                          style={{
+                            backgroundColor: "#cf2626",
+                            color: "white",
+                            borderRadius: "1rem",
+                            margin: "30px",
+                          }}
+                        >
+                          No Active
+                        </div>
+                      )}
+                    </td>
+                    <td style={{ alignContent: "center", height: "100px" }}>
+                      {cust.point}
+                    </td>
+                    <td style={{ alignContent: "center", height: "100px" }}>
+                      <Dropdown>
+                        <Dropdown.Toggle
+                          variant="link"
+                          id="dropdown-custom-components"
+                          bsPrefix="icon-dropdown-toggle" // Custom class to remove arrow styling
+                          style={{ border: "none" }}
+                        >
+                          <SlOptionsVertical
+                            size={20}
+                            style={{ color: "black" }}
+                          />
+                        </Dropdown.Toggle>
+                        <Dropdown.Menu>
+                          <Dropdown.Item onClick={() => setShowModal(true)}>
+                            View Information
+                          </Dropdown.Item>
+                          <Dropdown.Item
+                            onClick={() =>
+                              cust.is_active
+                                ? handleDelete(cust.id)
+                                : toastError("Customer is deleted already!")
+                            }
+                          >
+                            Delete
+                          </Dropdown.Item>
+                        </Dropdown.Menu>
+                      </Dropdown>
+                    </td>
+                  </tr>
+                </>
               ))}
             </tbody>
           </Table>

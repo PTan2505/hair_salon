@@ -36,10 +36,9 @@ export const AppointmentProvider = ({ children }) => {
     try {
       await updateAppointmentStatus(id, newStatus);
 
-      const updatedAppointments = appointments.map((appointment) =>
-        appointment.id === id
-          ? { ...appointment, status: newStatus }
-          : appointment
+      const updatedAppointments = appointments.map(
+        (appointment) =>
+          appointment.id === id && { ...appointment, status: newStatus }
       );
 
       setAppointments(updatedAppointments);

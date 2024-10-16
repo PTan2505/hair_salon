@@ -1,6 +1,7 @@
 import React, { createContext, useEffect, useState } from "react";
 import {
   addService,
+  editService,
   fetchServices,
   fetchServicesType,
 } from "../apiService/ServiceAPI";
@@ -22,6 +23,37 @@ export const ServiceProvider = ({ children }) => {
       console.error("Failed to add new Service:", error);
     }
   };
+
+  const handleEditService = async (id, updatedData) => {
+    try {
+      await editService(id, updatedData);
+
+      const newServices = services.map((service) =>
+        service.id === id ? { ...service, ...updatedData } : service
+      );
+      setServices(newServices);
+    } catch (error) {
+      console.error("Failed to edit Service:", error);
+    }
+  };
+
+  useEffect(() => {
+    const loadServices = async () => {
+      setLoading(true);
+      try {
+        const serviceData = await fetchServices();
+        if (JSON.stringify(serviceData) !== JSON.stringify(services)) {
+          setServices(serviceData);
+        }
+      } catch (error) {
+        console.error("Error loading services:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadServices();
+  }, [services]);
 
   useEffect(() => {
     const loadServices = async () => {
@@ -61,7 +93,13 @@ export const ServiceProvider = ({ children }) => {
 
   return (
     <ServiceContext.Provider
-      value={{ services, handleAddService, loading, servicesType }}
+      value={{
+        services,
+        handleAddService,
+        handleEditService,
+        loading,
+        servicesType,
+      }}
     >
       {children}
     </ServiceContext.Provider>

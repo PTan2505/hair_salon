@@ -51,3 +51,47 @@ export const addService = async (newService) => {
     throw error;
   }
 };
+
+export const editService = async (id, updatedData) => {
+  try {
+    const response = await fetch(
+      `https://67066a87a0e04071d226c4b3.mockapi.io/services/${id}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ updatedData }),
+      }
+    );
+    if (!response.ok) {
+      throw new Error("Failed to edit Service");
+    }
+    return await response.json();
+  } catch (error) {
+    console.error("Error edit Service:", error);
+    throw error;
+  }
+};
+
+export const deleteService = async (id) => {
+  try {
+    const response = await fetch(
+      `https://67066a87a0e04071d226c4b3.mockapi.io/services/${id}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ is_active: false }),
+      }
+    );
+    if (!response.ok) {
+      throw new Error("Failed to delete Service");
+    }
+    return await response.json();
+  } catch (error) {
+    console.error("Error delete Service:", error);
+    throw error;
+  }
+};
