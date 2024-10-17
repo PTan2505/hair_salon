@@ -61,7 +61,7 @@ const Appointment = () => {
               onChange={(e) => setSearchQuery(e.target.value)}
               onKeyDown={(e) => {
                 if (e.key === "Enter") {
-                  e.preventDefault(); // Prevent the form submission
+                  e.preventDefault();
                 }
               }}
             />

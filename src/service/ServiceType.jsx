@@ -157,7 +157,7 @@ export default function ServiceType() {
                       <Dropdown.Toggle
                         variant="link"
                         id="dropdown-custom-components"
-                        bsPrefix="icon-dropdown-toggle" // Custom class to remove arrow styling
+                        bsPrefix="icon-dropdown-toggle"
                         style={{ border: "none" }}
                       >
                         <SlOptionsVertical

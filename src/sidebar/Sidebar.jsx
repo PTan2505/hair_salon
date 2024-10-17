@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { Nav, Dropdown, NavbarText } from "react-bootstrap";
-import "./Sidebar.css"; // Optional CSS for styling
+import "./Sidebar.css";
 import { Link, useLocation } from "react-router-dom";
 
 function Sidebar({ role }) {
-  const location = useLocation(); // Get current location
+  const location = useLocation();
 
   return (
     <div className="sidebar">

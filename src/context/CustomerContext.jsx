@@ -1,11 +1,8 @@
-// UserContext.js
 import React, { createContext, useState, useEffect } from "react";
 import { deleteCustomer, fetchCustomers } from "../apiService/CustomerAPI";
 
-// Create a Context for the user
 export const CustomerContext = createContext(null);
 
-// Create a provider component
 export const CustomerProvider = ({ children }) => {
   const [customers, setCustomers] = useState([]);
   const [loading, setLoading] = useState(true);

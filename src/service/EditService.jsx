@@ -25,7 +25,6 @@ const EditService = ({ object, showModal, setShowModal }) => {
         return acc;
       }, {});
 
-      // Only proceed if there are changes
       if (Object.keys(changes).length > 0) {
         handleEditService(object.id, changes);
       }

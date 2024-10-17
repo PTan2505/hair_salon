@@ -9,37 +9,24 @@
 }
 
 
-/* Style for custom pills */
 .custom-nav .nav-link {
-    /* Custom background color */
     color: white;
-    /* Custom text color */
     border-radius: 0.25rem;
-    /* Round the pills */
     margin: 5px;
-    /* Space between pills */
     padding: 10px 20px;
-    /* Custom padding */
 }
 
-/* Active and hover styles */
 .custom-nav .nav-link.active {
     background-color: #DEC7A6;
-    /* Active state background */
     color: #000000;
-    /* Active state text color */
     border-color: #DEC7A6;
 }
 
 .custom-nav .nav-link:hover {
     background-color: #a7a39e;
-    /* Hover state background */
     color: #000000;
-    /* Hover state text color */
 }
 
-/* Optional: Customize spacing between the pills */
 .custom-nav .custom-navlink {
     margin-bottom: 15px;
-    /* Adds extra space between NavLink items */
 }

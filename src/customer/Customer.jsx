@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { CustomerContext } from "../context/CustomerContext";
-import { Table, Form, Spinner, Dropdown, Modal } from "react-bootstrap";
+import { Table, Form, Spinner, Dropdown } from "react-bootstrap";
 import { SlOptionsVertical } from "react-icons/sl";
 import { PiSmileySad } from "react-icons/pi";
 import { useParams } from "react-router-dom";
@@ -14,28 +14,8 @@ const Customer = () => {
   const { customers, handleDeleteCustomer, loading } =
     useContext(CustomerContext);
   const [sortOption, changeSortOption] = useState("no-desc");
-  const [selectedCustomers, setSelectedCustomers] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [showModal, setShowModal] = useState(false);
-
-  const allCustomersSelected =
-    customers.length > 0 && selectedCustomers.length === customers.length;
-
-  const handleSelectAll = () => {
-    if (allCustomersSelected) {
-      setSelectedCustomers([]); // Deselect all
-    } else {
-      setSelectedCustomers(customers.map((cust) => cust.id)); // Select all customer IDs
-    }
-  };
-
-  const handleSelectCustomer = (id) => {
-    if (selectedCustomers.includes(id)) {
-      setSelectedCustomers(selectedCustomers.filter((custId) => custId !== id)); // Deselect the customer
-    } else {
-      setSelectedCustomers([...selectedCustomers, id]); // Select the customer
-    }
-  };
 
   const handleDelete = (id) => {
     handleDeleteCustomer(id);
@@ -73,7 +53,7 @@ const Customer = () => {
               onChange={(e) => setSearchQuery(e.target.value)}
               onKeyDown={(e) => {
                 if (e.key === "Enter") {
-                  e.preventDefault(); // Prevent the form submission
+                  e.preventDefault();
                 }
               }}
             />
@@ -93,13 +73,6 @@ const Customer = () => {
           <Table striped borderless hover>
             <thead>
               <tr>
-                <th style={{ width: "50px" }}>
-                  <Form.Check
-                    type="checkbox"
-                    checked={allCustomersSelected} // Automatically checked if all are selected
-                    onChange={handleSelectAll} // Toggle all selections
-                  />
-                </th>
                 <th style={{ width: "50px" }}>No</th>
                 <th style={{ width: "20%" }}>Name</th>
                 <th style={{ width: "20%" }}>Email</th>
@@ -118,13 +91,6 @@ const Customer = () => {
                     setShowModal={setShowModal}
                   />
                   <tr key={cust.id}>
-                    <td style={{ alignContent: "center", height: "100px" }}>
-                      <Form.Check
-                        type="checkbox"
-                        checked={selectedCustomers.includes(cust.id)} // Check if the customer is selected
-                        onChange={() => handleSelectCustomer(cust.id)} // Handle individual selection
-                      />
-                    </td>
                     <td style={{ alignContent: "center", height: "100px" }}>
                       {cust.id}
                     </td>
@@ -170,7 +136,7 @@ const Customer = () => {
                         <Dropdown.Toggle
                           variant="link"
                           id="dropdown-custom-components"
-                          bsPrefix="icon-dropdown-toggle" // Custom class to remove arrow styling
+                          bsPrefix="icon-dropdown-toggle"
                           style={{ border: "none" }}
                         >
                           <SlOptionsVertical
