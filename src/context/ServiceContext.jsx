@@ -1,7 +1,11 @@
 import React, { createContext, useEffect, useState } from "react";
 import {
   addService,
+  addServiceType,
+  deleteService,
+  deleteServiceType,
   editService,
+  editServiceType,
   fetchServices,
   fetchServicesType,
 } from "../apiService/ServiceAPI";
@@ -23,6 +27,16 @@ export const ServiceProvider = ({ children }) => {
       console.error("Failed to add new Service:", error);
     }
   };
+  const handleAddServiceType = async (newServiceType) => {
+    try {
+      await addServiceType(newServiceType);
+
+      const newServicesType = [...servicesType, newServiceType];
+      setServicesType(newServicesType);
+    } catch (error) {
+      console.error("Failed to add new Service Type:", error);
+    }
+  };
 
   const handleEditService = async (id, updatedData) => {
     try {
@@ -37,23 +51,44 @@ export const ServiceProvider = ({ children }) => {
     }
   };
 
-  useEffect(() => {
-    const loadServices = async () => {
-      setLoading(true);
-      try {
-        const serviceData = await fetchServices();
-        if (JSON.stringify(serviceData) !== JSON.stringify(services)) {
-          setServices(serviceData);
-        }
-      } catch (error) {
-        console.error("Error loading services:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
+  const handleEditServiceType = async (id, updatedData) => {
+    try {
+      await editServiceType(id, updatedData);
 
-    loadServices();
-  }, [services]);
+      const newServicesType = servicesType.map((type) =>
+        type.id === id ? { ...type, ...updatedData } : type
+      );
+      setServicesType(newServicesType);
+    } catch (error) {
+      console.error("Failed to edit Service Type:", error);
+    }
+  };
+
+  const handleDeleteService = async (id) => {
+    try {
+      await deleteService(id);
+
+      const updateService = services.map((service) =>
+        service.id === id ? { ...service, is_active: false } : service
+      );
+      setServices(updateService);
+    } catch (error) {
+      console.error("Failed to delete Service:", error);
+    }
+  };
+
+  const handleDeleteServiceType = async (id) => {
+    try {
+      await deleteServiceType(id);
+
+      const updateServiceType = servicesType.map((type) =>
+        type.id === id ? { ...type, is_active: false } : type
+      );
+      setServicesType(updateServiceType);
+    } catch (error) {
+      console.error("Failed to delete Service Type:", error);
+    }
+  };
 
   useEffect(() => {
     const loadServices = async () => {
@@ -89,16 +124,20 @@ export const ServiceProvider = ({ children }) => {
     };
 
     loadServicesType();
-  }, []);
+  }, [servicesType]);
 
   return (
     <ServiceContext.Provider
       value={{
         services,
-        handleAddService,
-        handleEditService,
-        loading,
         servicesType,
+        loading,
+        handleAddService,
+        handleAddServiceType,
+        handleEditService,
+        handleEditServiceType,
+        handleDeleteService,
+        handleDeleteServiceType,
       }}
     >
       {children}

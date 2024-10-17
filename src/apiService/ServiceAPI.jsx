@@ -52,6 +52,28 @@ export const addService = async (newService) => {
   }
 };
 
+export const addServiceType = async (newServiceType) => {
+  try {
+    const response = await fetch(
+      `https://67066a87a0e04071d226c4b3.mockapi.io/servicesType`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newServiceType),
+      }
+    );
+    if (!response.ok) {
+      throw new Error("Failed to add new Service type");
+    }
+    return await response.json();
+  } catch (error) {
+    console.error("Error add new Service type:", error);
+    throw error;
+  }
+};
+
 export const editService = async (id, updatedData) => {
   try {
     const response = await fetch(
@@ -74,6 +96,28 @@ export const editService = async (id, updatedData) => {
   }
 };
 
+export const editServiceType = async (id, updatedData) => {
+  try {
+    const response = await fetch(
+      `https://67066a87a0e04071d226c4b3.mockapi.io/servicesType/${id}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updatedData),
+      }
+    );
+    if (!response.ok) {
+      throw new Error("Failed to edit Service Type");
+    }
+    return await response.json();
+  } catch (error) {
+    console.error("Error edit Service Type:", error);
+    throw error;
+  }
+};
+
 export const deleteService = async (id) => {
   try {
     const response = await fetch(
@@ -87,11 +131,33 @@ export const deleteService = async (id) => {
       }
     );
     if (!response.ok) {
-      throw new Error("Failed to delete Service");
+      throw new Error("Failed to delete service");
     }
     return await response.json();
   } catch (error) {
-    console.error("Error delete Service:", error);
+    console.error("Error delete service:", error);
+    throw error;
+  }
+};
+
+export const deleteServiceType = async (id) => {
+  try {
+    const response = await fetch(
+      `https://67066a87a0e04071d226c4b3.mockapi.io/servicesType/${id}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ is_active: false }),
+      }
+    );
+    if (!response.ok) {
+      throw new Error("Failed to delete service type");
+    }
+    return await response.json();
+  } catch (error) {
+    console.error("Error delete service type:", error);
     throw error;
   }
 };

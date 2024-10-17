@@ -1,23 +1,23 @@
 import React, { useContext, useState } from "react";
-import { ServiceContext } from "../context/ServiceContext";
-import { Button, Dropdown, Form, Spinner, Table } from "react-bootstrap";
-import { SlOptionsVertical } from "react-icons/sl";
-import { PiSmileySad } from "react-icons/pi";
-import { sortData } from "../shared/sortData";
+import { Button, Dropdown, Form, Spinner, Table, Image } from "react-bootstrap";
 import SortDropdown from "../shared/SortDropdown";
+import { SlOptionsVertical } from "react-icons/sl";
+import { ServiceContext } from "../context/ServiceContext";
+import { sortData } from "../shared/sortData";
 import { toastSuccess } from "../shared/toastify";
+import { PiSmileySad } from "react-icons/pi";
 import Confirm from "../shared/Modal/Confirm";
-import AddService from "./AddService";
-import EditService from "./EditService";
+import AddServiceType from "./AddServiceType";
+import EditServiceType from "./EditServiceType";
 
-export default function Service() {
-  const { services, servicesType, loading, handleDeleteService } =
+export default function ServiceType() {
+  const { servicesType, loading, handleDeleteServiceType } =
     useContext(ServiceContext);
   const [showModal, setShowModal] = useState(false);
-  const [sortOption, changeSortOption] = useState("no-desc");
   const [searchQuery, setSearchQuery] = useState("");
-  const [showEditModal, setShowEditModal] = useState(false);
+  const [sortOption, changeSortOption] = useState("no-desc");
   const [object, setObject] = useState("");
+  const [showEditModal, setShowEditModal] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
 
   const handleEdit = (service) => {
@@ -27,24 +27,18 @@ export default function Service() {
 
   const handleDelete = (object) => {
     setShowConfirm(false);
-    handleDeleteService(object.id);
-    toastSuccess("Delete Service Successfully");
+    handleDeleteServiceType(object.id);
+    toastSuccess("Delete Service Type Successfully");
   };
 
   const handleCancel = () => {
     setShowConfirm(false);
   };
 
-  const findTypeName = (id) => {
-    const serviceType = servicesType.find((type) => type.id === id);
-    return serviceType ? serviceType.name : "unknown";
-  };
-
-  const filteredServices = services.filter((service) =>
-    service.name.toLowerCase().includes(searchQuery.toLowerCase())
+  const filteredServicesType = servicesType.filter((type) =>
+    type.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
-
-  const sortedServices = sortData(filteredServices, sortOption);
+  const sortedServicesType = sortData(filteredServicesType, sortOption);
 
   return (
     <div>
@@ -54,14 +48,14 @@ export default function Service() {
         onCancel={handleCancel}
         onConfirm={() => handleDelete(object)}
       />
-      <AddService showModal={showModal} setShowModal={setShowModal} />
-      <EditService
+      <AddServiceType showModal={showModal} setShowModal={setShowModal} />
+      <EditServiceType
         object={object}
         showModal={showEditModal}
         setShowModal={setShowEditModal}
       />
       <div className="d-flex justify-content-between align-items-center my-4">
-        <h2 className="mb-0">Service Management</h2>
+        <h2 className="mb-0">Service Type Management</h2>
         <Button
           style={{
             backgroundColor: "#DEC7A6",
@@ -72,7 +66,7 @@ export default function Service() {
             setShowModal(true);
           }}
         >
-          Add Service
+          Add Service Type
         </Button>
       </div>
       <div
@@ -105,50 +99,41 @@ export default function Service() {
           page={"service"}
         />
       </div>
-      {sortedServices.length > 0 ? (
+      {sortedServicesType.length > 0 ? (
         <>
           <Table striped borderless hover>
             <thead>
               <tr>
-                <th style={{ width: "50px" }}>No</th>
-                <th style={{ width: "20%" }}>Name</th>
-                <th style={{ width: "15%" }}>Type</th>
-                <th style={{ width: "15%" }}>Price</th>
-                <th style={{ width: "15%" }}>Point</th>
-                <th style={{ width: "15%" }}>Time</th>
-                <th style={{ width: "150px" }}>Active</th>
-                <th style={{ width: "50px" }}></th>
+                <th style={{ width: "30%" }}>Image</th>
+                <th style={{ width: "30%" }}>Name</th>
+                <th style={{ width: "30%" }}>Active</th>
+                <th style={{ width: "10%" }}></th>
               </tr>
             </thead>
             <tbody>
-              {sortedServices.map((service) => (
-                <tr key={service.id}>
+              {sortedServicesType.map((type) => (
+                <tr key={type.id}>
                   <td style={{ alignContent: "center", height: "100px" }}>
-                    {service.id}
+                    <Image src={type.image} style={{ width: 50, height: 50 }} />
                   </td>
                   <td style={{ alignContent: "center", height: "100px" }}>
-                    {service.name}
+                    {type.name}
                   </td>
-                  <td style={{ alignContent: "center", height: "100px" }}>
-                    {findTypeName(service.type)}
-                  </td>
-                  <td style={{ alignContent: "center", height: "100px" }}>
-                    {service.price}
-                  </td>
-                  <td style={{ alignContent: "center", height: "100px" }}>
-                    {service.point}
-                  </td>
-                  <td style={{ alignContent: "center", height: "100px" }}>
-                    {service.time}
-                  </td>
-                  <td style={{ alignContent: "center", height: "100px" }}>
-                    {service.is_active === true ? (
+                  <td
+                    style={{
+                      // @ts-ignore
+                      textAlign: "-webkit-center",
+                      height: "100px",
+                    }}
+                  >
+                    {type.is_active === true ? (
                       <div
                         style={{
                           backgroundColor: "green",
                           color: "white",
                           borderRadius: "1rem",
                           margin: "30px",
+                          width: "100px",
                         }}
                       >
                         Active
@@ -160,6 +145,7 @@ export default function Service() {
                           color: "white",
                           borderRadius: "1rem",
                           margin: "30px",
+                          width: "100px",
                         }}
                       >
                         No Active
@@ -180,12 +166,12 @@ export default function Service() {
                         />
                       </Dropdown.Toggle>
                       <Dropdown.Menu>
-                        <Dropdown.Item onClick={() => handleEdit(service)}>
+                        <Dropdown.Item onClick={() => handleEdit(type)}>
                           Edit
                         </Dropdown.Item>
                         <Dropdown.Item
                           onClick={() => {
-                            setObject(service);
+                            setObject(type);
                             setShowConfirm(true);
                           }}
                         >

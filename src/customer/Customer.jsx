@@ -4,11 +4,9 @@ import { Table, Form, Spinner, Dropdown, Modal } from "react-bootstrap";
 import { SlOptionsVertical } from "react-icons/sl";
 import { PiSmileySad } from "react-icons/pi";
 import { useParams } from "react-router-dom";
-import { ModalContext } from "../context/ModalContext";
-import { ToastContainer } from "react-toastify";
 import { sortData } from "../shared/sortData";
 import SortDropdown from "../shared/SortDropdown";
-import CustomerDetail from "../shared/Modal/CustomerDetail";
+import CustomerDetail from "./CustomerDetail";
 import { toastError, toastSuccess } from "../shared/toastify";
 
 const Customer = () => {
@@ -18,7 +16,7 @@ const Customer = () => {
   const [sortOption, changeSortOption] = useState("no-desc");
   const [selectedCustomers, setSelectedCustomers] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
-  const { setShowModal, showModal } = useContext(ModalContext);
+  const [showModal, setShowModal] = useState(false);
 
   const allCustomersSelected =
     customers.length > 0 && selectedCustomers.length === customers.length;
@@ -55,7 +53,6 @@ const Customer = () => {
 
   return (
     <div>
-      <ToastContainer />
       <div className="d-flex justify-content-between align-items-center my-4">
         <h2 className="mb-0">
           {endpoint === "customer" ? "Customer Management" : "Staff Management"}

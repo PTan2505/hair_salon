@@ -1,17 +1,14 @@
 import { useFormik } from "formik";
 import React, { useContext, useState } from "react";
-import { ServiceContext } from "../../context/ServiceContext";
 import * as yup from "yup";
 import { Button, Col, Form, InputGroup, Modal, Row } from "react-bootstrap";
-import { ModalContext } from "../../context/ModalContext";
-import Confirm from "./Confirm";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { toastSuccess } from "../toastify";
+import { toastSuccess } from "../shared/toastify";
+import Confirm from "../shared/Modal/Confirm";
+import { ServiceContext } from "../context/ServiceContext";
 
-const AddService = ({ showModal, setShowModal }) => {
+const EditService = ({ object, showModal, setShowModal }) => {
   const [formValues, setFormValues] = useState(null);
-  const { servicesType, handleAddService, services } =
+  const { servicesType, handleEditService, services } =
     useContext(ServiceContext);
   const [showConfirm, setShowConfirm] = useState(false);
 
@@ -21,12 +18,22 @@ const AddService = ({ showModal, setShowModal }) => {
         ...formValues,
         price: Number(formValues.price) * 1000,
       };
-      handleAddService(updatedValues);
+      const changes = Object.keys(updatedValues).reduce((acc, key) => {
+        if (updatedValues[key] !== object[key]) {
+          acc[key] = updatedValues[key];
+        }
+        return acc;
+      }, {});
+
+      // Only proceed if there are changes
+      if (Object.keys(changes).length > 0) {
+        handleEditService(object.id, changes);
+      }
     }
     setShowConfirm(false);
     setShowModal(false);
     resetForm();
-    toastSuccess("Add Service Successfully");
+    toastSuccess("Edit Service Successfully");
   };
 
   const handleCancel = () => {
@@ -34,13 +41,14 @@ const AddService = ({ showModal, setShowModal }) => {
   };
 
   const formik = useFormik({
+    enableReinitialize: true,
     initialValues: {
-      name: "",
-      type: "",
-      price: 0,
-      point: 0,
-      time: 0,
-      is_active: true,
+      name: object.name || "",
+      type: object.type || "none",
+      price: Number(object.price) / 1000 || 0,
+      point: object.point || 0,
+      time: object.time || 0,
+      is_active: object.is_active || false,
     },
     onSubmit: (values) => {
       setFormValues(values);
@@ -51,7 +59,9 @@ const AddService = ({ showModal, setShowModal }) => {
         .string()
         .required("Required.")
         .test("name-exist", "Name is exist", function (value) {
-          return !services.some((service) => service.name === value);
+          return value !== object.name
+            ? !services.some((service) => service.name === value)
+            : true;
         }),
       type: yup
         .string()
@@ -75,9 +85,8 @@ const AddService = ({ showModal, setShowModal }) => {
   });
   return (
     <>
-      <ToastContainer />
       <Confirm
-        action={"add"}
+        action={"change"}
         showConfirm={showConfirm}
         onConfirm={() => handleConfirm(formik.resetForm)}
         onCancel={handleCancel}
@@ -112,7 +121,7 @@ const AddService = ({ showModal, setShowModal }) => {
                 />
                 {formik.errors.name ? (
                   <Form.Control.Feedback type="invalid">
-                    {formik.errors.name}
+                    {String(formik.errors.name)}
                   </Form.Control.Feedback>
                 ) : (
                   <Form.Control.Feedback>Look good!</Form.Control.Feedback>
@@ -128,7 +137,6 @@ const AddService = ({ showModal, setShowModal }) => {
                   isInvalid={formik.touched.type && !!formik.errors.type}
                   isValid={formik.touched.type && !formik.errors.type}
                 >
-                  <option value={"none"}>-------------</option>
                   {servicesType.map((type) => (
                     <option key={type.id} value={type.id}>
                       {type.name}
@@ -137,7 +145,7 @@ const AddService = ({ showModal, setShowModal }) => {
                 </Form.Select>
                 {formik.errors.type ? (
                   <Form.Control.Feedback type="invalid">
-                    {formik.errors.type}
+                    {String(formik.errors.name)}
                   </Form.Control.Feedback>
                 ) : (
                   <Form.Control.Feedback>Look good!</Form.Control.Feedback>
@@ -159,7 +167,7 @@ const AddService = ({ showModal, setShowModal }) => {
                   <InputGroup.Text id="inputGroupPrepend">VND</InputGroup.Text>
                   {formik.errors.price ? (
                     <Form.Control.Feedback type="invalid">
-                      {formik.errors.price}
+                      {String(formik.errors.price)}
                     </Form.Control.Feedback>
                   ) : (
                     <Form.Control.Feedback>Look good!</Form.Control.Feedback>
@@ -181,7 +189,7 @@ const AddService = ({ showModal, setShowModal }) => {
                 />
                 {formik.errors.point ? (
                   <Form.Control.Feedback type="invalid">
-                    {formik.errors.point}
+                    {String(formik.errors.point)}
                   </Form.Control.Feedback>
                 ) : (
                   <Form.Control.Feedback>Look good!</Form.Control.Feedback>
@@ -200,17 +208,30 @@ const AddService = ({ showModal, setShowModal }) => {
                 />
                 {formik.errors.time ? (
                   <Form.Control.Feedback type="invalid">
-                    {formik.errors.time}
+                    {String(formik.errors.time)}
                   </Form.Control.Feedback>
                 ) : (
                   <Form.Control.Feedback>Look good!</Form.Control.Feedback>
                 )}
               </Form.Group>
             </Row>
+            <Row className="mb-3">
+              <Form.Group as={Col} md="6">
+                <Form.Check // prettier-ignore
+                  type="switch"
+                  id="custom-switch"
+                  label="Active"
+                  onChange={(e) =>
+                    formik.setFieldValue("is_active", e.target.checked)
+                  }
+                  checked={formik.values.is_active}
+                />
+              </Form.Group>
+            </Row>
           </Modal.Body>
           <Modal.Footer>
             <Button onClick={() => setShowModal(false)}>Close</Button>
-            <Button type="submit">Add Service</Button>
+            <Button type="submit">Save Change</Button>
           </Modal.Footer>
         </Form>
       </Modal>
@@ -218,4 +239,4 @@ const AddService = ({ showModal, setShowModal }) => {
   );
 };
 
-export default AddService;
+export default EditService;

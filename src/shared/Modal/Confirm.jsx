@@ -5,6 +5,7 @@ const Confirm = ({ action, showConfirm, onConfirm, onCancel }) => {
   return (
     <Modal
       show={showConfirm}
+      onHide={onCancel}
       size="lg"
       aria-labelledby="contained-modal-title-vcenter"
       centered

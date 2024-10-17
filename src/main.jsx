@@ -7,7 +7,6 @@ import { BrowserRouter } from "react-router-dom";
 import { CustomerProvider } from "./context/CustomerContext";
 import { AppointmentProvider } from "./context/AppointmentContext.jsx";
 import { ServiceProvider } from "./context/ServiceContext.jsx";
-import { ModalProvider } from "./context/ModalContext.jsx";
 
 createRoot(document.getElementById("root")).render(
   <React.StrictMode>
@@ -15,9 +14,7 @@ createRoot(document.getElementById("root")).render(
       <CustomerProvider>
         <AppointmentProvider>
           <ServiceProvider>
-            <ModalProvider>
-              <App />
-            </ModalProvider>
+            <App />
           </ServiceProvider>
         </AppointmentProvider>
       </CustomerProvider>

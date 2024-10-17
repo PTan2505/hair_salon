@@ -1,6 +1,6 @@
 import React from "react";
 import { Button, Modal } from "react-bootstrap";
-import { splitDate } from "../splitDateTime";
+import { splitDate } from "../shared/splitDateTime";
 
 const CustomerDetail = ({ object, showModal, setShowModal }) => {
   return (

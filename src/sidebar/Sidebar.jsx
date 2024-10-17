@@ -56,16 +56,28 @@ function Sidebar({ role }) {
                 margin: "20px",
               }}
             >
-              Management
+              Business
             </h5>
             <Nav.Link
               as={Link}
-              to={"/"}
-              eventKey={"/"}
+              to={"/bill"}
+              eventKey={"/bill"}
               className="custom-navlink"
             >
-              Home
+              Bill
             </Nav.Link>
+
+            <h5
+              style={{
+                color: "#DEC7A6",
+                padding: "10px",
+                borderBottom: "double",
+                borderTop: "double",
+                margin: "20px",
+              }}
+            >
+              Management
+            </h5>
             <Nav.Link
               as={Link}
               to={"/customer"}
@@ -92,11 +104,19 @@ function Sidebar({ role }) {
             </Nav.Link>
             <Nav.Link
               as={Link}
+              to={"/serviceType"}
+              eventKey={"/serviceType"}
+              className="custom-navlink"
+            >
+              Service Type
+            </Nav.Link>
+            <Nav.Link
+              as={Link}
               to={"/home"}
               eventKey={"link-7"}
               className="custom-navlink"
             >
-              Finance
+              Salary
             </Nav.Link>
           </>
         )}

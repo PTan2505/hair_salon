@@ -5,16 +5,15 @@ import { AppointmentContext } from "../context/AppointmentContext";
 import { useParams } from "react-router-dom";
 import { PiSmileySad } from "react-icons/pi";
 import { AppointmentStatus } from "../shared/status";
-import { ModalContext } from "../context/ModalContext";
 import { splitDate, splitTime } from "../shared/splitDateTime";
 import { sortData } from "../shared/sortData";
-import AppointmentDetail from "../shared/Modal/AppointmentDetail";
 import SortDropdown from "../shared/SortDropdown";
+import AppointmentDetail from "./AppointmentDetail";
 
 const Appointment = () => {
   const { endpoint } = useParams();
   const { appointments, loading } = useContext(AppointmentContext);
-  const { setShowModal, showModal } = useContext(ModalContext);
+  const [showModal, setShowModal] = useState(false);
   const [sortOption, changeSortOption] = useState("no-desc");
   const [searchQuery, setSearchQuery] = useState("");
 

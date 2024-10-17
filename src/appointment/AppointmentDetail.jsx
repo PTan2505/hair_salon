@@ -1,9 +1,9 @@
 import React, { useContext } from "react";
 import { Button, Modal } from "react-bootstrap";
-import { splitDate, splitTime } from "../splitDateTime";
-import { AppointmentContext } from "../../context/AppointmentContext";
 import { Bounce, toast } from "react-toastify";
-import { AppointmentStatus } from "../status";
+import { AppointmentContext } from "../context/AppointmentContext";
+import { AppointmentStatus } from "../shared/status";
+import { splitDate, splitTime } from "../shared/splitDateTime";
 
 const AppointmentDetail = ({ object, showModal, setShowModal }) => {
   const { handleStatusUpdate } = useContext(AppointmentContext);
