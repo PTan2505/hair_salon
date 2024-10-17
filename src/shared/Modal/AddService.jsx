@@ -13,7 +13,7 @@ const AddService = ({ showModal, setShowModal }) => {
   const [formValues, setFormValues] = useState(null);
   const { servicesType, handleAddService, services } =
     useContext(ServiceContext);
-  const { showConfirm, setShowConfirm } = useContext(ModalContext);
+  const [showConfirm, setShowConfirm] = useState(false);
 
   const handleConfirm = (resetForm) => {
     if (formValues) {
@@ -37,10 +37,10 @@ const AddService = ({ showModal, setShowModal }) => {
     initialValues: {
       name: "",
       type: "",
-      price: "",
-      point: "",
-      time: "",
-      isActive: true,
+      price: 0,
+      point: 0,
+      time: 0,
+      is_active: true,
     },
     onSubmit: (values) => {
       setFormValues(values);
@@ -99,7 +99,7 @@ const AddService = ({ showModal, setShowModal }) => {
         <Form noValidate onSubmit={formik.handleSubmit}>
           <Modal.Body>
             <Row className="mb-3">
-              <Form.Group as={Col} md="4" controlId="validationFormik01">
+              <Form.Group as={Col} md="4" controlId="validationFormikName">
                 <Form.Label>Service Name</Form.Label>
                 <Form.Control
                   type="text"
@@ -118,7 +118,7 @@ const AddService = ({ showModal, setShowModal }) => {
                   <Form.Control.Feedback>Look good!</Form.Control.Feedback>
                 )}
               </Form.Group>
-              <Form.Group as={Col} md="4" controlId="validationFormik02">
+              <Form.Group as={Col} md="4" controlId="validationFormikType">
                 <Form.Label>Type</Form.Label>
                 <Form.Select
                   name="type"
@@ -128,11 +128,9 @@ const AddService = ({ showModal, setShowModal }) => {
                   isInvalid={formik.touched.type && !!formik.errors.type}
                   isValid={formik.touched.type && !formik.errors.type}
                 >
+                  <option value={"none"}>-------------</option>
                   {servicesType.map((type) => (
-                    <option
-                      value={type.id}
-                      selected={formik.values.type === type.id}
-                    >
+                    <option key={type.id} value={type.id}>
                       {type.name}
                     </option>
                   ))}
@@ -145,7 +143,7 @@ const AddService = ({ showModal, setShowModal }) => {
                   <Form.Control.Feedback>Look good!</Form.Control.Feedback>
                 )}
               </Form.Group>
-              <Form.Group as={Col} md="4" controlId="validationFormikUsername">
+              <Form.Group as={Col} md="4" controlId="validationFormikPrice">
                 <Form.Label>Price</Form.Label>
                 <InputGroup hasValidation>
                   <Form.Control
@@ -170,7 +168,7 @@ const AddService = ({ showModal, setShowModal }) => {
               </Form.Group>
             </Row>
             <Row className="mb-3">
-              <Form.Group as={Col} md="6" controlId="validationFormik03">
+              <Form.Group as={Col} md="6" controlId="validationFormikPoint">
                 <Form.Label>Point</Form.Label>
                 <Form.Control
                   type="number"
@@ -189,7 +187,7 @@ const AddService = ({ showModal, setShowModal }) => {
                   <Form.Control.Feedback>Look good!</Form.Control.Feedback>
                 )}
               </Form.Group>
-              <Form.Group as={Col} md="6" controlId="validationFormik04">
+              <Form.Group as={Col} md="6" controlId="validationFormikTime">
                 <Form.Label>Time</Form.Label>
                 <Form.Control
                   type="number"

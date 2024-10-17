@@ -10,7 +10,7 @@ import SortDropdown from "../shared/SortDropdown";
 import EditService from "../shared/Modal/EditService";
 
 export default function Service() {
-  const { services, loading } = useContext(ServiceContext);
+  const { services, servicesType, loading } = useContext(ServiceContext);
   const { showModal, setShowModal } = useContext(ModalContext);
   const [sortOption, changeSortOption] = useState("no-desc");
   const [searchQuery, setSearchQuery] = useState("");
@@ -20,7 +20,11 @@ export default function Service() {
   const handleEdit = (service) => {
     setEditObject(service);
     setShowEditModal(true);
-    console.log(service);
+  };
+
+  const findTypeName = (id) => {
+    const serviceType = servicesType.find((type) => type.id === id);
+    return serviceType ? serviceType.name : "unknown";
   };
 
   const filteredServices = services.filter((cust) =>
@@ -107,7 +111,7 @@ export default function Service() {
                     {service.name}
                   </td>
                   <td style={{ alignContent: "center", height: "100px" }}>
-                    {service.type}
+                    {findTypeName(service.type)}
                   </td>
                   <td style={{ alignContent: "center", height: "100px" }}>
                     {service.price}

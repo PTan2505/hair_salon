@@ -3,7 +3,6 @@ import React, { useContext, useState } from "react";
 import { ServiceContext } from "../../context/ServiceContext";
 import * as yup from "yup";
 import { Button, Col, Form, InputGroup, Modal, Row } from "react-bootstrap";
-import { ModalContext } from "../../context/ModalContext";
 import Confirm from "./Confirm";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -11,9 +10,9 @@ import { toastSuccess } from "../toastify";
 
 const EditService = ({ object, showModal, setShowModal }) => {
   const [formValues, setFormValues] = useState(null);
-  const { servicesType, handleAddService, services } =
+  const { servicesType, handleEditService, services } =
     useContext(ServiceContext);
-  const { showConfirm, setShowConfirm } = useContext(ModalContext);
+  const [showConfirm, setShowConfirm] = useState(false);
 
   const handleConfirm = (resetForm) => {
     if (formValues) {
@@ -21,12 +20,22 @@ const EditService = ({ object, showModal, setShowModal }) => {
         ...formValues,
         price: Number(formValues.price) * 1000,
       };
-      handleAddService(updatedValues);
+      const changes = Object.keys(updatedValues).reduce((acc, key) => {
+        if (updatedValues[key] !== object[key]) {
+          acc[key] = updatedValues[key];
+        }
+        return acc;
+      }, {});
+
+      // Only proceed if there are changes
+      if (Object.keys(changes).length > 0) {
+        handleEditService(object.id, changes);
+      }
     }
     setShowConfirm(false);
     setShowModal(false);
     resetForm();
-    toastSuccess("Add Service Successfully");
+    toastSuccess("Edit Service Successfully");
   };
 
   const handleCancel = () => {
@@ -34,13 +43,14 @@ const EditService = ({ object, showModal, setShowModal }) => {
   };
 
   const formik = useFormik({
+    enableReinitialize: true,
     initialValues: {
       name: object.name || "",
-      type: object.tpye || "",
-      price: object.price || "",
-      point: object.point || "",
-      time: object.time || "",
-      is_active: object.is_active || "",
+      type: object.type || "none",
+      price: Number(object.price) / 1000 || 0,
+      point: object.point || 0,
+      time: object.time || 0,
+      is_active: object.is_active || false,
     },
     onSubmit: (values) => {
       setFormValues(values);
@@ -51,7 +61,9 @@ const EditService = ({ object, showModal, setShowModal }) => {
         .string()
         .required("Required.")
         .test("name-exist", "Name is exist", function (value) {
-          return !services.some((service) => service.name === value);
+          return value !== object.name
+            ? !services.some((service) => service.name === value)
+            : true;
         }),
       type: yup
         .string()
@@ -99,9 +111,8 @@ const EditService = ({ object, showModal, setShowModal }) => {
         <Form noValidate onSubmit={formik.handleSubmit}>
           <Modal.Body>
             <Row className="mb-3">
-              <Form.Group as={Col} md="4" controlId="validationFormik01">
+              <Form.Group as={Col} md="4" controlId="validationFormikName">
                 <Form.Label>Service Name</Form.Label>
-
                 <Form.Control
                   type="text"
                   name="name"
@@ -112,12 +123,14 @@ const EditService = ({ object, showModal, setShowModal }) => {
                   isValid={formik.touched.name && !formik.errors.name}
                 />
                 {formik.errors.name ? (
-                  <Form.Control.Feedback type="invalid"></Form.Control.Feedback>
+                  <Form.Control.Feedback type="invalid">
+                    {String(formik.errors.name)}
+                  </Form.Control.Feedback>
                 ) : (
                   <Form.Control.Feedback>Look good!</Form.Control.Feedback>
                 )}
               </Form.Group>
-              <Form.Group as={Col} md="4" controlId="validationFormik02">
+              <Form.Group as={Col} md="4" controlId="validationFormikType">
                 <Form.Label>Type</Form.Label>
                 <Form.Select
                   name="type"
@@ -127,18 +140,21 @@ const EditService = ({ object, showModal, setShowModal }) => {
                   isInvalid={formik.touched.type && !!formik.errors.type}
                   isValid={formik.touched.type && !formik.errors.type}
                 >
-                  <option value="none">--------</option>
                   {servicesType.map((type) => (
-                    <option value={type.id}>{type.name}</option>
+                    <option key={type.id} value={type.id}>
+                      {type.name}
+                    </option>
                   ))}
                 </Form.Select>
                 {formik.errors.type ? (
-                  <Form.Control.Feedback type="invalid"></Form.Control.Feedback>
+                  <Form.Control.Feedback type="invalid">
+                    {String(formik.errors.name)}
+                  </Form.Control.Feedback>
                 ) : (
                   <Form.Control.Feedback>Look good!</Form.Control.Feedback>
                 )}
               </Form.Group>
-              <Form.Group as={Col} md="4" controlId="validationFormikUsername">
+              <Form.Group as={Col} md="4" controlId="validationFormikPrice">
                 <Form.Label>Price</Form.Label>
                 <InputGroup hasValidation>
                   <Form.Control
@@ -153,7 +169,9 @@ const EditService = ({ object, showModal, setShowModal }) => {
                   <InputGroup.Text id="inputGroupPrepend">.000</InputGroup.Text>
                   <InputGroup.Text id="inputGroupPrepend">VND</InputGroup.Text>
                   {formik.errors.price ? (
-                    <Form.Control.Feedback type="invalid"></Form.Control.Feedback>
+                    <Form.Control.Feedback type="invalid">
+                      {String(formik.errors.price)}
+                    </Form.Control.Feedback>
                   ) : (
                     <Form.Control.Feedback>Look good!</Form.Control.Feedback>
                   )}
@@ -161,7 +179,7 @@ const EditService = ({ object, showModal, setShowModal }) => {
               </Form.Group>
             </Row>
             <Row className="mb-3">
-              <Form.Group as={Col} md="6" controlId="validationFormik03">
+              <Form.Group as={Col} md="6" controlId="validationFormikPoint">
                 <Form.Label>Point</Form.Label>
                 <Form.Control
                   type="number"
@@ -173,12 +191,14 @@ const EditService = ({ object, showModal, setShowModal }) => {
                   isValid={formik.touched.point && !formik.errors.point}
                 />
                 {formik.errors.point ? (
-                  <Form.Control.Feedback type="invalid"></Form.Control.Feedback>
+                  <Form.Control.Feedback type="invalid">
+                    {String(formik.errors.point)}
+                  </Form.Control.Feedback>
                 ) : (
                   <Form.Control.Feedback>Look good!</Form.Control.Feedback>
                 )}
               </Form.Group>
-              <Form.Group as={Col} md="6" controlId="validationFormik04">
+              <Form.Group as={Col} md="6" controlId="validationFormikTime">
                 <Form.Label>Time</Form.Label>
                 <Form.Control
                   type="number"
@@ -190,10 +210,25 @@ const EditService = ({ object, showModal, setShowModal }) => {
                   isValid={formik.touched.time && !formik.errors.time}
                 />
                 {formik.errors.time ? (
-                  <Form.Control.Feedback type="invalid"></Form.Control.Feedback>
+                  <Form.Control.Feedback type="invalid">
+                    {String(formik.errors.time)}
+                  </Form.Control.Feedback>
                 ) : (
                   <Form.Control.Feedback>Look good!</Form.Control.Feedback>
                 )}
+              </Form.Group>
+            </Row>
+            <Row className="mb-3">
+              <Form.Group as={Col} md="6">
+                <Form.Check // prettier-ignore
+                  type="switch"
+                  id="custom-switch"
+                  label="Active"
+                  onChange={(e) =>
+                    formik.setFieldValue("is_active", e.target.checked)
+                  }
+                  checked={formik.values.is_active}
+                />
               </Form.Group>
             </Row>
           </Modal.Body>
