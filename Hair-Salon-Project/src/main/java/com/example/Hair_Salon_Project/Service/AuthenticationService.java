@@ -1,15 +1,17 @@
 package com.example.Hair_Salon_Project.Service;
 
 import com.example.Hair_Salon_Project.Entity.Account;
+import com.example.Hair_Salon_Project.Entity.Enums.Role;
+import com.example.Hair_Salon_Project.Entity.Staff;
 import com.example.Hair_Salon_Project.Exception.DuplicateEntity;
 import com.example.Hair_Salon_Project.Exception.NotFoundException;
 import com.example.Hair_Salon_Project.Model.*;
 import com.example.Hair_Salon_Project.Repository.AccountRepository;
+import com.example.Hair_Salon_Project.Repository.StaffRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -42,10 +44,15 @@ public class AuthenticationService implements UserDetailsService {
     @Autowired
     EmailService emailService;
 
+    @Autowired
+    StaffRepository staffRepository;
+
 
     public AccountResponse register(RegisterRequest registerRequest) {
         Account newAccount = modelMapper.map(registerRequest, Account.class);
+
         try {
+
             newAccount.setPassword(passwordEncoder.encode(registerRequest.getPassword()));//encode password before save to db
             accountRepository.save(newAccount);
             EmailDetail emailDetail = new EmailDetail();
@@ -67,32 +74,27 @@ public class AuthenticationService implements UserDetailsService {
     }
 
     public AccountResponse login(LoginRequest loginRequest) {
-        // Kiểm tra đầu vào
-        if (loginRequest.getEmail() == null || loginRequest.getPassword() == null) {
-            throw new IllegalArgumentException("Email and password must not be null");
-        }
+        try{
+            Authentication authentication =
+                    authenticationManager.  authenticate(new UsernamePasswordAuthenticationToken( // xac thuc
+                            // username , password (
+                            // tu dong ma hoa password user va check tren database )
+                            loginRequest.getEmail() , loginRequest.getPassword() // go to loadUserByUsername(String phone)
+                            // to check username in db first -> so sanh password db with request password
 
-        try {
-            // Kiểm tra xem tài khoản có tồn tại không
-            Account account = accountRepository.findByEmail(loginRequest.getEmail());
-            if (account == null) {
-                throw new EntityNotFoundException("Email not found");
-            }
-
-            Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword())
-            );
-
+                    ));
+            //==> account exists
+            Account account = (Account) authentication.getPrincipal(); // tra ve account tu database
             AccountResponse accountResponse = modelMapper.map(account, AccountResponse.class);
             accountResponse.setToken(tokenService.generateToken(account));
-            return accountResponse;
-        } catch (BadCredentialsException e) {
-            throw new EntityNotFoundException("Invalid password");
+            return accountResponse; // response thong tin account
         } catch (Exception e) {
             e.printStackTrace();
-            throw new RuntimeException("Login failed due to an unexpected error");
+            throw new EntityNotFoundException("Username or password is incorrect");
         }
+
     }
+
 
     public List<Account> getAllAccounts() {
         List<Account> accounts = accountRepository.findAll();
@@ -101,7 +103,9 @@ public class AuthenticationService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        Account account = accountRepository.findByEmail(email);
+        System.out.println("Attempting to load user with email: " + email);
+
+        Account account = accountRepository.findAccountByEmail(email);
         if (account == null) {
             throw new UsernameNotFoundException("User not found with email: " + email);
         }
@@ -116,27 +120,7 @@ public class AuthenticationService implements UserDetailsService {
         return accountRepository.findAccountById(account.getId());
     }
 
-    public AccountResponse handleGoogleLogin(String email) {
-        Optional<Account> accountOptional = Optional.ofNullable(accountRepository.findByEmail(email));
 
-        Account account;
-        if (accountOptional.isPresent()) {
-            // Nếu tài khoản đã tồn tại, lấy tài khoản đó
-            account = accountOptional.get();
-        } else {
-            // Nếu chưa tồn tại, tạo tài khoản mới
-            account = new Account();
-            account.setEmail(email);
-            // Thiết lập các thuộc tính khác như mật khẩu, tên, vai trò, v.v.
-            account.setPassword("randomGeneratedPassword"); // Có thể sử dụng một mật khẩu ngẫu nhiên hoặc một cách bảo mật khác
-            account.setActive(true); // Đánh dấu tài khoản là hoạt động
-            // Lưu tài khoản mới vào cơ sở dữ liệu
-            accountRepository.save(account);
-        }
-
-        // Tạo và trả về AccountResponse
-        return new AccountResponse(account.getId(), account.getEmail(), account.getPhone());
-    }
 
     public void forgotPassword(ForgotPasswordRequest request) {
         Account account = accountRepository.findByEmail(request.getEmail());
@@ -167,6 +151,9 @@ public class AuthenticationService implements UserDetailsService {
         account.setResetPasswordExpiration(null);
         accountRepository.save(account);
     }
+
+
+
 
 
 }

@@ -45,7 +45,8 @@ public class Filter extends OncePerRequestFilter { // Filer run once each reques
             "/api/register",
             "/api/oauth2/redirect/google/**",
             "/api/forgot-password",
-            "/api/reset-password"
+            "/api/reset-password",
+           "/api/admin/approve-customer/{accountId}"
     );
 
     public boolean checkIsPublicAPI(String uri) {

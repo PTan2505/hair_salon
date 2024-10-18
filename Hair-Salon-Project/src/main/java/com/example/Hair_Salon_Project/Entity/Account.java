@@ -4,6 +4,7 @@ import com.example.Hair_Salon_Project.Entity.Enums.Role;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -18,6 +19,7 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
+@NoArgsConstructor
 public class Account implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -99,4 +101,6 @@ public class Account implements UserDetails {
     protected void onUpdate() {
         this.updateDate = new Date();
     }
+
+
 }

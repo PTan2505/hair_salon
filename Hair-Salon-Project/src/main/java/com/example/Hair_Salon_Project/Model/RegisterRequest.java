@@ -1,9 +1,7 @@
 package com.example.Hair_Salon_Project.Model;
 
 import com.example.Hair_Salon_Project.Entity.Enums.Role;
-import jakarta.persistence.Column;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
@@ -32,5 +30,7 @@ public class RegisterRequest {
     String phone;
     @Size(min = 6 , message = "Password must be exceed 6 characters ")
     String password;
+
+    @Enumerated(EnumType.STRING)
     Role role;
 }

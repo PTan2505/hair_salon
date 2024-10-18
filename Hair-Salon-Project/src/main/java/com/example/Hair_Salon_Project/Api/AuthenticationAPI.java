@@ -1,5 +1,7 @@
 package com.example.Hair_Salon_Project.Api;
 
+import com.example.Hair_Salon_Project.Entity.Account;
+import com.example.Hair_Salon_Project.Entity.Staff;
 import com.example.Hair_Salon_Project.Model.*;
 import com.example.Hair_Salon_Project.Service.AuthenticationService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -31,18 +33,7 @@ public class AuthenticationAPI {
         AccountResponse accountResponse = authenticationService.login(loginRequest);
         return ResponseEntity.ok(accountResponse);
     }
-    @Operation(summary = "Google OAuth2 login", description = "Handle Google OAuth2 login and return JWT token")
-    @GetMapping("/oauth2/redirect/google")
-   public ResponseEntity<AccountResponse> oauth2Google(OAuth2AuthenticationToken authentication) {
-        OAuth2User user = authentication.getPrincipal();
-        String email = user.getAttribute("email");
 
-        // Xử lý tài khoản người dùng: kiểm tra xem người dùng đã tồn tại chưa,
-        // nếu chưa thì có thể tạo tài khoản mới hoặc xử lý theo cách bạn muốn.
-        AccountResponse accountResponse = authenticationService.handleGoogleLogin(email);
-
-        return ResponseEntity.ok(accountResponse);
-    }
 
 
 
