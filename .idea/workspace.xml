@@ -4,24 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7ffbebf1-02bf-4003-ae42-4a1f63b4f29c" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Service/SystemAdministratorService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Api/AuthenticationAPI.java" beforeDir="false" afterPath="$PROJECT_DIR$/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Api/AuthenticationAPI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Api/StaffAPI.java" beforeDir="false" afterPath="$PROJECT_DIR$/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Api/StaffAPI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Api/SystemAdministratorAPI.java" beforeDir="false" afterPath="$PROJECT_DIR$/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Api/SystemAdministratorAPI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Config/Filter.java" beforeDir="false" afterPath="$PROJECT_DIR$/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Config/Filter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Config/JwtAuthenticationFilter.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Config/OAuth2SuccessHandler.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Config/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Config/SwaggerConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Config/SwaggerConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Entity/Account.java" beforeDir="false" afterPath="$PROJECT_DIR$/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Entity/Account.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Entity/Staff.java" beforeDir="false" afterPath="$PROJECT_DIR$/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Entity/Staff.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Model/RegisterRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Model/RegisterRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Repository/AccountRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Repository/AccountRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Service/AuthenticationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Service/AuthenticationService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Service/CustomOAuth2UserService.java" beforeDir="false" />
-    </list>
+    <list default="true" id="7ffbebf1-02bf-4003-ae42-4a1f63b4f29c" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -46,18 +29,18 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.HairSalonProjectApplication.executor&quot;: &quot;Run&quot;,
-    &quot;Application.Unnamed.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;Hieu&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/spring/hair_salon-Hai&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.project.maven.repository.indices&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.HairSalonProjectApplication.executor": "Run",
+    "Application.Unnamed.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "Back__End",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "D:/spring/hair_salon-Hai",
+    "settings.editor.selected.configurable": "reference.settings.project.maven.repository.indices"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\github\hair_salon\Hair-Salon-Project\src\main\resources" />
