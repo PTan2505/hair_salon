@@ -1,6 +1,7 @@
 import React from "react";
 import { Button, Modal } from "react-bootstrap";
 import { splitDate } from "../shared/splitDateTime";
+import { CUSTOMER_FIELDS } from "../shared/constant";
 
 const CustomerDetail = ({ object, showModal, setShowModal }) => {
   return (
@@ -12,26 +13,27 @@ const CustomerDetail = ({ object, showModal, setShowModal }) => {
         {object && (
           <>
             <p>
-              <strong>Name</strong> {object.name}
+              <strong>Name</strong> {object[CUSTOMER_FIELDS.ID]}
             </p>
             <p>
-              <strong>Sex:</strong> {object.sex}
+              <strong>Sex:</strong> {object[CUSTOMER_FIELDS.SEX]}
             </p>
             <p>
-              <strong>Birth Date:</strong> {splitDate(object.birth_date)}
+              <strong>Birth Date:</strong>{" "}
+              {splitDate(object[CUSTOMER_FIELDS.BIRTH_DATE])}
             </p>
             <p>
-              <strong>Email:</strong> {object.email}
+              <strong>Email:</strong> {object[CUSTOMER_FIELDS.EMAIL]}
             </p>
             <p>
-              <strong>Phone:</strong> {object.phone}
+              <strong>Phone:</strong> {object[CUSTOMER_FIELDS.PHONE]}
             </p>
             <p>
-              <strong>Point:</strong> {object.point}
+              <strong>Point:</strong> {object[CUSTOMER_FIELDS.POINT]}
             </p>
             <p>
               <strong>Status:</strong>{" "}
-              {object.is_active ? (
+              {object[CUSTOMER_FIELDS.ACTIVE] ? (
                 <span
                   style={{
                     backgroundColor: "green",

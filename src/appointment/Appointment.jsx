@@ -9,6 +9,7 @@ import { splitDate, splitTime } from "../shared/splitDateTime";
 import { sortData } from "../shared/sortData";
 import SortDropdown from "../shared/SortDropdown";
 import AppointmentDetail from "./AppointmentDetail";
+import { APPOINTMENT_FIELDS } from "../shared/constant";
 
 const Appointment = () => {
   const { endpoint } = useParams();
@@ -97,18 +98,18 @@ const Appointment = () => {
                   showModal={showModal}
                   setShowModal={setShowModal}
                 />
-                <tr key={appointment.id}>
+                <tr key={appointment[APPOINTMENT_FIELDS.ID]}>
                   <td style={{ alignContent: "center", height: "100px" }}>
-                    {appointment.customer}
+                    {appointment[APPOINTMENT_FIELDS.CUSTOMER]}
                   </td>
                   <td style={{ alignContent: "center", height: "100px" }}>
-                    {appointment.stylist}
+                    {appointment[APPOINTMENT_FIELDS.STYLIST]}
                   </td>
                   <td style={{ alignContent: "center", height: "100px" }}>
-                    {splitDate(appointment.date)}
+                    {splitDate(appointment[APPOINTMENT_FIELDS.DATE_TIME])}
                   </td>
                   <td style={{ alignContent: "center", height: "100px" }}>
-                    {splitTime(appointment.date)}
+                    {splitTime(appointment[APPOINTMENT_FIELDS.DATE_TIME])}
                   </td>
                   <td
                     style={{
@@ -117,10 +118,10 @@ const Appointment = () => {
                       padding: "0 30px",
                     }}
                   >
-                    {appointment.note}
+                    {appointment[APPOINTMENT_FIELDS.NOTE]}
                   </td>
                   <td style={{ alignContent: "center", height: "100px" }}>
-                    {appointment.status === false ? (
+                    {appointment[APPOINTMENT_FIELDS.STATUS] === false ? (
                       <div
                         style={{
                           backgroundColor: "darkgrey",
@@ -130,7 +131,8 @@ const Appointment = () => {
                       >
                         Waiting...
                       </div>
-                    ) : appointment.status === status.accepted ? (
+                    ) : appointment[APPOINTMENT_FIELDS.STATUS] ===
+                      status.accepted ? (
                       <div
                         style={{
                           backgroundColor: "#ffc107",
@@ -140,7 +142,8 @@ const Appointment = () => {
                       >
                         Accepted
                       </div>
-                    ) : appointment.status === status.canceled ? (
+                    ) : appointment[APPOINTMENT_FIELDS.STATUS] ===
+                      status.canceled ? (
                       <div
                         style={{
                           backgroundColor: "#cf2626",

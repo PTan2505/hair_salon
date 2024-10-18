@@ -5,6 +5,7 @@ import { Button, Col, Form, InputGroup, Modal, Row } from "react-bootstrap";
 import { toastSuccess } from "../shared/toastify";
 import Confirm from "../shared/Modal/Confirm";
 import { ServiceContext } from "../context/ServiceContext";
+import { SERVICE_FIELDS, TYPE_FIELDS } from "../shared/constant";
 
 const EditService = ({ object, showModal, setShowModal }) => {
   const [formValues, setFormValues] = useState(null);
@@ -42,7 +43,7 @@ const EditService = ({ object, showModal, setShowModal }) => {
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
-      name: object.name || "",
+      [SERVICE_FIELDS.NAME]: object[SERVICE_FIELDS.NAME] || "",
       type: object.type || "none",
       price: Number(object.price) / 1000 || 0,
       point: object.point || 0,
@@ -54,12 +55,14 @@ const EditService = ({ object, showModal, setShowModal }) => {
       setShowConfirm(true);
     },
     validationSchema: yup.object().shape({
-      name: yup
+      [SERVICE_FIELDS.NAME]: yup
         .string()
         .required("Required.")
         .test("name-exist", "Name is exist", function (value) {
-          return value !== object.name
-            ? !services.some((service) => service.name === value)
+          return value !== object[SERVICE_FIELDS.NAME]
+            ? !services.some(
+                (service) => service[SERVICE_FIELDS.NAME] === value
+              )
             : true;
         }),
       type: yup
@@ -113,14 +116,20 @@ const EditService = ({ object, showModal, setShowModal }) => {
                   type="text"
                   name="name"
                   placeholder="Name"
-                  value={formik.values.name}
+                  value={formik.values[SERVICE_FIELDS.NAME]}
                   onChange={formik.handleChange}
-                  isInvalid={formik.touched.name && !!formik.errors.name}
-                  isValid={formik.touched.name && !formik.errors.name}
+                  isInvalid={
+                    formik.touched[SERVICE_FIELDS.NAME] &&
+                    !!formik.errors[SERVICE_FIELDS.NAME]
+                  }
+                  isValid={
+                    formik.touched[SERVICE_FIELDS.NAME] &&
+                    !formik.errors[SERVICE_FIELDS.NAME]
+                  }
                 />
-                {formik.errors.name ? (
+                {formik.errors[SERVICE_FIELDS.NAME] ? (
                   <Form.Control.Feedback type="invalid">
-                    {String(formik.errors.name)}
+                    {String(formik.errors[SERVICE_FIELDS.NAME])}
                   </Form.Control.Feedback>
                 ) : (
                   <Form.Control.Feedback>Look good!</Form.Control.Feedback>
@@ -137,14 +146,17 @@ const EditService = ({ object, showModal, setShowModal }) => {
                   isValid={formik.touched.type && !formik.errors.type}
                 >
                   {servicesType.map((type) => (
-                    <option key={type.id} value={type.id}>
-                      {type.name}
+                    <option
+                      key={type[TYPE_FIELDS.ID]}
+                      value={type[TYPE_FIELDS.ID]}
+                    >
+                      {type[SERVICE_FIELDS.NAME]}
                     </option>
                   ))}
                 </Form.Select>
                 {formik.errors.type ? (
                   <Form.Control.Feedback type="invalid">
-                    {String(formik.errors.name)}
+                    {String(formik.errors[SERVICE_FIELDS.NAME])}
                   </Form.Control.Feedback>
                 ) : (
                   <Form.Control.Feedback>Look good!</Form.Control.Feedback>

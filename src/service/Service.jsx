@@ -9,6 +9,7 @@ import { toastSuccess } from "../shared/toastify";
 import Confirm from "../shared/Modal/Confirm";
 import AddService from "./AddService";
 import EditService from "./EditService";
+import { SERVICE_FIELDS, TYPE_FIELDS } from "../shared/constant";
 
 export default function Service() {
   const { services, servicesType, loading, handleDeleteService } =
@@ -27,7 +28,7 @@ export default function Service() {
 
   const handleDelete = (object) => {
     setShowConfirm(false);
-    handleDeleteService(object.id);
+    handleDeleteService(object[SERVICE_FIELDS.ID]);
     toastSuccess("Delete Service Successfully");
   };
 
@@ -36,12 +37,16 @@ export default function Service() {
   };
 
   const findTypeName = (id) => {
-    const serviceType = servicesType.find((type) => type.id === id);
-    return serviceType ? serviceType.name : "unknown";
+    const serviceType = servicesType.find(
+      (type) => type[TYPE_FIELDS.ID] === id
+    );
+    return serviceType ? serviceType[TYPE_FIELDS.NAME] : "unknown";
   };
 
   const filteredServices = services.filter((service) =>
-    service.name.toLowerCase().includes(searchQuery.toLowerCase())
+    service[SERVICE_FIELDS.NAME]
+      .toLowerCase()
+      .includes(searchQuery.toLowerCase())
   );
 
   const sortedServices = sortData(filteredServices, sortOption);
@@ -122,27 +127,27 @@ export default function Service() {
             </thead>
             <tbody>
               {sortedServices.map((service) => (
-                <tr key={service.id}>
+                <tr key={service[SERVICE_FIELDS.ID]}>
                   <td style={{ alignContent: "center", height: "100px" }}>
-                    {service.id}
+                    {service[SERVICE_FIELDS.ID]}
                   </td>
                   <td style={{ alignContent: "center", height: "100px" }}>
-                    {service.name}
+                    {service[SERVICE_FIELDS.NAME]}
                   </td>
                   <td style={{ alignContent: "center", height: "100px" }}>
-                    {findTypeName(service.type)}
+                    {findTypeName(service[SERVICE_FIELDS.TYPE])}
                   </td>
                   <td style={{ alignContent: "center", height: "100px" }}>
-                    {service.price}
+                    {service[SERVICE_FIELDS.PRICE]}
                   </td>
                   <td style={{ alignContent: "center", height: "100px" }}>
-                    {service.point}
+                    {service[SERVICE_FIELDS.POINT]}
                   </td>
                   <td style={{ alignContent: "center", height: "100px" }}>
-                    {service.time}
+                    {service[SERVICE_FIELDS.TIME]}
                   </td>
                   <td style={{ alignContent: "center", height: "100px" }}>
-                    {service.is_active === true ? (
+                    {service[SERVICE_FIELDS.ACTIVE] === true ? (
                       <div
                         style={{
                           backgroundColor: "green",

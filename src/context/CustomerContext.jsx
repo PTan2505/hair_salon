@@ -1,5 +1,6 @@
 import React, { createContext, useState, useEffect } from "react";
 import { deleteCustomer, fetchCustomers } from "../apiService/CustomerAPI";
+import { CUSTOMER_FIELDS } from "../shared/constant";
 
 export const CustomerContext = createContext(null);
 
@@ -35,7 +36,9 @@ export const CustomerProvider = ({ children }) => {
     try {
       await deleteCustomer(id);
       const updatedCustomers = customers.map((customer) =>
-        customer.id === id ? { ...customer, is_active: false } : customer
+        customer[CUSTOMER_FIELDS.ID] === id
+          ? { ...customer, is_active: false }
+          : customer
       );
 
       setCustomers(updatedCustomers);

@@ -1,9 +1,10 @@
 import React, { useContext } from "react";
 import { Button, Modal } from "react-bootstrap";
-import { Bounce, toast } from "react-toastify";
 import { AppointmentContext } from "../context/AppointmentContext";
 import { AppointmentStatus } from "../shared/status";
 import { splitDate, splitTime } from "../shared/splitDateTime";
+import { APPOINTMENT_FIELDS } from "../shared/constant";
+import { toastSuccess } from "../shared/toastify";
 
 const AppointmentDetail = ({ object, showModal, setShowModal }) => {
   const { handleStatusUpdate } = useContext(AppointmentContext);
@@ -18,18 +19,7 @@ const AppointmentDetail = ({ object, showModal, setShowModal }) => {
       : newStatus === status.done
       ? (message = "Appointment is done")
       : (message = "Appointment is accepted");
-
-    toast.success(message, {
-      position: "bottom-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "colored",
-      transition: Bounce,
-    });
+    toastSuccess(message);
   };
 
   return (
@@ -41,16 +31,18 @@ const AppointmentDetail = ({ object, showModal, setShowModal }) => {
         {object && (
           <>
             <p>
-              <strong>Customer:</strong> {object.customer}
+              <strong>Customer:</strong> {object[APPOINTMENT_FIELDS.CUSTOMER]}
             </p>
             <p>
-              <strong>Stylist:</strong> {object.stylist}
+              <strong>Stylist:</strong> {object[APPOINTMENT_FIELDS.STYLIST]}
             </p>
             <p>
-              <strong>Date:</strong> {splitDate(object.date)}
+              <strong>Date:</strong>{" "}
+              {splitDate(object[APPOINTMENT_FIELDS.DATE_TIME])}
             </p>
             <p>
-              <strong>Time:</strong> {splitTime(object.date)}
+              <strong>Time:</strong>{" "}
+              {splitTime(object[APPOINTMENT_FIELDS.DATE_TIME])}
             </p>
           </>
         )}
@@ -59,12 +51,15 @@ const AppointmentDetail = ({ object, showModal, setShowModal }) => {
         <Button variant="secondary" onClick={() => setShowModal(false)}>
           Close
         </Button>
-        {object && object?.status === false ? (
+        {object && object[APPOINTMENT_FIELDS.STATUS] === false ? (
           <>
             <Button
               variant="warning"
               onClick={() => {
-                handleAppointmentStatusChange(object.id, status.accepted);
+                handleAppointmentStatusChange(
+                  object[APPOINTMENT_FIELDS.ID],
+                  status.accepted
+                );
               }}
             >
               Accept
@@ -72,7 +67,10 @@ const AppointmentDetail = ({ object, showModal, setShowModal }) => {
             <Button
               variant="danger"
               onClick={() => {
-                handleAppointmentStatusChange(object.id, status.canceled);
+                handleAppointmentStatusChange(
+                  object[APPOINTMENT_FIELDS.ID],
+                  status.canceled
+                );
               }}
             >
               Cancel
@@ -84,7 +82,10 @@ const AppointmentDetail = ({ object, showModal, setShowModal }) => {
               <Button
                 variant="success"
                 onClick={() => {
-                  handleAppointmentStatusChange(object.id, status.done);
+                  handleAppointmentStatusChange(
+                    object[APPOINTMENT_FIELDS.ID],
+                    status.done
+                  );
                 }}
               >
                 Done
@@ -92,7 +93,10 @@ const AppointmentDetail = ({ object, showModal, setShowModal }) => {
               <Button
                 variant="danger"
                 onClick={() => {
-                  handleAppointmentStatusChange(object.id, status.canceled);
+                  handleAppointmentStatusChange(
+                    object[APPOINTMENT_FIELDS.ID],
+                    status.canceled
+                  );
                 }}
               >
                 Cancel

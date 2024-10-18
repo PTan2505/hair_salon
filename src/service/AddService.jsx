@@ -5,6 +5,7 @@ import * as yup from "yup";
 import { Button, Col, Form, InputGroup, Modal, Row } from "react-bootstrap";
 import Confirm from "../shared/Modal/Confirm";
 import { toastSuccess } from "../shared/toastify";
+import { SERVICE_FIELDS, TYPE_FIELDS } from "../shared/constant";
 
 const AddService = ({ showModal, setShowModal }) => {
   const [formValues, setFormValues] = useState(null);
@@ -16,7 +17,7 @@ const AddService = ({ showModal, setShowModal }) => {
     if (formValues) {
       const updatedValues = {
         ...formValues,
-        price: Number(formValues.price) * 1000,
+        [SERVICE_FIELDS.PRICE]: Number(formValues[SERVICE_FIELDS.PRICE]) * 1000,
       };
       handleAddService(updatedValues);
     }
@@ -32,44 +33,47 @@ const AddService = ({ showModal, setShowModal }) => {
 
   const formik = useFormik({
     initialValues: {
-      name: "",
-      type: "",
-      price: 0,
-      point: 0,
-      time: 0,
-      is_active: true,
+      [SERVICE_FIELDS.NAME]: "",
+      [SERVICE_FIELDS.TYPE]: "",
+      [SERVICE_FIELDS.PRICE]: 0,
+      [SERVICE_FIELDS.POINT]: 0,
+      [SERVICE_FIELDS.TIME]: 0,
+      [SERVICE_FIELDS.ACTIVE]: true,
     },
     onSubmit: (values) => {
       setFormValues(values);
       setShowConfirm(true);
     },
     validationSchema: yup.object().shape({
-      name: yup
+      [SERVICE_FIELDS.NAME]: yup
         .string()
         .required("Required.")
-        .test("name-exist", "Name is exist", function (value) {
-          return !services.some((service) => service.name === value);
+        .test("name-exist", "Name already exists", function (value) {
+          return !services.some(
+            (service) => service[SERVICE_FIELDS.NAME] === value
+          );
         }),
-      type: yup
+      [SERVICE_FIELDS.TYPE]: yup
         .string()
         .required("Please select type.")
         .test("same-none", "Choose an option", function (value) {
           return value !== "none";
         }),
-      price: yup
+      [SERVICE_FIELDS.PRICE]: yup
         .number()
         .required("Required.")
         .typeError("Please enter a valid number"),
-      point: yup
+      [SERVICE_FIELDS.POINT]: yup
         .number()
         .required("Required.")
         .typeError("Please enter a valid number"),
-      time: yup
+      [SERVICE_FIELDS.TIME]: yup
         .number()
         .required("Required.")
         .typeError("Please enter a valid number"),
     }),
   });
+
   return (
     <>
       <Confirm
@@ -99,16 +103,23 @@ const AddService = ({ showModal, setShowModal }) => {
                 <Form.Label>Service Name</Form.Label>
                 <Form.Control
                   type="text"
-                  name="name"
+                  name={SERVICE_FIELDS.NAME}
                   placeholder="Name"
-                  value={formik.values.name}
+                  // @ts-ignore
+                  value={formik.values[SERVICE_FIELDS.NAME]}
                   onChange={formik.handleChange}
-                  isInvalid={formik.touched.name && !!formik.errors.name}
-                  isValid={formik.touched.name && !formik.errors.name}
+                  isInvalid={
+                    formik.touched[SERVICE_FIELDS.NAME] &&
+                    !!formik.errors[SERVICE_FIELDS.NAME]
+                  }
+                  isValid={
+                    formik.touched[SERVICE_FIELDS.NAME] &&
+                    !formik.errors[SERVICE_FIELDS.NAME]
+                  }
                 />
-                {formik.errors.name ? (
+                {formik.errors[SERVICE_FIELDS.NAME] ? (
                   <Form.Control.Feedback type="invalid">
-                    {formik.errors.name}
+                    {formik.errors[SERVICE_FIELDS.NAME]}
                   </Form.Control.Feedback>
                 ) : (
                   <Form.Control.Feedback>Look good!</Form.Control.Feedback>
@@ -117,23 +128,33 @@ const AddService = ({ showModal, setShowModal }) => {
               <Form.Group as={Col} md="4" controlId="validationFormikType">
                 <Form.Label>Type</Form.Label>
                 <Form.Select
-                  name="type"
-                  value={formik.values.type}
+                  name={SERVICE_FIELDS.TYPE}
+                  // @ts-ignore
+                  value={formik.values[SERVICE_FIELDS.TYPE]}
                   aria-label="Default select example"
                   onChange={formik.handleChange}
-                  isInvalid={formik.touched.type && !!formik.errors.type}
-                  isValid={formik.touched.type && !formik.errors.type}
+                  isInvalid={
+                    formik.touched[SERVICE_FIELDS.TYPE] &&
+                    !!formik.errors[SERVICE_FIELDS.TYPE]
+                  }
+                  isValid={
+                    formik.touched[SERVICE_FIELDS.TYPE] &&
+                    !formik.errors[SERVICE_FIELDS.TYPE]
+                  }
                 >
                   <option value={"none"}>-------------</option>
                   {servicesType.map((type) => (
-                    <option key={type.id} value={type.id}>
-                      {type.name}
+                    <option
+                      key={type[TYPE_FIELDS.ID]}
+                      value={type[TYPE_FIELDS.ID]}
+                    >
+                      {type[SERVICE_FIELDS.NAME]}
                     </option>
                   ))}
                 </Form.Select>
-                {formik.errors.type ? (
+                {formik.errors[SERVICE_FIELDS.TYPE] ? (
                   <Form.Control.Feedback type="invalid">
-                    {formik.errors.type}
+                    {formik.errors[SERVICE_FIELDS.TYPE]}
                   </Form.Control.Feedback>
                 ) : (
                   <Form.Control.Feedback>Look good!</Form.Control.Feedback>
@@ -145,17 +166,24 @@ const AddService = ({ showModal, setShowModal }) => {
                   <Form.Control
                     type="number"
                     placeholder="Price"
-                    name="price"
-                    value={formik.values.price}
+                    name={SERVICE_FIELDS.PRICE}
+                    // @ts-ignore
+                    value={formik.values[SERVICE_FIELDS.PRICE]}
                     onChange={formik.handleChange}
-                    isInvalid={formik.touched.price && !!formik.errors.price}
-                    isValid={formik.touched.price && !formik.errors.price}
+                    isInvalid={
+                      formik.touched[SERVICE_FIELDS.PRICE] &&
+                      !!formik.errors[SERVICE_FIELDS.PRICE]
+                    }
+                    isValid={
+                      formik.touched[SERVICE_FIELDS.PRICE] &&
+                      !formik.errors[SERVICE_FIELDS.PRICE]
+                    }
                   />
                   <InputGroup.Text id="inputGroupPrepend">.000</InputGroup.Text>
                   <InputGroup.Text id="inputGroupPrepend">VND</InputGroup.Text>
-                  {formik.errors.price ? (
+                  {formik.errors[SERVICE_FIELDS.PRICE] ? (
                     <Form.Control.Feedback type="invalid">
-                      {formik.errors.price}
+                      {formik.errors[SERVICE_FIELDS.PRICE]}
                     </Form.Control.Feedback>
                   ) : (
                     <Form.Control.Feedback>Look good!</Form.Control.Feedback>
@@ -169,15 +197,22 @@ const AddService = ({ showModal, setShowModal }) => {
                 <Form.Control
                   type="number"
                   placeholder="Point"
-                  name="point"
-                  value={formik.values.point}
+                  name={SERVICE_FIELDS.POINT}
+                  // @ts-ignore
+                  value={formik.values[SERVICE_FIELDS.POINT]}
                   onChange={formik.handleChange}
-                  isInvalid={formik.touched.point && !!formik.errors.point}
-                  isValid={formik.touched.point && !formik.errors.point}
+                  isInvalid={
+                    formik.touched[SERVICE_FIELDS.POINT] &&
+                    !!formik.errors[SERVICE_FIELDS.POINT]
+                  }
+                  isValid={
+                    formik.touched[SERVICE_FIELDS.POINT] &&
+                    !formik.errors[SERVICE_FIELDS.POINT]
+                  }
                 />
-                {formik.errors.point ? (
+                {formik.errors[SERVICE_FIELDS.POINT] ? (
                   <Form.Control.Feedback type="invalid">
-                    {formik.errors.point}
+                    {formik.errors[SERVICE_FIELDS.POINT]}
                   </Form.Control.Feedback>
                 ) : (
                   <Form.Control.Feedback>Look good!</Form.Control.Feedback>
@@ -188,15 +223,22 @@ const AddService = ({ showModal, setShowModal }) => {
                 <Form.Control
                   type="number"
                   placeholder="Time"
-                  name="time"
-                  value={formik.values.time}
+                  name={SERVICE_FIELDS.TIME}
+                  // @ts-ignore
+                  value={formik.values[SERVICE_FIELDS.TIME]}
                   onChange={formik.handleChange}
-                  isInvalid={formik.touched.time && !!formik.errors.time}
-                  isValid={formik.touched.time && !formik.errors.time}
+                  isInvalid={
+                    formik.touched[SERVICE_FIELDS.TIME] &&
+                    !!formik.errors[SERVICE_FIELDS.TIME]
+                  }
+                  isValid={
+                    formik.touched[SERVICE_FIELDS.TIME] &&
+                    !formik.errors[SERVICE_FIELDS.TIME]
+                  }
                 />
-                {formik.errors.time ? (
+                {formik.errors[SERVICE_FIELDS.TIME] ? (
                   <Form.Control.Feedback type="invalid">
-                    {formik.errors.time}
+                    {formik.errors[SERVICE_FIELDS.TIME]}
                   </Form.Control.Feedback>
                 ) : (
                   <Form.Control.Feedback>Look good!</Form.Control.Feedback>

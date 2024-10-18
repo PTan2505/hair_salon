@@ -9,6 +9,7 @@ import {
   fetchServices,
   fetchServicesType,
 } from "../apiService/ServiceAPI";
+import { SERVICE_FIELDS, TYPE_FIELDS } from "../shared/constant";
 
 export const ServiceContext = createContext(null);
 
@@ -43,7 +44,9 @@ export const ServiceProvider = ({ children }) => {
       await editService(id, updatedData);
 
       const newServices = services.map((service) =>
-        service.id === id ? { ...service, ...updatedData } : service
+        service[SERVICE_FIELDS.ID] === id
+          ? { ...service, ...updatedData }
+          : service
       );
       setServices(newServices);
     } catch (error) {
@@ -56,7 +59,7 @@ export const ServiceProvider = ({ children }) => {
       await editServiceType(id, updatedData);
 
       const newServicesType = servicesType.map((type) =>
-        type.id === id ? { ...type, ...updatedData } : type
+        type[TYPE_FIELDS.ID] === id ? { ...type, ...updatedData } : type
       );
       setServicesType(newServicesType);
     } catch (error) {
@@ -69,7 +72,9 @@ export const ServiceProvider = ({ children }) => {
       await deleteService(id);
 
       const updateService = services.map((service) =>
-        service.id === id ? { ...service, is_active: false } : service
+        service[SERVICE_FIELDS.ID] === id
+          ? { ...service, is_active: false }
+          : service
       );
       setServices(updateService);
     } catch (error) {
@@ -82,7 +87,7 @@ export const ServiceProvider = ({ children }) => {
       await deleteServiceType(id);
 
       const updateServiceType = servicesType.map((type) =>
-        type.id === id ? { ...type, is_active: false } : type
+        type[TYPE_FIELDS.ID] === id ? { ...type, is_active: false } : type
       );
       setServicesType(updateServiceType);
     } catch (error) {

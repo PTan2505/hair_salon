@@ -9,6 +9,7 @@ import { PiSmileySad } from "react-icons/pi";
 import Confirm from "../shared/Modal/Confirm";
 import AddServiceType from "./AddServiceType";
 import EditServiceType from "./EditServiceType";
+import { TYPE_FIELDS } from "../shared/constant";
 
 export default function ServiceType() {
   const { servicesType, loading, handleDeleteServiceType } =
@@ -112,7 +113,7 @@ export default function ServiceType() {
             </thead>
             <tbody>
               {sortedServicesType.map((type) => (
-                <tr key={type.id}>
+                <tr key={type[TYPE_FIELDS.ID]}>
                   <td style={{ alignContent: "center", height: "100px" }}>
                     <Image src={type.image} style={{ width: 50, height: 50 }} />
                   </td>

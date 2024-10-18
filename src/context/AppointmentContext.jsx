@@ -1,6 +1,7 @@
 import React, { createContext, useState, useEffect } from "react";
 import { updateAppointmentStatus } from "../apiService/AppointmentAPI";
 import { fetchAppointments } from "../apiService/AppointmentAPI";
+import { APPOINTMENT_FIELDS } from "../shared/constant";
 
 export const AppointmentContext = createContext(null);
 
@@ -38,7 +39,10 @@ export const AppointmentProvider = ({ children }) => {
 
       const updatedAppointments = appointments.map(
         (appointment) =>
-          appointment.id === id && { ...appointment, status: newStatus }
+          appointment[APPOINTMENT_FIELDS.ID] === id && {
+            ...appointment,
+            status: newStatus,
+          }
       );
 
       setAppointments(updatedAppointments);

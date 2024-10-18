@@ -8,6 +8,7 @@ import { sortData } from "../shared/sortData";
 import SortDropdown from "../shared/SortDropdown";
 import CustomerDetail from "./CustomerDetail";
 import { toastError, toastSuccess } from "../shared/toastify";
+import { CUSTOMER_FIELDS } from "../shared/constant";
 
 const Customer = () => {
   const { endpoint } = useParams();
@@ -25,8 +26,12 @@ const Customer = () => {
 
   const filteredCustomers = customers.filter(
     (cust) =>
-      cust.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      cust.phone.toLowerCase().includes(searchQuery.toLowerCase())
+      cust[CUSTOMER_FIELDS[CUSTOMER_FIELDS.ID]]
+        .toLowerCase()
+        .includes(searchQuery.toLowerCase()) ||
+      cust[CUSTOMER_FIELDS.PHONE]
+        .toLowerCase()
+        .includes(searchQuery.toLowerCase())
   );
 
   const sortedCustomers = sortData(filteredCustomers, sortOption);
@@ -90,21 +95,21 @@ const Customer = () => {
                     showModal={showModal}
                     setShowModal={setShowModal}
                   />
-                  <tr key={cust.id}>
+                  <tr key={cust[CUSTOMER_FIELDS.ID]}>
                     <td style={{ alignContent: "center", height: "100px" }}>
-                      {cust.id}
+                      {cust[CUSTOMER_FIELDS.ID]}
                     </td>
                     <td style={{ alignContent: "center", height: "100px" }}>
-                      {cust.name}
+                      {cust[CUSTOMER_FIELDS[CUSTOMER_FIELDS.ID]]}
                     </td>
                     <td style={{ alignContent: "center", height: "100px" }}>
-                      {cust.email}
+                      {cust[CUSTOMER_FIELDS.EMAIL]}
                     </td>
                     <td style={{ alignContent: "center", height: "100px" }}>
-                      {cust.phone}
+                      {cust[CUSTOMER_FIELDS.PHONE]}
                     </td>
                     <td style={{ alignContent: "center", height: "100px" }}>
-                      {cust.is_active === true ? (
+                      {cust[CUSTOMER_FIELDS.ACTIVE] === true ? (
                         <div
                           style={{
                             backgroundColor: "green",
@@ -129,7 +134,7 @@ const Customer = () => {
                       )}
                     </td>
                     <td style={{ alignContent: "center", height: "100px" }}>
-                      {cust.point}
+                      {cust[CUSTOMER_FIELDS.POINT]}
                     </td>
                     <td style={{ alignContent: "center", height: "100px" }}>
                       <Dropdown>
@@ -150,8 +155,8 @@ const Customer = () => {
                           </Dropdown.Item>
                           <Dropdown.Item
                             onClick={() =>
-                              cust.is_active
-                                ? handleDelete(cust.id)
+                              cust[CUSTOMER_FIELDS.ACTIVE]
+                                ? handleDelete(cust[CUSTOMER_FIELDS.ID])
                                 : toastError("Customer is deleted already!")
                             }
                           >
