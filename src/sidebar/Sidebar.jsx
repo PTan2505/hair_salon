@@ -76,7 +76,7 @@ function Sidebar({ role }) {
                 margin: "20px",
               }}
             >
-              Management
+              Dashboard
             </h5>
             <Nav.Link
               as={Link}

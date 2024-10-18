@@ -7,17 +7,20 @@ import { BrowserRouter } from "react-router-dom";
 import { CustomerProvider } from "./context/CustomerContext";
 import { AppointmentProvider } from "./context/AppointmentContext.jsx";
 import { ServiceProvider } from "./context/ServiceContext.jsx";
+import { BillProvider } from "./context/BillContext.jsx";
 
 createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <BrowserRouter>
-      <CustomerProvider>
-        <AppointmentProvider>
-          <ServiceProvider>
-            <App />
-          </ServiceProvider>
-        </AppointmentProvider>
-      </CustomerProvider>
+      <BillProvider>
+        <CustomerProvider>
+          <AppointmentProvider>
+            <ServiceProvider>
+              <App />
+            </ServiceProvider>
+          </AppointmentProvider>
+        </CustomerProvider>
+      </BillProvider>
     </BrowserRouter>
   </React.StrictMode>
 );
