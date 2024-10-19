@@ -2,6 +2,7 @@ package com.example.Hair_Salon_Project.Entity;
 
 import com.example.Hair_Salon_Project.Entity.Enums.Gender;
 import com.example.Hair_Salon_Project.Entity.Enums.Role;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
@@ -38,6 +39,7 @@ public class Account implements UserDetails {
     @NotBlank(message = "Last name is required")
     private String lastName;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM-dd-yyyy")
     private LocalDate birthDate;
 
     @Enumerated(EnumType.STRING)
@@ -104,6 +106,10 @@ public class Account implements UserDetails {
             return authorities;
         }
         if (this.staff != null) {
+            if (!this.staff.isStaff()) {
+                return authorities;
+            }
+
             Role role = this.staff.getRole();
             if (role != null) {
                 if (role == Role.MANAGER) {
@@ -129,26 +135,6 @@ public class Account implements UserDetails {
     @Override
     public String getUsername() {
         return this.email;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return this.isActive;
     }
 
     // Lifecycle callbacks for date fields

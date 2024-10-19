@@ -8,6 +8,8 @@ import lombok.Setter;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Getter
 @Setter
 public class RegisterRequest {
@@ -18,6 +20,7 @@ public class RegisterRequest {
 
     private String lastName;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM-dd-yyyy")
     private Date birthday;
 
     private String gender;

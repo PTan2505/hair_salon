@@ -20,14 +20,12 @@ public class AdminProductAPI {
     private ProductService productService;
 
     @GetMapping
-    @PreAuthorize("hasRole('STYLIST') || hasRole('CASHIER')")
     public ResponseEntity<List<Product>> getAllProducts() {
         List<Product> products = productService.getAllProducts();
         return ResponseEntity.ok(products);
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasRole('STYLIST') || hasRole('CASHIER')")
     public ResponseEntity<Product> getProductById(@PathVariable long id) {
         Product product = productService.getProductById(id);
         return ResponseEntity.ok(product);
