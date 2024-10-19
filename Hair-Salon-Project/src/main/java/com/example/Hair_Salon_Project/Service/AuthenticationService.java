@@ -1,10 +1,7 @@
 package com.example.Hair_Salon_Project.Service;
 
 import com.example.Hair_Salon_Project.Entity.Account;
-import com.example.Hair_Salon_Project.Entity.Enums.Role;
-import com.example.Hair_Salon_Project.Entity.Staff;
 import com.example.Hair_Salon_Project.Exception.DuplicateEntity;
-import com.example.Hair_Salon_Project.Exception.NotFoundException;
 import com.example.Hair_Salon_Project.Model.*;
 import com.example.Hair_Salon_Project.Repository.AccountRepository;
 import com.example.Hair_Salon_Project.Repository.StaffRepository;
@@ -23,7 +20,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -47,43 +43,43 @@ public class AuthenticationService implements UserDetailsService {
     @Autowired
     StaffRepository staffRepository;
 
-
     public AccountResponse register(RegisterRequest registerRequest) {
         Account newAccount = modelMapper.map(registerRequest, Account.class);
 
         try {
 
-            newAccount.setPassword(passwordEncoder.encode(registerRequest.getPassword()));//encode password before save to db
+            newAccount.setPassword(passwordEncoder.encode(registerRequest.getPassword()));// encode password before save
+                                                                                          // to db
             accountRepository.save(newAccount);
             EmailDetail emailDetail = new EmailDetail();
             emailDetail.setAccount(newAccount);
             emailDetail.setSubject("Hello world");
             emailDetail.setLink("https://www.google.com/");
             emailService.sendEmail(emailDetail);
-            return modelMapper.map(newAccount,AccountResponse.class); // JPA có sẵn :  INSERT INTO account(...) VALUES (....)
+            return modelMapper.map(newAccount, AccountResponse.class); // JPA có sẵn : INSERT INTO account(...) VALUES
+                                                                       // (....)
 
         } catch (Exception e) {
-             if (e.getMessage().contains(newAccount.getEmail())) {
+            if (e.getMessage().contains(newAccount.getEmail())) {
                 throw new DuplicateEntity("Duplicated  email ");
             } else {
                 throw new DuplicateEntity("Duplicated  phone ");
             }
         }
 
-
     }
 
     public AccountResponse login(LoginRequest loginRequest) {
-        try{
-            Authentication authentication =
-                    authenticationManager.  authenticate(new UsernamePasswordAuthenticationToken( // xac thuc
-                            // username , password (
-                            // tu dong ma hoa password user va check tren database )
-                            loginRequest.getEmail() , loginRequest.getPassword() // go to loadUserByUsername(String phone)
-                            // to check username in db first -> so sanh password db with request password
+        try {
+            Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken( // xac
+                                                                                                                        // thuc
+                    // username , password (
+                    // tu dong ma hoa password user va check tren database )
+                    loginRequest.getEmail(), loginRequest.getPassword() // go to loadUserByUsername(String phone)
+            // to check username in db first -> so sanh password db with request password
 
-                    ));
-            //==> account exists
+            ));
+            // ==> account exists
             Account account = (Account) authentication.getPrincipal(); // tra ve account tu database
             AccountResponse accountResponse = modelMapper.map(account, AccountResponse.class);
             accountResponse.setToken(tokenService.generateToken(account));
@@ -94,7 +90,6 @@ public class AuthenticationService implements UserDetailsService {
         }
 
     }
-
 
     public List<Account> getAllAccounts() {
         List<Account> accounts = accountRepository.findAll();
@@ -112,15 +107,12 @@ public class AuthenticationService implements UserDetailsService {
         return account;
     }
 
-
-    public Account getCurrentAccount(){
+    public Account getCurrentAccount() {
         Account account = (Account) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        //phai get thong tin user tu database
+        // phai get thong tin user tu database
 
         return accountRepository.findAccountById(account.getId());
     }
-
-
 
     public void forgotPassword(ForgotPasswordRequest request) {
         Account account = accountRepository.findByEmail(request.getEmail());
@@ -151,9 +143,5 @@ public class AuthenticationService implements UserDetailsService {
         account.setResetPasswordExpiration(null);
         accountRepository.save(account);
     }
-
-
-
-
 
 }

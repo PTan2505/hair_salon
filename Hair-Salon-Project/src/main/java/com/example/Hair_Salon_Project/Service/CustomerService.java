@@ -27,54 +27,47 @@
 // private StaffRepository staffRepository;
 
 // @Autowired
-// ModelMapper modelMapper;
+// private ModelMapper modelMapper;
 
 // @Autowired
-// AuthenticationService authenticationService;
+// private AuthenticationService authenticationService;
 
 // @Autowired
-// ProductRepository productRepository;
+// private ProductRepository productRepository;
 
 // @Autowired
-// FeedbackRepository feedbackRepository;
+// private FeedbackRepository feedbackRepository;
 
-// public Booking createNewBooking(BookingRequest bookingRequest){
-// if (bookingRequest.getBookingDate() == null ||
-// bookingRequest.getProductType() == null || bookingRequest.getProduct() ==
-// null ) {
+// public Booking createNewBooking(BookingRequest bookingRequest) {
+// // Validate booking request fields
+// if (bookingRequest.getBookingDate() == null || bookingRequest.getProduct() ==
+// null) {
 // throw new IllegalArgumentException("Thông tin đặt lịch không đầy đủ.");
 // }
 
+// // Try to create a new booking
 // try {
 // Booking booking = modelMapper.map(bookingRequest, Booking.class);
 // Account accountRequest = authenticationService.getCurrentAccount();
 // booking.setAccount(accountRequest);
 // booking.setCreateDate(bookingRequest.getCreateDate());
 
-// // Tìm kiếm dịch vụ dựa trên serviceType
+// // Find the product directly by ID
 // Product product =
-// productRepository.findProductByTypeAndId(bookingRequest.getProduct().getType(),bookingRequest.getProduct().getId());
-// if (product == null ||
-// !product.getType().equals(bookingRequest.getProductType())) {
-// throw new IllegalArgumentException("Dịch vụ không tồn tại.");
-// }
+// productRepository.findById(bookingRequest.getProduct().getId())
+// .orElseThrow(() -> new IllegalArgumentException("Dịch vụ không tồn tại."));
+
 // booking.setProduct(product);
 
-// // Kiểm tra xem người dùng có chọn stylist không
+// // Check if the user has selected a stylist
 // if (bookingRequest.getStaff() != null) {
 // Staff selectedStaff =
 // staffRepository.findById(bookingRequest.getStaff().getId())
 // .orElseThrow(() -> new IllegalArgumentException("Stylist không tồn tại."));
 
-// // // Kiểm tra vai trò của stylist
-// // if (selectedStaff.getRole() != Role.STYLIST) {
-// // throw new IllegalArgumentException("Người dùng đã chọn không phải là
-// stylist.");
-// // }
-
 // booking.setStaff(selectedStaff);
 // } else {
-// // Tự động chọn stylist có trạng thái rảnh
+// // Automatically select an available stylist
 // Staff availableStaff = staffRepository.findAvailableStylist(Role.STYLIST);
 // if (availableStaff == null) {
 // throw new IllegalArgumentException("Không có stylist nào rảnh.");
@@ -82,10 +75,9 @@
 // booking.setStaff(availableStaff);
 // }
 
-// Booking newBooking =bookingRepository.save(booking);
-// return newBooking;
+// return bookingRepository.save(booking); // Save and return the new booking
 // } catch (Exception e) {
-// throw new RuntimeException(e);
+// throw new RuntimeException("Error creating booking: " + e.getMessage(), e);
 // }
 // }
 
@@ -94,25 +86,33 @@
 // Account accountRequest = authenticationService.getCurrentAccount();
 // List<Booking> bookingList =
 // bookingRepository.findBookingByAccount_Id(accountRequest.getId());
+
 // List<BookingStatus> bookingStatusList = new ArrayList<>();
-// for(Booking booking: bookingList){
+// for (Booking booking : bookingList) {
 // BookingStatus bookingStatus = new BookingStatus();
 // bookingStatus.setNote(booking.getNote());
-// bookingStatus.setProductType(booking.getProduct().getType());
 // bookingStatus.setBookingDate(booking.getBookingDate());
 // bookingStatus.setCreateDate(booking.getCreateDate());
 // bookingStatus.setStatus(booking.getStatus());
+
+// // Avoid NullPointerException when getting staff name
+// if (booking.getStaff() != null) {
 // bookingStatus.setStaffName(booking.getStaff().getFirstName() + " " +
 // booking.getStaff().getLastName());
+// } else {
+// bookingStatus.setStaffName("Chưa chọn stylist");
+// }
+
 // bookingStatusList.add(bookingStatus);
 // }
 // return bookingStatusList;
 // } catch (Exception e) {
-// throw new RuntimeException(e);
+// throw new RuntimeException("Error retrieving bookings: " + e.getMessage(),
+// e);
 // }
 // }
 
-// public Feedback createFeedback(FeedbackRequest feedbackRequest){
+// public Feedback createFeedback(FeedbackRequest feedbackRequest) {
 // try {
 // Feedback feedback = modelMapper.map(feedbackRequest, Feedback.class);
 // Account accountRequest = authenticationService.getCurrentAccount();
@@ -120,10 +120,10 @@
 // feedback.setCreateDate(feedbackRequest.getCreateDate());
 // feedback.setFeedbackText(feedbackRequest.getFeedbackText());
 // feedback.setRating(feedbackRequest.getRating());
-// Feedback newFeedback = feedbackRepository.save(feedback);
-// return newFeedback;
+
+// return feedbackRepository.save(feedback); // Save and return new feedback
 // } catch (Exception e) {
-// throw new RuntimeException(e);
+// throw new RuntimeException("Error creating feedback: " + e.getMessage(), e);
 // }
 // }
 
@@ -131,11 +131,12 @@
 // try {
 // Account account = authenticationService.getCurrentAccount();
 
-// if(accountUpdateRequest.getFirstName() != null) {
+// // Update fields conditionally
+// if (accountUpdateRequest.getFirstName() != null) {
 // account.setFirstName(accountUpdateRequest.getFirstName());
 // }
 
-// if(accountUpdateRequest.getLastName() != null) {
+// if (accountUpdateRequest.getLastName() != null) {
 // account.setLastName(accountUpdateRequest.getLastName());
 // }
 
@@ -147,13 +148,14 @@
 // account.setGender(accountUpdateRequest.getGender());
 // }
 
-// if(accountUpdateRequest.getBirthday() != null) {
+// if (accountUpdateRequest.getBirthday() != null) {
 // account.setBirthday(accountUpdateRequest.getBirthday());
 // }
 
-// return accountRepository.save(account);
+// return accountRepository.save(account); // Save and return the updated
+// account
 // } catch (Exception e) {
-// throw new RuntimeException(e);
+// throw new RuntimeException("Error updating account: " + e.getMessage(), e);
 // }
 // }
 // }

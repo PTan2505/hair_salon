@@ -21,7 +21,7 @@ public class FeedbackService {
     public List<Feedback> getFeedbacksByStaff(long staffId) {
         Staff staff = staffRepository.findById(staffId)
                 .orElseThrow(() -> new RuntimeException("Staff not found"));
-        return feedbackRepository.findByStaff(staff);
+        return feedbackRepository.findAll();
     }
 
     // Additional methods for managing feedback can be added here

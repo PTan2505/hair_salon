@@ -56,4 +56,9 @@ public class Staff {
     protected void onUpdate() {
         this.updateDate = new Date();
     }
+
+    public void setIsStaff(boolean isStaff) {
+        this.isStaff = isStaff; // Update the isStaff field with the provided value
+    }
+
 }

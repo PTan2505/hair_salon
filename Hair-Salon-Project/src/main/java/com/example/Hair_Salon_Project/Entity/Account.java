@@ -52,7 +52,7 @@ public class Account implements UserDetails {
     private String phone;
 
     @Column(name = "is_active", nullable = false)
-    private boolean active;
+    private boolean isActive;
 
     @Column(name = "is_super_user", nullable = false)
     private boolean superUser;
@@ -118,7 +118,7 @@ public class Account implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return this.active;
+        return this.isActive;
     }
 
     // Lifecycle callbacks for date fields
@@ -130,5 +130,10 @@ public class Account implements UserDetails {
     @PreUpdate
     protected void onUpdate() {
         this.updateDate = new Date();
+    }
+
+    // Setter for isActive, if needed
+    public void setIsActive(boolean isActive) {
+        this.isActive = isActive;
     }
 }

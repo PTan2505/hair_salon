@@ -13,8 +13,9 @@ import java.util.List;
 @Entity
 @NoArgsConstructor
 public class Product {
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long productId;
+    private long id;
 
     private String productName;
 
@@ -44,4 +45,5 @@ public class Product {
     protected void onUpdate() {
         this.updatedAt = new Date();
     }
+
 }

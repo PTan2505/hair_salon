@@ -48,4 +48,14 @@ public class Bill {
     protected void onUpdate() {
         this.updateDate = new Date();
     }
+
+    public Object getTotalAmount() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getTotalAmount'");
+    }
+
+    public void setTotalAmount(Object totalAmount) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'setTotalAmount'");
+    }
 }
