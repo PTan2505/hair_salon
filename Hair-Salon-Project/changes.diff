@@ -1,0 +1,1052 @@
+diff --git a/Hair-Salon-Project/pom.xml b/Hair-Salon-Project/pom.xml
+index c55c52d..08c9b65 100644
+--- a/Hair-Salon-Project/pom.xml
++++ b/Hair-Salon-Project/pom.xml
+@@ -1,199 +1,207 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+-	<modelVersion>4.0.0</modelVersion>
+-	<parent>
+-		<groupId>org.springframework.boot</groupId>
+-		<artifactId>spring-boot-starter-parent</artifactId>
+-		<version>3.3.4</version>
+-		<relativePath/> <!-- lookup parent from repository -->
+-	</parent>
+-	<groupId>com.example</groupId>
+-	<artifactId>Hair-Salon-Project</artifactId>
+-	<version>0.0.1-SNAPSHOT</version>
+-	<name>Hair-Salon-Project</name>
+-	<description>Demo project for Spring Boot</description>
+-	<url/>
+-	<licenses>
+-		<license/>
+-	</licenses>
+-	<developers>
+-		<developer/>
+-	</developers>
+-	<scm>
+-		<connection/>
+-		<developerConnection/>
+-		<tag/>
+-		<url/>
+-	</scm>
+-	<properties>
+-		<java.version>17</java.version>
+-	</properties>
+-	<dependencies>
+-		<dependency>
+-			<groupId>org.springframework.boot</groupId>
+-			<artifactId>spring-boot-starter-web</artifactId>
+-		</dependency>
++<project xmlns="http://maven.apache.org/POM/4.0.0"
++    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
++    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
++    <modelVersion>4.0.0</modelVersion>
++    <parent>
++        <groupId>org.springframework.boot</groupId>
++        <artifactId>spring-boot-starter-parent</artifactId>
++        <version>3.3.4</version>
++        <relativePath /> <!-- lookup parent from repository -->
++    </parent>
++    <groupId>com.example</groupId>
++    <artifactId>Hair-Salon-Project</artifactId>
++    <version>0.0.1-SNAPSHOT</version>
++    <name>Hair-Salon-Project</name>
++    <description>Demo project for Spring Boot</description>
++    <url />
++    <licenses>
++        <license />
++    </licenses>
++    <developers>
++        <developer />
++    </developers>
++    <scm>
++        <connection />
++        <developerConnection />
++        <tag />
++        <url />
++    </scm>
++    <properties>
++        <java.version>17</java.version>
++    </properties>
++    <dependencies>
++        <dependency>
++            <groupId>org.springframework.boot</groupId>
++            <artifactId>spring-boot-starter-web</artifactId>
++        </dependency>
+ 
+-		<dependency>
+-			<groupId>org.projectlombok</groupId>
+-			<artifactId>lombok</artifactId>
+-			<optional>true</optional>
+-		</dependency>
+-		<dependency>
+-			<groupId>org.springframework.boot</groupId>
+-			<artifactId>spring-boot-starter-test</artifactId>
+-			<scope>test</scope>
+-		</dependency>
+-		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-validation -->
+-		<dependency>
+-			<groupId>org.springframework.boot</groupId>
+-			<artifactId>spring-boot-starter-validation</artifactId>
+-			<version>3.3.3</version>
+-		</dependency>
+-		<dependency>
+-			<groupId>org.springdoc</groupId>
+-			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+-			<version>2.5.0</version>
+-		</dependency>
+-		<!-- Cài driver cho My SQL , định nghĩa đường dẫn để kết nối đến SQL ở application.properties . Set up biến môi trường  -->
+-		<dependency>
+-			<groupId>com.mysql</groupId>
+-			<artifactId>mysql-connector-j</artifactId>
+-			<version>9.0.0</version>
+-		</dependency>
+-		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-jpa -->
+-		<dependency>
+-			<groupId>org.springframework.boot</groupId>
+-			<artifactId>spring-boot-starter-data-jpa</artifactId> <!-- JPA giúp ta sử dụng đc cơ chế ORM , cơ chế code first -> generate db sau khi code !-->
+-			<version>3.3.3</version>
+-		</dependency>
+-		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-jdbc -->
+-		<dependency>
+-			<groupId>org.springframework.boot</groupId>
+-			<artifactId>spring-boot-starter-jdbc</artifactId>
+-			<version>3.3.3</version>
+-		</dependency>
+-		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security -->
+-		<dependency>
+-			<groupId>org.springframework.boot</groupId>
+-			<artifactId>spring-boot-starter-security</artifactId>
+-			<version>3.3.3</version>
+-		</dependency>
+-		<!-- https://mvnrepository.com/artifact/org.modelmapper/modelmapper -->
+-		<dependency>
+-			<groupId>org.modelmapper</groupId>
+-			<artifactId>modelmapper</artifactId>
+-			<version>3.2.1</version>
+-		</dependency>
+-		<!-- https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-api -->
+-		<dependency>
+-			<groupId>io.jsonwebtoken</groupId>
+-			<artifactId>jjwt-api</artifactId>
+-			<version>0.12.5</version>
+-		</dependency>
+-		<!-- https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-impl -->
+-		<dependency>
+-			<groupId>io.jsonwebtoken</groupId>
+-			<artifactId>jjwt-impl</artifactId>
+-			<version>0.12.5</version>
+-			<scope>runtime</scope>
+-		</dependency>
++        <dependency>
++            <groupId>org.projectlombok</groupId>
++            <artifactId>lombok</artifactId>
++            <optional>true</optional>
++        </dependency>
++        <dependency>
++            <groupId>org.springframework.boot</groupId>
++            <artifactId>spring-boot-starter-test</artifactId>
++            <scope>test</scope>
++        </dependency>
++        <!--
++        https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-validation -->
++        <dependency>
++            <groupId>org.springframework.boot</groupId>
++            <artifactId>spring-boot-starter-validation</artifactId>
++            <version>3.3.3</version>
++        </dependency>
++        <dependency>
++            <groupId>org.springdoc</groupId>
++            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
++            <version>2.5.0</version>
++        </dependency>
++        <!-- Cài driver cho My SQL , định nghĩa đường dẫn để kết nối đến SQL ở
++        application.properties . Set up biến môi trường  -->
+ 
+-		<!-- https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-jackson -->
+-		<dependency>
+-			<groupId>io.jsonwebtoken</groupId>
+-			<artifactId>jjwt-jackson</artifactId>
+-			<version>0.12.5</version>
+-			<scope>runtime</scope>
+-		</dependency>
+-		<!-- https://mvnrepository.com/artifact/org.thymeleaf/thymeleaf -->
+-		<!-- tạo giao diện lúc gưỉ mail -->
+-		<dependency>
+-			<groupId>org.thymeleaf</groupId>
+-			<artifactId>thymeleaf</artifactId>
+-		</dependency>
++        <dependency>
++            <groupId>org.postgresql</groupId>
++            <artifactId>postgresql</artifactId>
++            <version>42.5.0</version> <!-- Use the latest version -->
++            <scope>runtime</scope>
++        </dependency>
++        <!--
++        https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-jpa -->
++        <dependency>
++            <groupId>org.springframework.boot</groupId>
++            <artifactId>spring-boot-starter-data-jpa</artifactId> <!-- JPA giúp ta sử dụng đc cơ chế ORM , cơ chế code first ->
++            generate db sau khi code !-->
++            <version>3.3.3</version>
++        </dependency>
++        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-jdbc -->
++        <dependency>
++            <groupId>org.springframework.boot</groupId>
++            <artifactId>spring-boot-starter-jdbc</artifactId>
++            <version>3.3.3</version>
++        </dependency>
++        <!--
++        https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security -->
++        <dependency>
++            <groupId>org.springframework.boot</groupId>
++            <artifactId>spring-boot-starter-security</artifactId>
++            <version>3.3.3</version>
++        </dependency>
++        <!-- https://mvnrepository.com/artifact/org.modelmapper/modelmapper -->
++        <dependency>
++            <groupId>org.modelmapper</groupId>
++            <artifactId>modelmapper</artifactId>
++            <version>3.2.1</version>
++        </dependency>
++        <!-- https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-api -->
++        <dependency>
++            <groupId>io.jsonwebtoken</groupId>
++            <artifactId>jjwt-api</artifactId>
++            <version>0.12.5</version>
++        </dependency>
++        <!-- https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-impl -->
++        <dependency>
++            <groupId>io.jsonwebtoken</groupId>
++            <artifactId>jjwt-impl</artifactId>
++            <version>0.12.5</version>
++            <scope>runtime</scope>
++        </dependency>
+ 
+-		<dependency>
+-			<groupId>org.springframework.boot</groupId>
+-			<artifactId>spring-boot-starter-mail</artifactId>
+-		</dependency>
+-		<dependency>
+-			<groupId>io.springfox</groupId>
+-			<artifactId>springfox-boot-starter</artifactId>
+-			<version>3.0.0</version>
+-		</dependency>
++        <!-- https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-jackson -->
++        <dependency>
++            <groupId>io.jsonwebtoken</groupId>
++            <artifactId>jjwt-jackson</artifactId>
++            <version>0.12.5</version>
++            <scope>runtime</scope>
++        </dependency>
++        <!-- https://mvnrepository.com/artifact/org.thymeleaf/thymeleaf -->
++        <!-- tạo giao diện lúc gưỉ mail -->
++        <dependency>
++            <groupId>org.thymeleaf</groupId>
++            <artifactId>thymeleaf</artifactId>
++        </dependency>
+ 
+-		<dependency>
+-			<groupId>org.springframework.boot</groupId>
+-			<artifactId>spring-boot-starter-security</artifactId>
+-		</dependency>
++        <dependency>
++            <groupId>org.springframework.boot</groupId>
++            <artifactId>spring-boot-starter-mail</artifactId>
++        </dependency>
++        <dependency>
++            <groupId>io.springfox</groupId>
++            <artifactId>springfox-boot-starter</artifactId>
++            <version>3.0.0</version>
++        </dependency>
+ 
+-		<dependency>
+-			<groupId>org.springframework.boot</groupId>
+-			<artifactId>spring-boot-starter-oauth2-client</artifactId>
+-		</dependency>
+-		<!-- Spring Security JWT -->
+-		<dependency>
+-			<groupId>io.jsonwebtoken</groupId>
+-			<artifactId>jjwt-api</artifactId>
+-			<version>0.11.5</version>
+-		</dependency>
+-		<dependency>
+-			<groupId>io.jsonwebtoken</groupId>
+-			<artifactId>jjwt-impl</artifactId>
+-			<version>0.11.5</version>
+-			<scope>runtime</scope>
+-		</dependency>
+-		<dependency>
+-			<groupId>io.jsonwebtoken</groupId>
+-			<artifactId>jjwt-jackson</artifactId> <!-- hoặc jjwt-gson nếu bạn muốn -->
+-			<version>0.11.5</version>
+-			<scope>runtime</scope>
+-		</dependency>
+-		<dependency>
+-			<groupId>org.springframework.boot</groupId>
+-			<artifactId>spring-boot-starter-security</artifactId>
+-		</dependency>
+-		<dependency>
+-			<groupId>javax.servlet</groupId>
+-			<artifactId>javax.servlet-api</artifactId>
+-			<version>4.0.1</version>
+-			<scope>provided</scope>
+-		</dependency>
++        <dependency>
++            <groupId>org.springframework.boot</groupId>
++            <artifactId>spring-boot-starter-security</artifactId>
++        </dependency>
+ 
+-		<dependency>
+-			<groupId>org.springframework.boot</groupId>
+-			<artifactId>spring-boot-starter-mail</artifactId>
+-		</dependency>
++        <dependency>
++            <groupId>org.springframework.boot</groupId>
++            <artifactId>spring-boot-starter-oauth2-client</artifactId>
++        </dependency>
++        <!-- Spring Security JWT -->
++        <dependency>
++            <groupId>io.jsonwebtoken</groupId>
++            <artifactId>jjwt-api</artifactId>
++            <version>0.11.5</version>
++        </dependency>
++        <dependency>
++            <groupId>io.jsonwebtoken</groupId>
++            <artifactId>jjwt-impl</artifactId>
++            <version>0.11.5</version>
++            <scope>runtime</scope>
++        </dependency>
++        <dependency>
++            <groupId>io.jsonwebtoken</groupId>
++            <artifactId>jjwt-jackson</artifactId> <!-- hoặc jjwt-gson nếu bạn muốn -->
++            <version>0.11.5</version>
++            <scope>runtime</scope>
++        </dependency>
++        <dependency>
++            <groupId>org.springframework.boot</groupId>
++            <artifactId>spring-boot-starter-security</artifactId>
++        </dependency>
++        <dependency>
++            <groupId>javax.servlet</groupId>
++            <artifactId>javax.servlet-api</artifactId>
++            <version>4.0.1</version>
++            <scope>provided</scope>
++        </dependency>
+ 
+-		<dependency>
+-			<groupId>org.springframework.boot</groupId>
+-			<artifactId>spring-boot-starter-web</artifactId>
+-		</dependency>
++        <dependency>
++            <groupId>org.springframework.boot</groupId>
++            <artifactId>spring-boot-starter-mail</artifactId>
++        </dependency>
+ 
+-		<dependency>
+-			<groupId>org.springframework.boot</groupId>
+-			<artifactId>spring-boot-starter-security</artifactId>
+-			<version>2.7.5</version> <!-- Đảm bảo đây là phiên bản mới nhất hoặc ít nhất 5.4 trở lên -->
+-		</dependency>
+-	</dependencies>
++        <dependency>
++            <groupId>org.springframework.boot</groupId>
++            <artifactId>spring-boot-starter-web</artifactId>
++        </dependency>
+ 
+-	<build>
+-		<plugins>
+-			<plugin>
+-				<groupId>org.springframework.boot</groupId>
+-				<artifactId>spring-boot-maven-plugin</artifactId>
+-				<configuration>
+-					<excludes>
+-						<exclude>
+-							<groupId>org.projectlombok</groupId>
+-							<artifactId>lombok</artifactId>
+-						</exclude>
+-					</excludes>
+-				</configuration>
+-			</plugin>
+-		</plugins>
+-	</build>
++        <dependency>
++            <groupId>org.springframework.boot</groupId>
++            <artifactId>spring-boot-starter-security</artifactId>
++            <version>2.7.5</version> <!-- Đảm bảo đây là phiên bản mới nhất hoặc ít nhất 5.4 trở lên -->
++        </dependency>
++    </dependencies>
+ 
+-</project>
++    <build>
++        <plugins>
++            <plugin>
++                <groupId>org.springframework.boot</groupId>
++                <artifactId>spring-boot-maven-plugin</artifactId>
++                <configuration>
++                    <excludes>
++                        <exclude>
++                            <groupId>org.projectlombok</groupId>
++                            <artifactId>lombok</artifactId>
++                        </exclude>
++                    </excludes>
++                </configuration>
++            </plugin>
++        </plugins>
++    </build>
++
++</project>
+\ No newline at end of file
+diff --git a/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Api/AuthenticationAPI.java b/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Api/AuthenticationAPI.java
+index d627aa3..f476de1 100644
+--- a/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Api/AuthenticationAPI.java
++++ b/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Api/AuthenticationAPI.java
+@@ -35,14 +35,14 @@ public class AuthenticationAPI {
+     @PostMapping("forgot-password")
+     public ResponseEntity<String> forgotPassword(@Valid @RequestBody ForgotPasswordRequest request) {
+         authenticationService.forgotPassword(request);
+-        return ResponseEntity.ok("Một email đã được gửi để đặt lại mật khẩu của bạn.");
++        return ResponseEntity.ok("You've received an email to reset password");
+     }
+ 
+     @Operation(summary = "Reset password", description = "Reset user's password using the token sent via email")
+     @PostMapping("reset-password")
+     public ResponseEntity<String> resetPassword(@Valid @RequestBody ResetPasswordRequest request) {
+         authenticationService.resetPassword(request);
+-        return ResponseEntity.ok("Mật khẩu của bạn đã được cập nhật thành công.");
++        return ResponseEntity.ok("Password updated successfully");
+     }
+ 
+ }
+diff --git a/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Config/Filter.java b/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Config/Filter.java
+index 3e017aa..bc2590b 100644
+--- a/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Config/Filter.java
++++ b/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Config/Filter.java
+@@ -23,13 +23,13 @@ import org.springframework.web.servlet.HandlerExceptionResolver;
+ 
+ import java.io.IOException;
+ import java.util.List;
++import java.util.Optional;
+ 
+ @Component // publish to be a library for using Autowired
+ public class Filter extends OncePerRequestFilter { // Filer run once each request approach
+ 
+     private static final Logger logger = LoggerFactory.getLogger(Filter.class);
+ 
+-
+     @Autowired
+     TokenService tokenService;
+ 
+@@ -37,7 +37,7 @@ public class Filter extends OncePerRequestFilter { // Filer run once each reques
+     @Qualifier("handlerExceptionResolver")
+     HandlerExceptionResolver handlerExceptionResolver;
+ 
+-    private final List<String> AUTH_PERMISSION = List.of( //những api mà ai cũng truy cập đc
++    private final List<String> AUTH_PERMISSION = List.of( // những api mà ai cũng truy cập đc
+             "/swagger-ui/**",
+             "/v3/api-docs/**",
+             "/swagger-resources/**",
+@@ -46,38 +46,41 @@ public class Filter extends OncePerRequestFilter { // Filer run once each reques
+             "/api/oauth2/redirect/google/**",
+             "/api/forgot-password",
+             "/api/reset-password",
+-           "/api/admin/approve-customer/{accountId}"
+-    );
++            "/api/admin/approve-customer/{accountId}");
+ 
+     public boolean checkIsPublicAPI(String uri) {
+-        //Nếu gặp những API như list trên -> cho phép truy cập luôn
+-        //ngược lại , phân quyền ( authorization) , check token
++        // Nếu gặp những API như list trên -> cho phép truy cập luôn
++        // ngược lại , phân quyền ( authorization) , check token
+         AntPathMatcher matcher = new AntPathMatcher();// check pattern vs uri người dùng truy
+-        return AUTH_PERMISSION.stream().anyMatch(pattern ->  matcher.match(pattern, uri));// nếu match -> true ; else -> false
++        return AUTH_PERMISSION.stream().anyMatch(pattern -> matcher.match(pattern, uri));// nếu match -> true ; else ->
++                                                                                         // false
+ 
+     }
+ 
+     private static final String TOKEN_PREFIX = "Bearer ";
+ 
+     @Override
+-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+-        //check xem api user that user request allow who can access ( có phải là 1 public api hay ko , ai cũng dùng đc )
++    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
++            throws ServletException, IOException {
++        // check xem api user that user request allow who can access ( có phải là 1
++        // public api hay ko , ai cũng dùng đc )
+         boolean isPublicAPI = checkIsPublicAPI(request.getRequestURI());
+-        if(isPublicAPI) {
++        if (isPublicAPI) {
+             filterChain.doFilter(request, response); // cho phep truy cap luon
+-        }else {
+-            //nếu ko phải public api -> kiểm tra token
++        } else {
++            // nếu ko phải public api -> kiểm tra token
+             String token = getTokenFromRequest(request);
+-            if(token == null){
++            if (token == null) {
+                 // ko dc phep truy cap
+-                handlerExceptionResolver.resolveException(request,response,null,new AuthenException("Token is missing"));
++                handlerExceptionResolver.resolveException(request, response, null,
++                        new AuthenException("Token is missing"));
+                 return;
+             }
+             // => co' token
+             // check xem token co' đúng hay ko -> lấy thông tin account từ token
+-            Account account;
+-            try{
+-                account = tokenService.getAccountByToken(token);
++            Optional<Account> optionalAccount;
++            try {
++                optionalAccount = tokenService.getAccountByToken(token);
+             } catch (ExpiredJwtException e) {
+                 handleAuthenticationException(request, response, "Expired token");
+                 return;
+@@ -88,20 +91,31 @@ public class Filter extends OncePerRequestFilter { // Filer run once each reques
+                 handleAuthenticationException(request, response, "Authentication failed");
+                 return;
+             }
+-            //=> token chuẩn -> cho phép truy cập , lưu lại thông tin của account này trong mot phien lam viec do , khi response về thì
++
++            // Check if account is present
++            if (optionalAccount.isEmpty()) {
++                handleAuthenticationException(request, response, "User not found");
++                return;
++            }
++
++            Account account = optionalAccount.get();
++
++            // => token chuẩn -> cho phép truy cập , lưu lại thông tin của account này trong
++            // mot phien lam viec do , khi response về thì
+             UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
+-                    account
+-                    , token
+-                    , account.getAuthorities());
++                    account, token, account.getAuthorities());
+             authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+-            SecurityContextHolder.getContext().setAuthentication(authenticationToken); // Lưu thông tin user vào SecurityContext để biết chính xác đâu là thằng
+-            //token ok , cho truy cap
+-           filterChain.doFilter(request,response);
++            SecurityContextHolder.getContext().setAuthentication(authenticationToken); // Lưu thông tin user vào
++                                                                                       // SecurityContext để biết chính
++                                                                                       // xác đâu là thằng
++            // token ok , cho truy cap
++            filterChain.doFilter(request, response);
+         }
+ 
+     }
+ 
+-    private void handleAuthenticationException(HttpServletRequest request, HttpServletResponse response, String message) {
++    private void handleAuthenticationException(HttpServletRequest request, HttpServletResponse response,
++            String message) {
+         handlerExceptionResolver.resolveException(request, response, null, new AuthenException(message));
+     }
+ 
+@@ -113,5 +127,4 @@ public class Filter extends OncePerRequestFilter { // Filer run once each reques
+         return null;
+     }
+ 
+-
+ }
+diff --git a/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Config/SecurityConfig.java b/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Config/SecurityConfig.java
+index 9bb79cf..f6a4384 100644
+--- a/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Config/SecurityConfig.java
++++ b/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Config/SecurityConfig.java
+@@ -1,6 +1,7 @@
+ package com.example.Hair_Salon_Project.Config;
+ 
+-import com.example.Hair_Salon_Project.Service.AuthenticationService;
++import com.example.Hair_Salon_Project.Service.CustomUserDetailsService;
++
+ import org.modelmapper.ModelMapper;
+ import org.springframework.beans.factory.annotation.Autowired;
+ import org.springframework.context.annotation.Bean;
+@@ -17,12 +18,12 @@ import org.springframework.security.web.SecurityFilterChain;
+ import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+ 
+ @Configuration
+-@EnableWebSecurity // Thêm annotation này
++@EnableWebSecurity
+ @EnableMethodSecurity
+ public class SecurityConfig {
+ 
+     @Autowired
+-    AuthenticationService authenticationService;
++    CustomUserDetailsService userDetailsService;
+ 
+     @Autowired
+     Filter filter;
+@@ -37,16 +38,17 @@ public class SecurityConfig {
+         return http
+                 .csrf(csrf -> csrf.disable())
+                 .authorizeHttpRequests(req -> req
+-                        .requestMatchers("/api/login", "/api/register", "/swagger-ui/**", "/v3/api-docs/**", "/api/forgot-password", "/api/reset-password", "/api/admin/approve-customer/**").permitAll()
+-                        .anyRequest().authenticated()
+-                )
+-                .userDetailsService(authenticationService)
++                        .requestMatchers("/api/login", "/api/register", "/swagger-ui/**", "/v3/api-docs/**",
++                                "/api/forgot-password", "/api/reset-password", "/api/admin/approve-customer/**")
++                        .permitAll()
++                        .anyRequest().authenticated())
++                .userDetailsService(userDetailsService)
+                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                 .addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class)
+                 .build();
+     }
+ 
+-        @Bean
++    @Bean
+     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
+         return configuration.getAuthenticationManager();
+     }
+diff --git a/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Entity/Account.java b/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Entity/Account.java
+index 5dd35bd..a3c348e 100644
+--- a/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Entity/Account.java
++++ b/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Entity/Account.java
+@@ -1,11 +1,12 @@
+ package com.example.Hair_Salon_Project.Entity;
+ 
+-import com.example.Hair_Salon_Project.Entity.Enums.Role;
++import com.example.Hair_Salon_Project.Model.Gender;
+ import com.fasterxml.jackson.annotation.JsonIgnore;
+ import jakarta.persistence.*;
+ import jakarta.validation.constraints.Email;
+ import jakarta.validation.constraints.NotBlank;
+ import jakarta.validation.constraints.Pattern;
++import jakarta.validation.constraints.Size;
+ import lombok.Getter;
+ import lombok.NoArgsConstructor;
+ import lombok.Setter;
+@@ -38,27 +39,27 @@ public class Account implements UserDetails {
+ 
+     private LocalDate birthDate;
+ 
+-    private String gender;
++    @Enumerated(EnumType.STRING)
++    private Gender gender;
+ 
+     @Email(message = "Invalid email format")
+     @Column(unique = true, nullable = false)
+     private String email;
+ 
+     @NotBlank(message = "Password is required")
++    @Size(min = 8, message = "New password must be at least 8 characters long")
+     private String password;
+ 
+     @Pattern(regexp = "(84|0[3|5|7|8|9])+([0-9]{8})\\b", message = "Invalid phone number")
++    @NotBlank(message = "Phone is required")
+     @Column(unique = true)
+     private String phone;
+ 
+     @Column(name = "is_active", nullable = false)
+-    private boolean isActive;
++    private boolean isActive = true;
+ 
+     @Column(name = "is_super_user", nullable = false)
+-    private boolean superUser;
+-
+-    @Enumerated(EnumType.STRING)
+-    private Role role;
++    private boolean superUser = false;
+ 
+     @Temporal(TemporalType.TIMESTAMP)
+     @Column(name = "create_date", nullable = false, updatable = false)
+@@ -85,9 +86,9 @@ public class Account implements UserDetails {
+     @Override
+     public Collection<? extends GrantedAuthority> getAuthorities() {
+         List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+-        if (this.role != null) {
+-            authorities.add(new SimpleGrantedAuthority("ROLE_" + this.role.name()));
+-        }
++        // if (this.role != null) {
++        // authorities.add(new SimpleGrantedAuthority("ROLE_" + this.role.name()));
++        // }
+         return authorities;
+     }
+ 
+diff --git a/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Model/LoginRequest.java b/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Model/LoginRequest.java
+index 33937b1..b8682db 100644
+--- a/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Model/LoginRequest.java
++++ b/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Model/LoginRequest.java
+@@ -1,9 +1,15 @@
+ package com.example.Hair_Salon_Project.Model;
+ 
++import jakarta.validation.constraints.Email;
++import jakarta.validation.constraints.NotBlank;
+ import lombok.Data;
+ 
+ @Data
+ public class LoginRequest {
++    @NotBlank(message = "Email is required")
++    @Email(message = "Email should be valid")
+     private String email;
++
++    @NotBlank(message = "Email is required")
+     private String password;
+ }
+diff --git a/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Model/RegisterRequest.java b/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Model/RegisterRequest.java
+index 969b4e1..8e9c2dc 100644
+--- a/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Model/RegisterRequest.java
++++ b/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Model/RegisterRequest.java
+@@ -1,7 +1,5 @@
+ package com.example.Hair_Salon_Project.Model;
+ 
+-import com.example.Hair_Salon_Project.Entity.Enums.Role;
+-import jakarta.persistence.*;
+ import jakarta.validation.constraints.Email;
+ import jakarta.validation.constraints.Pattern;
+ import jakarta.validation.constraints.Size;
+@@ -14,23 +12,19 @@ import java.util.Date;
+ @Setter
+ public class RegisterRequest {
+     @Email(message = "Invalid email")
+-    @Column(unique = true)
+-    String email;
++    private String email;
+ 
+     private String firstName;
++
+     private String lastName;
+ 
+-    @Temporal(TemporalType.DATE)
+     private Date birthday;
+ 
+     private String gender;
+ 
+-    @Pattern(regexp = "(84|0[3|5|7|8|9])+(\\d{8})\\b" , message = "Invalid phone number")
+-    @Column(unique = true)
+-    String phone;
+-    @Size(min = 6 , message = "Password must be exceed 6 characters ")
+-    String password;
++    @Pattern(regexp = "(84|0[3|5|7|8|9])+(\\d{8})\\b", message = "Invalid phone number")
++    private String phone;
+ 
+-    @Enumerated(EnumType.STRING)
+-    Role role;
++    @Size(min = 6, message = "Password must be at least 6 characters")
++    private String password;
+ }
+diff --git a/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Repository/AccountRepository.java b/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Repository/AccountRepository.java
+index 2b8f7c9..d10a1a5 100644
+--- a/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Repository/AccountRepository.java
++++ b/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Repository/AccountRepository.java
+@@ -8,16 +8,13 @@ import java.util.Optional;
+ 
+ @Repository
+ public interface AccountRepository extends JpaRepository<Account, Long> {
+-    Account findAccountById(Long id);
++    Optional<Account> findByPhone(String phone);
+ 
+-    Account findAccountByPhone(String phone);
++    Optional<Account> findByEmail(String email);
+ 
+-    Account findByEmail(String email);
++    Optional<Account> findByResetPasswordToken(String resetPasswordToken);
+ 
++    boolean existsByPhone(String phone);
+ 
+-    Account findAccountByEmail(String email);
+-
+-    Account findByResetPasswordToken(String token);
+-
+-    Optional<Account> findById(Long id);
++    boolean existsByEmail(String email);
+ }
+diff --git a/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Service/AuthenticationService.java b/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Service/AuthenticationService.java
+index 3b29c1d..2934d98 100644
+--- a/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Service/AuthenticationService.java
++++ b/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Service/AuthenticationService.java
+@@ -6,6 +6,8 @@ import com.example.Hair_Salon_Project.Model.*;
+ import com.example.Hair_Salon_Project.Repository.AccountRepository;
+ import com.example.Hair_Salon_Project.Repository.StaffRepository;
+ import jakarta.persistence.EntityNotFoundException;
++import jakarta.validation.ConstraintViolationException;
++
+ import org.modelmapper.ModelMapper;
+ import org.springframework.beans.factory.annotation.Autowired;
+ import org.springframework.security.authentication.AuthenticationManager;
+@@ -21,16 +23,21 @@ import org.springframework.stereotype.Service;
+ import java.time.LocalDateTime;
+ import java.util.List;
+ import java.util.UUID;
++import java.util.stream.Collectors;
++import java.util.Optional;
+ 
+ @Service
+-public class AuthenticationService implements UserDetailsService {
++public class AuthenticationService {
+ 
+     @Autowired
+-    AccountRepository accountRepository; // ~ dao
++    AccountRepository accountRepository;
++
+     @Autowired
+     PasswordEncoder passwordEncoder;
++
+     @Autowired
+     AuthenticationManager authenticationManager;
++
+     @Autowired
+     ModelMapper modelMapper;
+ 
+@@ -44,104 +51,92 @@ public class AuthenticationService implements UserDetailsService {
+     StaffRepository staffRepository;
+ 
+     public AccountResponse register(RegisterRequest registerRequest) {
++        // Check for existing email or phone
++        if (accountRepository.existsByEmail(registerRequest.getEmail())) {
++            throw new DuplicateEntity("Email already exists.");
++        }
++
++        if (accountRepository.existsByPhone(registerRequest.getPhone())) {
++            throw new DuplicateEntity("Phone number already exists.");
++        }
++
++        // Map the RegisterRequest to Account
+         Account newAccount = modelMapper.map(registerRequest, Account.class);
++        newAccount.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
++        newAccount.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
+ 
++        // Save the new account and send the email
+         try {
+-
+-            newAccount.setPassword(passwordEncoder.encode(registerRequest.getPassword()));// encode password before save
+-                                                                                          // to db
+             accountRepository.save(newAccount);
++
+             EmailDetail emailDetail = new EmailDetail();
+             emailDetail.setAccount(newAccount);
+-            emailDetail.setSubject("Hello world");
++            emailDetail.setSubject("Welcome to Our Service");
+             emailDetail.setLink("https://www.google.com/");
+             emailService.sendEmail(emailDetail);
+-            return modelMapper.map(newAccount, AccountResponse.class); // JPA có sẵn : INSERT INTO account(...) VALUES
+-                                                                       // (....)
+ 
++            return modelMapper.map(newAccount, AccountResponse.class);
++        } catch (ConstraintViolationException e) {
++            String violations = e.getConstraintViolations().stream()
++                    .map(violation -> "Field: " + violation.getPropertyPath() + ", Message: " + violation.getMessage())
++                    .collect(Collectors.joining(", "));
++
++            throw new RuntimeException(violations);
+         } catch (Exception e) {
+-            if (e.getMessage().contains(newAccount.getEmail())) {
+-                throw new DuplicateEntity("Duplicated  email ");
+-            } else {
+-                throw new DuplicateEntity("Duplicated  phone ");
+-            }
++            throw new RuntimeException("An error occurred during registration.");
+         }
+-
+     }
+ 
+     public AccountResponse login(LoginRequest loginRequest) {
+         try {
+-            Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken( // xac
+-                                                                                                                        // thuc
+-                    // username , password (
+-                    // tu dong ma hoa password user va check tren database )
+-                    loginRequest.getEmail(), loginRequest.getPassword() // go to loadUserByUsername(String phone)
+-            // to check username in db first -> so sanh password db with request password
+-
+-            ));
+-            // ==> account exists
+-            Account account = (Account) authentication.getPrincipal(); // tra ve account tu database
++            Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
++                    loginRequest.getEmail(), loginRequest.getPassword()));
++            SecurityContextHolder.getContext().setAuthentication(authentication);
++
++            Optional<Account> optionalAccount = accountRepository.findByEmail(loginRequest.getEmail());
++            if (optionalAccount.isEmpty()) {
++                throw new EntityNotFoundException("Username or password is incorrect");
++            }
++
++            Account account = optionalAccount.get();
+             AccountResponse accountResponse = modelMapper.map(account, AccountResponse.class);
+             accountResponse.setToken(tokenService.generateToken(account));
+-            return accountResponse; // response thong tin account
++
++            return accountResponse;
+         } catch (Exception e) {
+             e.printStackTrace();
+             throw new EntityNotFoundException("Username or password is incorrect");
+         }
+-
+-    }
+-
+-    public List<Account> getAllAccounts() {
+-        List<Account> accounts = accountRepository.findAll();
+-        return accounts;
+-    }
+-
+-    @Override
+-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+-        System.out.println("Attempting to load user with email: " + email);
+-
+-        Account account = accountRepository.findAccountByEmail(email);
+-        if (account == null) {
+-            throw new UsernameNotFoundException("User not found with email: " + email);
+-        }
+-        return account;
+     }
+ 
+     public Account getCurrentAccount() {
+         Account account = (Account) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+-        // phai get thong tin user tu database
+-
+-        return accountRepository.findAccountById(account.getId());
++        return account;
+     }
+ 
+     public void forgotPassword(ForgotPasswordRequest request) {
+-        Account account = accountRepository.findByEmail(request.getEmail());
+-        if (account == null) {
+-            throw new EntityNotFoundException("Email không tồn tại");
+-        }
+-
+-        // Tạo token đặt lại mật khẩu
+-        String token = UUID.randomUUID().toString();
+-        account.setResetPasswordToken(token);
+-        account.setResetPasswordExpiration(LocalDateTime.now().plusHours(1)); // Token hết hạn sau 1 giờ
+-        accountRepository.save(account);
+-
+-        // Gửi email đặt lại mật khẩu
+-        emailService.sendResetPasswordEmail(account, token);
++        accountRepository.findByEmail(request.getEmail())
++                .ifPresentOrElse(account -> {
++                    String token = UUID.randomUUID().toString();
++                    account.setResetPasswordToken(token);
++                    account.setResetPasswordExpiration(LocalDateTime.now().plusHours(1));
++                    accountRepository.save(account);
++                    emailService.sendResetPasswordEmail(account, token);
++                }, () -> {
++                    throw new EntityNotFoundException("Email not found");
++                });
+     }
+ 
+-    // Phương thức đặt lại mật khẩu
+     public void resetPassword(ResetPasswordRequest request) {
+-        Account account = accountRepository.findByResetPasswordToken(request.getToken());
+-
+-        if (account == null || account.getResetPasswordExpiration().isBefore(LocalDateTime.now())) {
+-            throw new EntityNotFoundException("Token không hợp lệ hoặc đã hết hạn");
+-        }
++        accountRepository.findByResetPasswordToken(request.getToken()).ifPresentOrElse(account -> {
++            account.setPassword(passwordEncoder.encode(request.getNewPassword()));
++            account.setResetPasswordToken(null);
++            account.setResetPasswordExpiration(null);
++            accountRepository.save(account);
++        }, () -> {
++            throw new EntityNotFoundException("Token not found or expired");
++        });
+ 
+-        account.setPassword(passwordEncoder.encode(request.getNewPassword()));
+-        account.setResetPasswordToken(null); // Xóa token sau khi sử dụng
+-        account.setResetPasswordExpiration(null);
+-        accountRepository.save(account);
+     }
+ 
+ }
+diff --git a/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Service/TokenService.java b/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Service/TokenService.java
+index 7707a86..c205f2b 100644
+--- a/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Service/TokenService.java
++++ b/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Service/TokenService.java
+@@ -12,62 +12,50 @@ import org.springframework.stereotype.Service;
+ 
+ import javax.crypto.SecretKey;
+ import java.util.Date;
++import java.util.Optional;
+ 
+ @Service
+ public class TokenService {
+     @Autowired
+     private AccountRepository accountRepository;
+ 
+-    public final String SECRET_KEY = "4bb6d1dfbafb64a681139d1586b6f1160d18159afd57c8c79136d7490630407"; // Ensure this key is properly secured
++    public final String SECRET_KEY = "4bb6d1dfbafb64a681139d1586b6f1160d18159afd57c8c79136d7490630407";
+ 
+     private SecretKey getSigninKey() {
+         byte[] keyBytes = Decoders.BASE64.decode(SECRET_KEY);
+         return Keys.hmacShaKeyFor(keyBytes);
+     }
+ 
+-    // Create token
+     public String generateToken(Account account) {
+         return Jwts.builder()
+-                .setSubject(account.getId() + "") // Save unique ID information from user to token
++                .setSubject(account.getId() + "")
+                 .setIssuedAt(new Date(System.currentTimeMillis())) // Current time
+                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24)) // 1 day
+                 .signWith(getSigninKey())
+                 .compact();
+     }
+ 
+-    // Verify the token and return the associated account
+-    public Account getAccountByToken(String token) {
++    public Optional<Account> getAccountByToken(String token) {
+         Claims claims = Jwts.parserBuilder()
+                 .setSigningKey(getSigninKey())
+                 .build()
+                 .parseClaimsJws(token)
+-                .getBody(); // Get the body of the token
++                .getBody();
+ 
+         String idString = claims.getSubject();
+-        Long id = Long.parseLong(idString); // Convert to Long
+-        return accountRepository.findAccountById(id);
++        Long id = Long.parseLong(idString);
++        return accountRepository.findById(id);
+     }
+ 
+-    // Validate token
+     public boolean validateToken(String token) {
+         try {
+             Jwts.parserBuilder()
+                     .setSigningKey(getSigninKey())
+                     .build()
+                     .parseClaimsJws(token);
+-            return true; // Token is valid
++            return true;
+         } catch (Exception e) {
+-            return false; // Token is invalid or expired
++            return false;
+         }
+     }
+-
+-    // Get username from token
+-    public String getUsernameFromToken(String token) {
+-        Claims claims = Jwts.parserBuilder()
+-                .setSigningKey(getSigninKey())
+-                .build()
+-                .parseClaimsJws(token)
+-                .getBody();
+-        return claims.getSubject(); // Returns the user ID (or username)
+-    }
+ }
+diff --git a/Hair-Salon-Project/src/main/resources/application.properties b/Hair-Salon-Project/src/main/resources/application.properties
+index 10456be..fe534b0 100644
+--- a/Hair-Salon-Project/src/main/resources/application.properties
++++ b/Hair-Salon-Project/src/main/resources/application.properties
+@@ -2,13 +2,14 @@
+ spring.application.name=Hair-Salon-Project
+ 
+ # DataSource configuration
+-spring.datasource.url=jdbc:mysql://localhost:3306/HairSalon
+-spring.datasource.username=root
+-spring.datasource.password=1234
++spring.datasource.url=jdbc:postgresql://localhost:5432/hair_salon
++spring.datasource.username=admin
++spring.datasource.password=admin123
+ 
+ # Hibernate properties
+-spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQLDialect
++spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
+ spring.jpa.hibernate.ddl-auto=update
++spring.jpa.show-sql=true
+ 
+ # Enable circular references
+ spring.main.allow-circular-references=true

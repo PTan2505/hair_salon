@@ -23,7 +23,7 @@ public class ProductClone {
 
     private float productPrice;
 
-    private int point;
+    private int points;
 
     private String image;
 

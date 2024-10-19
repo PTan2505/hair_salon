@@ -41,7 +41,8 @@ public class SecurityConfig {
                         .requestMatchers("/api/login", "/api/register", "/swagger-ui/**", "/v3/api-docs/**",
                                 "/api/forgot-password", "/api/reset-password", "/api/admin/approve-customer/**")
                         .permitAll()
-                        .anyRequest().authenticated())
+                        // .anyRequest().authenticated())
+                        .anyRequest().permitAll())
                 .userDetailsService(userDetailsService)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class)

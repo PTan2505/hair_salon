@@ -9,14 +9,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.example.Hair_Salon_Project.Entity.ProductType;
 import com.example.Hair_Salon_Project.Model.ProductTypeRequest;
 import com.example.Hair_Salon_Project.Service.ProductTypeService;
 
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
-
-public class ProductTypeAPI {
+@RestController
+@RequestMapping("/api/admin/product-types")
+public class AdminProductTypeAPI {
     @Autowired
     private ProductTypeService productTypeService;
 
@@ -34,26 +37,16 @@ public class ProductTypeAPI {
         return ResponseEntity.ok(productType);
     }
 
-    // Create a new ProductType
     @PostMapping
     public ResponseEntity<ProductType> createProductType(@RequestBody ProductTypeRequest productTypeRequest) {
-        ProductType newProductType = new ProductType();
-        newProductType.setName(productTypeRequest.getName());
-        newProductType.setImage(productTypeRequest.getImage());
-
-        ProductType createdProductType = productTypeService.createProductType(newProductType);
+        ProductType createdProductType = productTypeService.createProductType(productTypeRequest);
         return ResponseEntity.ok(createdProductType);
     }
 
-    // Update an existing ProductType
     @PutMapping("/{id}")
     public ResponseEntity<ProductType> updateProductType(@PathVariable long id,
             @RequestBody ProductTypeRequest productTypeRequest) {
-        ProductType productTypeDetails = new ProductType();
-        productTypeDetails.setName(productTypeRequest.getName());
-        productTypeDetails.setImage(productTypeRequest.getImage());
-
-        ProductType updatedProductType = productTypeService.updateProductType(id, productTypeDetails);
+        ProductType updatedProductType = productTypeService.updateProductType(id, productTypeRequest);
         return ResponseEntity.ok(updatedProductType);
     }
 
