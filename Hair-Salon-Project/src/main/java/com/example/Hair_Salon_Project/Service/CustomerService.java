@@ -14,6 +14,9 @@
 // import java.util.ArrayList;
 // import java.util.List;
 
+// import java.time.LocalDate;
+// import java.time.LocalDateTime;
+
 // @Service
 // public class CustomerService {
 
@@ -59,16 +62,21 @@
 
 // booking.setProduct(product);
 
+// // Calculate the number of time slots needed
+// int numberOfTimeSlots = (product.getTime() + 29) / 30; // Round up to the
+// nearest half hour
+
 // // Check if the user has selected a stylist
 // if (bookingRequest.getStaff() != null) {
 // Staff selectedStaff =
 // staffRepository.findById(bookingRequest.getStaff().getId())
 // .orElseThrow(() -> new IllegalArgumentException("Stylist không tồn tại."));
-
 // booking.setStaff(selectedStaff);
 // } else {
 // // Automatically select an available stylist
-// Staff availableStaff = staffRepository.findAvailableStylist(Role.STYLIST);
+// Staff availableStaff = findAvailableStylist(bookingRequest.getBookingDate(),
+// numberOfTimeSlots,
+// product);
 // if (availableStaff == null) {
 // throw new IllegalArgumentException("Không có stylist nào rảnh.");
 // }
@@ -79,6 +87,40 @@
 // } catch (Exception e) {
 // throw new RuntimeException("Error creating booking: " + e.getMessage(), e);
 // }
+// }
+
+// private Staff findAvailableStylist(LocalDate bookingDate, int
+// numberOfTimeSlots, Product product) {
+// // Find available stylists (staff with the STYLIST role)
+// List<Staff> stylists = staffRepository.findAllByRole(Role.STYLIST);
+
+// // Check availability based on booking date and required time slots
+// for (Staff stylist : stylists) {
+// // Check if the stylist has available time slots
+// boolean isAvailable = true;
+
+// // Here, you would check against the stylist's existing bookings
+// // For example, check if the stylist has bookings during the required time
+// slots
+// // on the booking date
+// for (int i = 0; i < numberOfTimeSlots; i++) {
+// LocalDateTime bookingStartTime = bookingDate.atStartOfDay().plusMinutes(i *
+// 30);
+// LocalDateTime bookingEndTime = bookingStartTime.plusMinutes(30);
+// if
+// (bookingRepository.existsByStylistAndBookingDateAndTimeSlot(stylist.getId(),
+// bookingStartTime,
+// bookingEndTime)) {
+// isAvailable = false;
+// break;
+// }
+// }
+
+// if (isAvailable) {
+// return stylist; // Return the first available stylist
+// }
+// }
+// return null; // No available stylist found
 // }
 
 // public List<BookingStatus> getAllBooking() {

@@ -17,14 +17,18 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    private String productName;
+    private String name;
 
-    private float productPrice;
+    private float price;
 
-    private int productPoint;
+    private int points = 0;
+
+    private int time;
+
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_at", nullable = false, updatable = false)
     private Date createdAt;
+
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "updated_at")
     private Date updatedAt;
@@ -45,5 +49,4 @@ public class Product {
     protected void onUpdate() {
         this.updatedAt = new Date();
     }
-
 }

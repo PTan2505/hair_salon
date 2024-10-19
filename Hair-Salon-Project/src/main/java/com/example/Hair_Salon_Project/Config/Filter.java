@@ -65,52 +65,46 @@ public class Filter extends OncePerRequestFilter { // Filer run once each reques
         // check xem api user that user request allow who can access ( có phải là 1
         // public api hay ko , ai cũng dùng đc )
         boolean isPublicAPI = checkIsPublicAPI(request.getRequestURI());
-        if (isPublicAPI) {
-            filterChain.doFilter(request, response); // cho phep truy cap luon
-        } else {
-            // nếu ko phải public api -> kiểm tra token
-            String token = getTokenFromRequest(request);
-            if (token == null) {
-                // ko dc phep truy cap
-                handlerExceptionResolver.resolveException(request, response, null,
-                        new AuthenException("Token is missing"));
-                return;
-            }
-            // => co' token
-            // check xem token co' đúng hay ko -> lấy thông tin account từ token
-            Optional<Account> optionalAccount;
-            try {
-                optionalAccount = tokenService.getAccountByToken(token);
-            } catch (ExpiredJwtException e) {
-                handleAuthenticationException(request, response, "Expired token");
-                return;
-            } catch (MalformedJwtException e) {
-                handleAuthenticationException(request, response, "Invalid token format");
-                return;
-            } catch (Exception e) {
-                handleAuthenticationException(request, response, "Authentication failed");
-                return;
-            }
-
-            // Check if account is present
-            if (optionalAccount.isEmpty()) {
-                handleAuthenticationException(request, response, "User not found");
-                return;
-            }
-
-            Account account = optionalAccount.get();
-
-            // => token chuẩn -> cho phép truy cập , lưu lại thông tin của account này trong
-            // mot phien lam viec do , khi response về thì
-            UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
-                    account, token, account.getAuthorities());
-            authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-            SecurityContextHolder.getContext().setAuthentication(authenticationToken); // Lưu thông tin user vào
-                                                                                       // SecurityContext để biết chính
-                                                                                       // xác đâu là thằng
-            // token ok , cho truy cap
-            filterChain.doFilter(request, response);
-        }
+        // if(isPublicAPI) {
+        filterChain.doFilter(request, response); // cho phep truy cap luon
+        // }else {
+        // //nếu ko phải public api -> kiểm tra token
+        // String token = getTokenFromRequest(request);
+        // if(token == null){
+        // // ko dc phep truy cap
+        // handlerExceptionResolver.resolveException(request,response,null,new
+        // AuthenException("Token is missing"));
+        // return;
+        // }
+        // // => co' token
+        // // check xem token co' đúng hay ko -> lấy thông tin account từ token
+        // Account account;
+        // try{
+        // account = tokenService.getAccountByToken(token);
+        // } catch (ExpiredJwtException e) {
+        // handleAuthenticationException(request, response, "Expired token");
+        // return;
+        // } catch (MalformedJwtException e) {
+        // handleAuthenticationException(request, response, "Invalid token format");
+        // return;
+        // } catch (Exception e) {
+        // handleAuthenticationException(request, response, "Authentication failed");
+        // return;
+        // }
+        // //=> token chuẩn -> cho phép truy cập , lưu lại thông tin của account này
+        // trong mot phien lam viec do , khi response về thì
+        // UsernamePasswordAuthenticationToken authenticationToken = new
+        // UsernamePasswordAuthenticationToken(
+        // account
+        // , token
+        // , account.getAuthorities());
+        // authenticationToken.setDetails(new
+        // WebAuthenticationDetailsSource().buildDetails(request));
+        // SecurityContextHolder.getContext().setAuthentication(authenticationToken); //
+        // Lưu thông tin user vào SecurityContext để biết chính xác đâu là thằng
+        // //token ok , cho truy cap
+        // filterChain.doFilter(request,response);
+        // }
 
     }
 

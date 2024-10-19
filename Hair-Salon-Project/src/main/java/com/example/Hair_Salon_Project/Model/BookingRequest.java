@@ -1,20 +1,22 @@
-package com.example.Hair_Salon_Project.Model;
+// package com.example.Hair_Salon_Project.Model;
 
-import com.example.Hair_Salon_Project.Entity.Product;
-import com.example.Hair_Salon_Project.Entity.Staff;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
-import lombok.Data;
+// import lombok.Getter;
+// import lombok.Setter;
 
-import java.util.Date;
+// import com.example.Hair_Salon_Project.Entity.Product;
+// import com.example.Hair_Salon_Project.Entity.Staff;
+// import com.example.Hair_Salon_Project.Entity.TimeSlot;
 
-@Data
-public class BookingRequest {
-    String note;
-    String productType;
-    Date bookingDate;
-    @Temporal(TemporalType.TIMESTAMP)
-    Date createDate;
-    Staff staff;
-    Product product;
-}
+// import java.time.LocalDate;
+// import java.util.Date;;
+
+// @Getter
+// @Setter
+// public class BookingRequest {
+// private LocalDate bookingDate; // Date for the booking
+// private Product product; // Product associated with the booking
+// private Staff staff; // Selected staff for the booking
+// private String note; // Customer note for the booking
+// private Date createDate; // Date when the booking is created
+// private TimeSlot timeSlot; // New field for the selected time slot
+// }

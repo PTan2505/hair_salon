@@ -3,6 +3,7 @@ package com.example.Hair_Salon_Project.Config;
 import com.example.Hair_Salon_Project.Service.CustomUserDetailsService;
 
 import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -41,7 +42,8 @@ public class SecurityConfig {
                         .requestMatchers("/api/login", "/api/register", "/swagger-ui/**", "/v3/api-docs/**",
                                 "/api/forgot-password", "/api/reset-password", "/api/admin/approve-customer/**")
                         .permitAll()
-                        .anyRequest().authenticated())
+                        // .anyRequest().authenticated())
+                        .anyRequest().permitAll())
                 .userDetailsService(userDetailsService)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class)
@@ -55,6 +57,9 @@ public class SecurityConfig {
 
     @Bean
     public ModelMapper modelMapper() {
-        return new ModelMapper();
+        ModelMapper modelMapper = new ModelMapper();
+        modelMapper.getConfiguration()
+                .setMatchingStrategy(MatchingStrategies.STRICT);
+        return modelMapper;
     }
 }

@@ -19,16 +19,16 @@ public class Staff {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id; // PK for Staff
+    private long id;
 
     @OneToOne
-    @JoinColumn(name = "account_id", referencedColumnName = "id", nullable = false) // FK to Account
-    private Account account; // Reference to the corresponding Account
+    @JoinColumn(name = "account_id", referencedColumnName = "id", nullable = false)
+    private Account account;
 
-    private boolean isStaff; // Indicates if the user is still a staff member
+    private boolean isStaff;
 
     @Enumerated(EnumType.STRING)
-    private Role role; // Role of the staff (e.g., STYLIST, CASHIER, etc.)
+    private Role role;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "create_date", nullable = false, updatable = false)
@@ -40,13 +40,16 @@ public class Staff {
 
     @OneToMany(mappedBy = "staff")
     @JsonIgnore
-    private List<Booking> bookings; // Reference to bookings associated with the staff
+    private List<Booking> bookings;
 
     @OneToMany(mappedBy = "staff")
     @JsonIgnore
-    private List<Bill> bills; // Reference to bills associated with the staff
+    private List<Bill> bills;
 
-    // Lifecycle callbacks for date fields
+    @OneToMany(mappedBy = "staff")
+    @JsonIgnore
+    private List<TimeSlot> timeSlots;
+
     @PrePersist
     protected void onCreate() {
         this.createDate = new Date();
@@ -58,7 +61,7 @@ public class Staff {
     }
 
     public void setIsStaff(boolean isStaff) {
-        this.isStaff = isStaff; // Update the isStaff field with the provided value
+        this.isStaff = isStaff;
     }
 
 }
