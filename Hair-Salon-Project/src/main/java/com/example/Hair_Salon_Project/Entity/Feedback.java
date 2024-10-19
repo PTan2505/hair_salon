@@ -2,6 +2,7 @@ package com.example.Hair_Salon_Project.Entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Date;
@@ -9,28 +10,30 @@ import java.util.Date;
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
 public class Feedback {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @Column(nullable = false)
     private String feedbackText;
 
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "create_date", nullable = false, updatable = false)
     private Date createDate;
 
+    @Column(nullable = false)
     private int rating;
 
     @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "update_date")
     private Date updateDate;
 
     @ManyToOne
-    @JoinColumn(name = "account_id") // Tùy chọn: nếu có liên kết đến tài khoản
+    @JoinColumn(name = "account_id", nullable = false)
     private Account account;
-
-    @ManyToOne // Thêm thuộc tính staff với quan hệ ManyToOne
-    @JoinColumn(name = "staff_id") // Đảm bảo tên cột này tương ứng với bảng trong cơ sở dữ liệu
-    private Staff staff;
 
     @PrePersist
     protected void onCreate() {

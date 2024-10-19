@@ -1,7 +1,10 @@
 package com.example.Hair_Salon_Project.Entity;
 
 import com.example.Hair_Salon_Project.Entity.Enums.Role;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,6 +13,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -21,28 +25,40 @@ import java.util.List;
 @Entity
 @NoArgsConstructor
 public class Account implements UserDetails {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private long id; // PK for Account
 
+    @NotBlank(message = "First name is required")
     private String firstName;
+
+    @NotBlank(message = "Last name is required")
     private String lastName;
 
-    @Pattern(regexp = "^[A-Za-z0-9+_.-]+@(.+)$", message = "Invalid email format")
+    private LocalDate birthDate;
+
+    private String gender;
+
+    @Email(message = "Invalid email format")
     @Column(unique = true, nullable = false)
     private String email;
 
+    @NotBlank(message = "Password is required")
     private String password;
 
-    @Pattern(regexp = "(84|0[3|5|7|8|9])+(\\d{8})\\b", message = "Invalid phone number")
+    @Pattern(regexp = "(84|0[3|5|7|8|9])+([0-9]{8})\\b", message = "Invalid phone number")
     @Column(unique = true)
     private String phone;
 
-    @Temporal(TemporalType.DATE)
-    private Date birthday;
-
-    private String gender;
+    @Column(name = "is_active", nullable = false)
     private boolean active;
+
+    @Column(name = "is_super_user", nullable = false)
+    private boolean superUser;
+
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "create_date", nullable = false, updatable = false)
@@ -52,46 +68,60 @@ public class Account implements UserDetails {
     @Column(name = "update_date")
     private Date updateDate;
 
-    @OneToOne(mappedBy = "account", cascade = CascadeType.ALL)
-    private Staff staff;
-
-    @Enumerated(EnumType.STRING)
-    private Role role;
-
     private String resetPasswordToken;
+
     private LocalDateTime resetPasswordExpiration;
 
-    // UserDetails interface methods
+    // Relationships with Booking and Bill
+    @OneToMany(mappedBy = "account") // Reference to Booking's account
+    @JsonIgnore
+    private List<Booking> bookings;
+
+    @OneToMany(mappedBy = "account") // Reference to Bill's account
+    @JsonIgnore
+    private List<Bill> bills;
+
+    // Implement UserDetails methods
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<SimpleGrantedAuthority> authorities = new ArrayList<>();
-        if(this.role != null){
-            authorities.add(new SimpleGrantedAuthority(this.role.toString()));
+        if (this.role != null) {
+            authorities.add(new SimpleGrantedAuthority("ROLE_" + this.role.name()));
         }
         return authorities;
     }
 
     @Override
-    public String getPassword() { return this.password; }
+    public String getPassword() {
+        return this.password;
+    }
 
     @Override
-    public String getUsername() { return this.email; }
+    public String getUsername() {
+        return this.email;
+    }
 
     @Override
-    public boolean isAccountNonExpired() { return true; }
-
-    @Override
-    public boolean isAccountNonLocked() { return true; }
-
-    @Override
-    public boolean isCredentialsNonExpired() { return true; }
-
-    @Override
-    public boolean isEnabled() {
+    public boolean isAccountNonExpired() {
         return true;
     }
 
-    // Lifecycle callbacks to set dates
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return this.active;
+    }
+
+    // Lifecycle callbacks for date fields
     @PrePersist
     protected void onCreate() {
         this.createDate = new Date();
@@ -101,6 +131,4 @@ public class Account implements UserDetails {
     protected void onUpdate() {
         this.updateDate = new Date();
     }
-
-
 }

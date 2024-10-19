@@ -1,7 +1,7 @@
 package com.example.Hair_Salon_Project.Entity;
 
+import com.example.Hair_Salon_Project.Entity.Enums.BookingStatus; // Import the enum
 import jakarta.persistence.*;
-
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,28 +15,29 @@ public class Booking {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    String note;
+    private String note; // Optional note for the booking
 
-    private Date bookingDate;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date bookingDate; // Date and time for the booking
 
-    private String status;
+    @Enumerated(EnumType.STRING) // Use EnumType.STRING to store the enum as a String
+    private BookingStatus status = BookingStatus.PENDING; // Default status upon creation
 
     private Date createDate;
 
-    @Temporal(TemporalType.TIMESTAMP)
     private Date updateDate;
 
     @ManyToOne
-    @JoinColumn(name = "account_id")
-    private Account account;
+    @JoinColumn(name = "account_id", nullable = false)
+    private Account account; // Reference to the customer making the booking
 
     @ManyToOne
-    @JoinColumn(name = "staff_id")
-    private Staff staff;
+    @JoinColumn(name = "staff_id", nullable = false)
+    private Staff staff; // Reference to the assigned stylist
 
     @ManyToOne
-    @JoinColumn(name = "product_id")
-    private Product product;
+    @JoinColumn(name = "product_id", nullable = false)
+    private Product product; // Reference to the service being booked
 
     @PrePersist
     protected void onCreate() {
@@ -47,8 +48,4 @@ public class Booking {
     protected void onUpdate() {
         this.updateDate = new Date();
     }
-
-
-
-
 }

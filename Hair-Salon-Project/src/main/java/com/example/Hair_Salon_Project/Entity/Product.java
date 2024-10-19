@@ -2,44 +2,46 @@ package com.example.Hair_Salon_Project.Entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Date;
 import java.util.List;
 
-@Entity
 @Getter
 @Setter
+@Entity
+@NoArgsConstructor
 public class Product {
-    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-
-    private String type;
+    private long productId;
 
     private String productName;
 
     private float productPrice;
 
-    private int point;
-
-    private String image;
-
-    private Date createDate;
-
+    private int productPoint;
     @Temporal(TemporalType.TIMESTAMP)
-    private Date updateDate;
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private Date createdAt;
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "updated_at")
+    private Date updatedAt;
 
-    @OneToMany(mappedBy = "product") // Một nhân viên có thể có nhiều booking
+    @ManyToOne
+    @JoinColumn(name = "product_type_id", nullable = false)
+    private ProductType productType;
+
+    @OneToMany(mappedBy = "product")
     private List<Booking> bookings;
 
     @PrePersist
     protected void onCreate() {
-        this.createDate = new Date();
+        this.createdAt = new Date();
     }
 
     @PreUpdate
     protected void onUpdate() {
-        this.updateDate = new Date();
+        this.updatedAt = new Date();
     }
 }

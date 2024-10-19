@@ -11,38 +11,37 @@ import java.util.Date;
 @Setter
 @Entity
 @NoArgsConstructor
-public class ProductClone {
+public class ProductType {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    private String type;
-
-    private String productName;
-
-    private float productPrice;
-
-    private int point;
+    @Column(nullable = false, unique = true)
+    private String name;
 
     private String image;
 
-    private Date createDate;
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private Date createdAt;
 
     @Temporal(TemporalType.TIMESTAMP)
-    private Date updateDate;
+    @Column(name = "updated_at")
+    private Date updatedAt;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "original_product_id", nullable = true)
-    private Product originalProduct;
+    public ProductType(String name, String image) {
+        this.name = name;
+        this.image = image;
+    }
 
     @PrePersist
     protected void onCreate() {
-        this.createDate = new Date();
+        this.createdAt = new Date();
     }
 
     @PreUpdate
     protected void onUpdate() {
-        this.updateDate = new Date();
+        this.updatedAt = new Date();
     }
 }

@@ -2,6 +2,7 @@ package com.example.Hair_Salon_Project.Entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Date;
@@ -9,6 +10,7 @@ import java.util.Date;
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
 public class Bill {
 
     @Id
@@ -17,10 +19,12 @@ public class Bill {
 
     private long tip;
 
-    private long totalAmount;
-
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "create_date", nullable = false, updatable = false)
     private Date createDate;
 
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "update_date")
     private Date updateDate;
 
     @ManyToOne
@@ -34,4 +38,14 @@ public class Bill {
     @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product;
+
+    @PrePersist
+    protected void onCreate() {
+        this.createDate = new Date();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        this.updateDate = new Date();
+    }
 }
