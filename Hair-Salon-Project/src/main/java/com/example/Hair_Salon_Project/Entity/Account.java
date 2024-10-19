@@ -18,10 +18,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 
 @Getter
 @Setter
@@ -162,5 +162,9 @@ public class Account implements UserDetails {
         }
 
         return Role.CUSTOMER;
+    }
+
+    public String getFullName() {
+        return this.getFirstName() + " " + this.getLastName();
     }
 }

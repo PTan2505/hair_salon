@@ -46,10 +46,6 @@ public class Staff {
     @JsonIgnore
     private List<Bill> bills;
 
-    @OneToMany(mappedBy = "staff")
-    @JsonIgnore
-    private List<TimeSlot> timeSlots;
-
     @PrePersist
     protected void onCreate() {
         this.createDate = new Date();

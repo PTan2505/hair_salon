@@ -1,11 +1,15 @@
 package com.example.Hair_Salon_Project.Entity;
 
-import com.example.Hair_Salon_Project.Entity.Enums.BookingStatus; // Import the enum
+import com.example.Hair_Salon_Project.Entity.Enums.BookingStatus;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Date;
+import java.util.List;
+import java.util.Comparator;
 
 @Entity
 @Getter
@@ -15,13 +19,9 @@ public class Booking {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    private String note; // Optional note for the booking
+    private String note;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date bookingDate; // Date and time for the booking
-
-    @Enumerated(EnumType.STRING) // Use EnumType.STRING to store the enum as a String
-    private BookingStatus status = BookingStatus.PENDING; // Default status upon creation
+    private BookingStatus status = BookingStatus.PENDING;
 
     private Date createDate;
 
@@ -29,15 +29,22 @@ public class Booking {
 
     @ManyToOne
     @JoinColumn(name = "account_id", nullable = false)
-    private Account account; // Reference to the customer making the booking
+    private Account account;
 
     @ManyToOne
     @JoinColumn(name = "staff_id", nullable = false)
-    private Staff staff; // Reference to the assigned stylist
+    private Staff staff;
 
     @ManyToOne
     @JoinColumn(name = "product_id", nullable = false)
-    private Product product; // Reference to the service being booked
+    private ProductClone product;
+
+    @Column(nullable = false)
+    private LocalDate bookingDate;
+
+    @ManyToMany
+    @JoinTable(name = "booking_time_slot", joinColumns = @JoinColumn(name = "booking_id"), inverseJoinColumns = @JoinColumn(name = "time_slot_id"))
+    private List<TimeSlot> timeSlots;
 
     @PrePersist
     protected void onCreate() {
@@ -47,5 +54,19 @@ public class Booking {
     @PreUpdate
     protected void onUpdate() {
         this.updateDate = new Date();
+    }
+
+    public LocalTime getFirstStartTime() {
+        return timeSlots.stream()
+                .map(TimeSlot::getStartTime)
+                .min(Comparator.naturalOrder())
+                .orElse(null);
+    }
+
+    public LocalTime getLastEndTime() {
+        return timeSlots.stream()
+                .map(TimeSlot::getEndTime)
+                .max(Comparator.naturalOrder())
+                .orElse(null);
     }
 }
