@@ -1,6 +1,7 @@
 package com.example.Hair_Salon_Project.Config;
 
-import com.example.Hair_Salon_Project.Service.AuthenticationService;
+import com.example.Hair_Salon_Project.Service.CustomUserDetailsService;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -17,12 +18,12 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
-@EnableWebSecurity // Thêm annotation này
+@EnableWebSecurity
 @EnableMethodSecurity
 public class SecurityConfig {
 
     @Autowired
-    AuthenticationService authenticationService;
+    CustomUserDetailsService userDetailsService;
 
     @Autowired
     Filter filter;
@@ -37,16 +38,17 @@ public class SecurityConfig {
         return http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(req -> req
-                        .requestMatchers("/api/login", "/api/register", "/swagger-ui/**", "/v3/api-docs/**", "/api/forgot-password", "/api/reset-password", "/api/admin/approve-customer/**").permitAll()
-                        .anyRequest().authenticated()
-                )
-                .userDetailsService(authenticationService)
+                        .requestMatchers("/api/login", "/api/register", "/swagger-ui/**", "/v3/api-docs/**",
+                                "/api/forgot-password", "/api/reset-password", "/api/admin/approve-customer/**")
+                        .permitAll()
+                        .anyRequest().authenticated())
+                .userDetailsService(userDetailsService)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
 
-        @Bean
+    @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
         return configuration.getAuthenticationManager();
     }

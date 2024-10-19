@@ -6,31 +6,34 @@ import com.example.Hair_Salon_Project.Model.*;
 import com.example.Hair_Salon_Project.Repository.AccountRepository;
 import com.example.Hair_Salon_Project.Repository.StaffRepository;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.ConstraintViolationException;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
+import java.util.Optional;
 
 @Service
-public class AuthenticationService implements UserDetailsService {
+public class AuthenticationService {
 
     @Autowired
-    AccountRepository accountRepository; // ~ dao
+    AccountRepository accountRepository;
+
     @Autowired
     PasswordEncoder passwordEncoder;
+
     @Autowired
     AuthenticationManager authenticationManager;
+
     @Autowired
     ModelMapper modelMapper;
 
@@ -44,104 +47,92 @@ public class AuthenticationService implements UserDetailsService {
     StaffRepository staffRepository;
 
     public AccountResponse register(RegisterRequest registerRequest) {
-        Account newAccount = modelMapper.map(registerRequest, Account.class);
-
-        try {
-
-            newAccount.setPassword(passwordEncoder.encode(registerRequest.getPassword()));// encode password before save
-                                                                                          // to db
-            accountRepository.save(newAccount);
-            EmailDetail emailDetail = new EmailDetail();
-            emailDetail.setAccount(newAccount);
-            emailDetail.setSubject("Hello world");
-            emailDetail.setLink("https://www.google.com/");
-            emailService.sendEmail(emailDetail);
-            return modelMapper.map(newAccount, AccountResponse.class); // JPA có sẵn : INSERT INTO account(...) VALUES
-                                                                       // (....)
-
-        } catch (Exception e) {
-            if (e.getMessage().contains(newAccount.getEmail())) {
-                throw new DuplicateEntity("Duplicated  email ");
-            } else {
-                throw new DuplicateEntity("Duplicated  phone ");
-            }
+        // Check for existing email or phone
+        if (accountRepository.existsByEmail(registerRequest.getEmail())) {
+            throw new DuplicateEntity("Email already exists.");
         }
 
+        if (accountRepository.existsByPhone(registerRequest.getPhone())) {
+            throw new DuplicateEntity("Phone number already exists.");
+        }
+
+        // Map the RegisterRequest to Account
+        Account newAccount = modelMapper.map(registerRequest, Account.class);
+        newAccount.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
+        newAccount.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
+
+        // Save the new account and send the email
+        try {
+            accountRepository.save(newAccount);
+
+            EmailDetail emailDetail = new EmailDetail();
+            emailDetail.setAccount(newAccount);
+            emailDetail.setSubject("Welcome to Our Service");
+            emailDetail.setLink("https://www.google.com/");
+            emailService.sendEmail(emailDetail);
+
+            return modelMapper.map(newAccount, AccountResponse.class);
+        } catch (ConstraintViolationException e) {
+            String violations = e.getConstraintViolations().stream()
+                    .map(violation -> "Field: " + violation.getPropertyPath() + ", Message: " + violation.getMessage())
+                    .collect(Collectors.joining(", "));
+
+            throw new RuntimeException(violations);
+        } catch (Exception e) {
+            throw new RuntimeException("An error occurred during registration.");
+        }
     }
 
     public AccountResponse login(LoginRequest loginRequest) {
         try {
-            Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken( // xac
-                                                                                                                        // thuc
-                    // username , password (
-                    // tu dong ma hoa password user va check tren database )
-                    loginRequest.getEmail(), loginRequest.getPassword() // go to loadUserByUsername(String phone)
-            // to check username in db first -> so sanh password db with request password
+            Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
+                    loginRequest.getEmail(), loginRequest.getPassword()));
+            SecurityContextHolder.getContext().setAuthentication(authentication);
 
-            ));
-            // ==> account exists
-            Account account = (Account) authentication.getPrincipal(); // tra ve account tu database
+            Optional<Account> optionalAccount = accountRepository.findByEmail(loginRequest.getEmail());
+            if (optionalAccount.isEmpty()) {
+                throw new EntityNotFoundException("Username or password is incorrect");
+            }
+
+            Account account = optionalAccount.get();
             AccountResponse accountResponse = modelMapper.map(account, AccountResponse.class);
             accountResponse.setToken(tokenService.generateToken(account));
-            return accountResponse; // response thong tin account
+
+            return accountResponse;
         } catch (Exception e) {
             e.printStackTrace();
             throw new EntityNotFoundException("Username or password is incorrect");
         }
-
-    }
-
-    public List<Account> getAllAccounts() {
-        List<Account> accounts = accountRepository.findAll();
-        return accounts;
-    }
-
-    @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        System.out.println("Attempting to load user with email: " + email);
-
-        Account account = accountRepository.findAccountByEmail(email);
-        if (account == null) {
-            throw new UsernameNotFoundException("User not found with email: " + email);
-        }
-        return account;
     }
 
     public Account getCurrentAccount() {
         Account account = (Account) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        // phai get thong tin user tu database
-
-        return accountRepository.findAccountById(account.getId());
+        return account;
     }
 
     public void forgotPassword(ForgotPasswordRequest request) {
-        Account account = accountRepository.findByEmail(request.getEmail());
-        if (account == null) {
-            throw new EntityNotFoundException("Email không tồn tại");
-        }
-
-        // Tạo token đặt lại mật khẩu
-        String token = UUID.randomUUID().toString();
-        account.setResetPasswordToken(token);
-        account.setResetPasswordExpiration(LocalDateTime.now().plusHours(1)); // Token hết hạn sau 1 giờ
-        accountRepository.save(account);
-
-        // Gửi email đặt lại mật khẩu
-        emailService.sendResetPasswordEmail(account, token);
+        accountRepository.findByEmail(request.getEmail())
+                .ifPresentOrElse(account -> {
+                    String token = UUID.randomUUID().toString();
+                    account.setResetPasswordToken(token);
+                    account.setResetPasswordExpiration(LocalDateTime.now().plusHours(1));
+                    accountRepository.save(account);
+                    emailService.sendResetPasswordEmail(account, token);
+                }, () -> {
+                    throw new EntityNotFoundException("Email not found");
+                });
     }
 
-    // Phương thức đặt lại mật khẩu
     public void resetPassword(ResetPasswordRequest request) {
-        Account account = accountRepository.findByResetPasswordToken(request.getToken());
+        accountRepository.findByResetPasswordToken(request.getToken()).ifPresentOrElse(account -> {
+            account.setPassword(passwordEncoder.encode(request.getNewPassword()));
+            account.setResetPasswordToken(null);
+            account.setResetPasswordExpiration(null);
+            accountRepository.save(account);
+        }, () -> {
+            throw new EntityNotFoundException("Token not found or expired");
+        });
 
-        if (account == null || account.getResetPasswordExpiration().isBefore(LocalDateTime.now())) {
-            throw new EntityNotFoundException("Token không hợp lệ hoặc đã hết hạn");
-        }
-
-        account.setPassword(passwordEncoder.encode(request.getNewPassword()));
-        account.setResetPasswordToken(null); // Xóa token sau khi sử dụng
-        account.setResetPasswordExpiration(null);
-        accountRepository.save(account);
     }
 
 }

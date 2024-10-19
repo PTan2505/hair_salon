@@ -1,11 +1,12 @@
 package com.example.Hair_Salon_Project.Entity;
 
-import com.example.Hair_Salon_Project.Entity.Enums.Role;
+import com.example.Hair_Salon_Project.Entity.Enums.Gender;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -38,27 +39,27 @@ public class Account implements UserDetails {
 
     private LocalDate birthDate;
 
-    private String gender;
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
 
     @Email(message = "Invalid email format")
     @Column(unique = true, nullable = false)
     private String email;
 
     @NotBlank(message = "Password is required")
+    @Size(min = 8, message = "New password must be at least 8 characters long")
     private String password;
 
     @Pattern(regexp = "(84|0[3|5|7|8|9])+([0-9]{8})\\b", message = "Invalid phone number")
+    @NotBlank(message = "Phone is required")
     @Column(unique = true)
     private String phone;
 
     @Column(name = "is_active", nullable = false)
-    private boolean isActive;
+    private boolean isActive = true;
 
     @Column(name = "is_super_user", nullable = false)
-    private boolean superUser;
-
-    @Enumerated(EnumType.STRING)
-    private Role role;
+    private boolean superUser = false;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "create_date", nullable = false, updatable = false)
@@ -85,9 +86,9 @@ public class Account implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<SimpleGrantedAuthority> authorities = new ArrayList<>();
-        if (this.role != null) {
-            authorities.add(new SimpleGrantedAuthority("ROLE_" + this.role.name()));
-        }
+        // if (this.role != null) {
+        // authorities.add(new SimpleGrantedAuthority("ROLE_" + this.role.name()));
+        // }
         return authorities;
     }
 

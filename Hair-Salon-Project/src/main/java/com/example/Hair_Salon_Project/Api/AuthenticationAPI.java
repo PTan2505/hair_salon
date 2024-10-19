@@ -35,14 +35,14 @@ public class AuthenticationAPI {
     @PostMapping("forgot-password")
     public ResponseEntity<String> forgotPassword(@Valid @RequestBody ForgotPasswordRequest request) {
         authenticationService.forgotPassword(request);
-        return ResponseEntity.ok("Một email đã được gửi để đặt lại mật khẩu của bạn.");
+        return ResponseEntity.ok("You've received an email to reset password");
     }
 
     @Operation(summary = "Reset password", description = "Reset user's password using the token sent via email")
     @PostMapping("reset-password")
     public ResponseEntity<String> resetPassword(@Valid @RequestBody ResetPasswordRequest request) {
         authenticationService.resetPassword(request);
-        return ResponseEntity.ok("Mật khẩu của bạn đã được cập nhật thành công.");
+        return ResponseEntity.ok("Password updated successfully");
     }
 
 }
