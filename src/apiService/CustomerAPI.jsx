@@ -1,8 +1,6 @@
 export const fetchCustomers = async () => {
   try {
-    const response = await fetch(
-      "https://67066a87a0e04071d226c4b3.mockapi.io/customers"
-    );
+    const response = await fetch("");
     if (!response.ok) {
       throw new Error("Failed to fetch customers");
     }
