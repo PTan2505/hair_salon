@@ -2,8 +2,11 @@ package com.example.Hair_Salon_Project.Service;
 
 import com.example.Hair_Salon_Project.Entity.Staff;
 import com.example.Hair_Salon_Project.Entity.Account;
+import com.example.Hair_Salon_Project.Exception.DuplicateEntity;
 import com.example.Hair_Salon_Project.Exception.NotFoundException;
+import com.example.Hair_Salon_Project.Model.AccountUpdateRequest;
 import com.example.Hair_Salon_Project.Model.StaffRequest;
+import com.example.Hair_Salon_Project.Model.StaffResponse;
 import com.example.Hair_Salon_Project.Repository.StaffRepository;
 import com.example.Hair_Salon_Project.Repository.AccountRepository;
 import org.modelmapper.ModelMapper;
@@ -25,22 +28,31 @@ public class StaffService {
     private AccountRepository accountRepository;
 
     @Autowired
+    private AuthenticationService authenticationService;
+
+    @Autowired
     private ModelMapper modelMapper;
 
+    // TODO: change role
     public List<Staff> getAllStaff() {
         return staffRepository.findAll();
     }
 
     public Staff getStaffById(long id) {
+        // TODO: Check if role != MANAGER, only can get that staff id
         return staffRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Staff not found with id: " + id));
     }
 
     public Staff addStaffByPhone(StaffRequest staffRequest) {
         Optional<Staff> existingStaff = staffRepository.findByPhone(staffRequest.getPhone());
-        if (existingStaff.isPresent()) {
+        if (existingStaff.isPresent() && existingStaff.get().isStaff()) {
             throw new RuntimeException(
                     "Staff member already exists with phone: " + staffRequest.getPhone());
+        } else if (existingStaff.isPresent() && !existingStaff.get().isStaff()) {
+            Staff addStaff = existingStaff.get();
+            addStaff.setIsStaff(true);
+            return staffRepository.save(addStaff);
         }
 
         Optional<Account> existingAccount = accountRepository.findByPhone(staffRequest.getPhone());
@@ -55,10 +67,17 @@ public class StaffService {
         }
     }
 
-    public Staff updateStaff(long id, StaffRequest staffRequest) {
+    public Staff updateStaff(long id, AccountUpdateRequest accountUpdateRequest) {
         try {
             Staff staff = getStaffById(id);
-            modelMapper.map(staffRequest, staff); // Map the request to the existing staff entity
+            Account currentAccount = authenticationService.getCurrentAccount();
+            if (staff.getAccount() == null || staff.getAccount().getId() != currentAccount.getId()) {
+                throw new RuntimeException("You do not have permission to update this staff member's account.");
+            }
+            if (accountRepository.existsByPhone(accountUpdateRequest.getPhone())) {
+                throw new DuplicateEntity("Phone number already exists.");
+            }
+            modelMapper.map(accountUpdateRequest, staff.getAccount());
             return staffRepository.save(staff);
         } catch (ConstraintViolationException e) {
             String violations = e.getConstraintViolations().stream()
@@ -69,8 +88,30 @@ public class StaffService {
         }
     }
 
-    public void deleteStaff(long id) {
+    public Staff deactivateStaff(long id) {
         Staff staff = getStaffById(id);
-        staffRepository.delete(staff);
+        staff.setIsStaff(false);
+        return staffRepository.save(staff);
+    }
+
+    public StaffResponse generateStaffResponse(Staff staff) {
+        StaffResponse response = new StaffResponse();
+        response.setStaffId(staff.getId());
+        response.setRole(staff.getRole().name());
+        response.setStaff(staff.isStaff());
+        Account account = staff.getAccount();
+        response.setFirstName(account.getFirstName());
+        response.setLastName(account.getLastName());
+        response.setEmail(account.getEmail());
+        response.setPhone(account.getPhone());
+        response.setGender(account.getGender().name());
+        response.setBirthDate(account.getBirthDate());
+        return response;
+    }
+
+    public List<StaffResponse> generateStaffResponseList(List<Staff> staffList) {
+        return staffList.stream()
+                .map(this::generateStaffResponse) // Use the existing method
+                .collect(Collectors.toList());
     }
 }

@@ -4,46 +4,54 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import com.example.Hair_Salon_Project.Entity.Account;
 import com.example.Hair_Salon_Project.Entity.Staff;
+import com.example.Hair_Salon_Project.Model.AccountUpdateRequest;
 import com.example.Hair_Salon_Project.Model.StaffRequest;
 import com.example.Hair_Salon_Project.Model.StaffResponse;
 import com.example.Hair_Salon_Project.Service.StaffService;
 
 @RestController
 @RequestMapping("/api/admin/staffs")
+@PreAuthorize("hasRole('MANAGER')")
 public class AdminStaffAPI {
 
     @Autowired
     private StaffService staffService;
 
     @GetMapping
-    public ResponseEntity<List<Staff>> getAllStaff() {
+    public ResponseEntity<List<StaffResponse>> getAllStaff() {
         List<Staff> staffs = staffService.getAllStaff();
-        return ResponseEntity.ok(staffs);
+        return ResponseEntity.ok(staffService.generateStaffResponseList(staffs));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<StaffResponse> getStaffById(@PathVariable Long id) {
+        Staff staffs = staffService.getStaffById(id);
+        return ResponseEntity.ok(staffService.generateStaffResponse(staffs));
     }
 
     @PostMapping
     public ResponseEntity<StaffResponse> addStaff(@RequestBody StaffRequest staffRequest) {
         Staff addedStaff = staffService.addStaffByPhone(staffRequest);
-        return ResponseEntity.ok(convertToStaffResponse(addedStaff));
+        return ResponseEntity.ok(staffService.generateStaffResponse(addedStaff));
     }
 
-    private StaffResponse convertToStaffResponse(Staff staff) {
-        StaffResponse response = new StaffResponse();
-        response.setStaffId(staff.getId());
-        response.setRole(staff.getRole().name());
-        response.setStaff(staff.isStaff());
-        Account account = staff.getAccount();
-        response.setFirstName(account.getFirstName());
-        response.setLastName(account.getLastName());
-        response.setEmail(account.getEmail());
-        response.setPhone(account.getPhone());
-        response.setGender(account.getGender().name());
-        response.setBirthDate(account.getBirthDate());
-
-        return response;
+    @PutMapping("/{id}")
+    public ResponseEntity<StaffResponse> updateStaff(
+            @PathVariable long id,
+            @RequestBody AccountUpdateRequest accountUpdateRequest) {
+        Staff updatedStaff = staffService.updateStaff(id, accountUpdateRequest);
+        return ResponseEntity.ok(staffService.generateStaffResponse(updatedStaff));
     }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<StaffResponse> deactivateStaff(
+            @PathVariable long id) {
+        Staff deactivateStaff = staffService.deactivateStaff(id);
+        return ResponseEntity.ok(staffService.generateStaffResponse(deactivateStaff));
+    }
+
 }
