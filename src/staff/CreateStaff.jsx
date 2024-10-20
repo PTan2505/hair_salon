@@ -57,43 +57,6 @@ export default function CreateStaff({ showModal, setShowModal }) {
             />
           </Form.Group>
           <Form.Group className="mb-3">
-            <Form.Label>Phone Number (SĐT)</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Enter staff phone number"
-              name="phone"
-              value={newStaff.phone}
-              onChange={handleChange}
-              required
-            />
-          </Form.Group>
-          <Form.Group className="mb-3">
-            <Form.Label>Email</Form.Label>
-            <Form.Control
-              type="email"
-              placeholder="Enter staff email"
-              name="email"
-              value={newStaff.email}
-              onChange={handleChange}
-              required
-            />
-          </Form.Group>
-          <Form.Group className="mb-3">
-            <Form.Label>Gender</Form.Label>
-            <Form.Control
-              as="select"
-              name="gender"
-              value={newStaff.gender}
-              onChange={handleChange}
-              required
-            >
-              <option value="">Select Gender</option>
-              <option value="male">Male</option>
-              <option value="female">Female</option>
-              <option value="other">Other</option>
-            </Form.Control>
-          </Form.Group>
-          <Form.Group className="mb-3">
             <Form.Label>Role</Form.Label>
             <Form.Control
               type="text"
