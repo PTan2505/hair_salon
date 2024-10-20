@@ -1,0 +1,37 @@
+[
+    {
+        "name": "Hair Shampoo",
+        "price": 15.99,
+        "points": 10,
+        "time": 30,
+        "productTypeId":1
+    },
+    {
+        "name": "Hair Conditioner",
+        "price": 12.99,
+        "points": 8,
+        "time": 30,
+        "productTypeId":1
+    },
+    {
+        "name": "Hair Styling Gel",
+        "price": 10.50,
+        "points": 5,
+        "time": 15,
+        "productTypeId":1
+    },
+    {
+        "name": "Hair Spray",
+        "price": 9.99,
+        "points": 5,
+        "time": 20,
+        "productTypeId":1
+    },
+    {
+        "name": "Hair Mask",
+        "price": 20.00,
+        "points": 15,
+        "time": 45,
+        "productTypeId":1
+    }
+]
