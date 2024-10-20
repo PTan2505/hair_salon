@@ -22,7 +22,7 @@ public class StaffService {
     private StaffRepository staffRepository;
 
     @Autowired
-    private AccountRepository accountRepository; // Assuming you have an AccountRepository
+    private AccountRepository accountRepository;
 
     @Autowired
     private ModelMapper modelMapper;
@@ -31,15 +31,19 @@ public class StaffService {
         return staffRepository.findAll();
     }
 
-    public Staff addStaffByEmailOrPhone(StaffRequest staffRequest) {
-        // Check if staff already exists
-        Optional<Staff> existingStaff = staffRepository.findByEmailOrPhone(staffRequest.getEmailOrPhone());
+    public Staff getStaffById(long id) {
+        return staffRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Staff not found with id: " + id));
+    }
+
+    public Staff addStaffByPhone(StaffRequest staffRequest) {
+        Optional<Staff> existingStaff = staffRepository.findByPhone(staffRequest.getPhone());
         if (existingStaff.isPresent()) {
             throw new RuntimeException(
-                    "Staff member already exists with email or phone: " + staffRequest.getEmailOrPhone());
+                    "Staff member already exists with phone: " + staffRequest.getPhone());
         }
 
-        Optional<Account> existingAccount = accountRepository.findByEmailOrPhone(staffRequest.getEmailOrPhone());
+        Optional<Account> existingAccount = accountRepository.findByPhone(staffRequest.getPhone());
         if (existingAccount.isPresent()) {
             Account account = existingAccount.get();
             Staff newStaff = new Staff();
@@ -47,13 +51,8 @@ public class StaffService {
             newStaff.setRole(staffRequest.getRoleEnum());
             return staffRepository.save(newStaff);
         } else {
-            throw new NotFoundException("No account found with email or phone: " + staffRequest.getEmailOrPhone());
+            throw new NotFoundException("No account found with phone: " + staffRequest.getPhone());
         }
-    }
-
-    public Staff getStaffById(long id) {
-        return staffRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Staff not found with id: " + id));
     }
 
     public Staff updateStaff(long id, StaffRequest staffRequest) {
