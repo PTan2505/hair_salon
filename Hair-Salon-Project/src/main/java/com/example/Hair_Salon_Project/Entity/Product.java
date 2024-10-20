@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Date;
-import java.util.List;
 
 @Getter
 @Setter
@@ -23,7 +22,7 @@ public class Product {
 
     private int points = 0;
 
-    private int time;
+    private int time; // In minute
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_at", nullable = false, updatable = false)
@@ -36,9 +35,6 @@ public class Product {
     @ManyToOne
     @JoinColumn(name = "product_type_id", nullable = false)
     private ProductType productType;
-
-    @OneToMany(mappedBy = "product")
-    private List<Booking> bookings;
 
     @PrePersist
     protected void onCreate() {

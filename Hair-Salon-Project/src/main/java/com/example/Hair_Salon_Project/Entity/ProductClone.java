@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
@@ -35,6 +36,9 @@ public class ProductClone {
     @ManyToOne(optional = false)
     @JoinColumn(name = "original_product_id", nullable = true)
     private Product originalProduct;
+
+    @OneToMany(mappedBy = "product")
+    private List<Booking> bookings;
 
     @PrePersist
     protected void onCreate() {

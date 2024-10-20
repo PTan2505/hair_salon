@@ -2,6 +2,7 @@ package com.example.Hair_Salon_Project.Service;
 
 import com.example.Hair_Salon_Project.Entity.Account;
 import com.example.Hair_Salon_Project.Exception.DuplicateEntity;
+import com.example.Hair_Salon_Project.Exception.ValidationException;
 import com.example.Hair_Salon_Project.Model.*;
 import com.example.Hair_Salon_Project.Repository.AccountRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -73,7 +74,7 @@ public class AuthenticationService {
                     .map(violation -> "Field: " + violation.getPropertyPath() + ", Message: " + violation.getMessage())
                     .collect(Collectors.joining(", "));
 
-            throw new RuntimeException(violations);
+            throw new ValidationException(violations);
         } catch (Exception e) {
             throw new RuntimeException("An error occurred during registration.");
         }

@@ -1,9 +1,11 @@
 package com.example.Hair_Salon_Project.Service;
 
 import com.example.Hair_Salon_Project.Entity.Product;
+import com.example.Hair_Salon_Project.Entity.ProductClone;
 import com.example.Hair_Salon_Project.Entity.ProductType;
 import com.example.Hair_Salon_Project.Exception.NotFoundException;
 import com.example.Hair_Salon_Project.Model.ProductRequest;
+import com.example.Hair_Salon_Project.Repository.ProductCloneRepository;
 import com.example.Hair_Salon_Project.Repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +20,9 @@ public class ProductService {
 
     @Autowired
     private ProductRepository productRepository;
+
+    @Autowired
+    private ProductCloneRepository productCloneRepository;
 
     @Autowired
     private ProductTypeService productTypeService;
@@ -70,6 +75,19 @@ public class ProductService {
     public void deleteProduct(long id) {
         Product product = getProductById(id);
         productRepository.delete(product);
+    }
+
+    public ProductClone cloneProduct(Product originalProduct) {
+        ProductType productType = originalProduct.getProductType();
+
+        ProductClone clonedProduct = new ProductClone();
+        clonedProduct.setType(productType.getName());
+        clonedProduct.setImage(productType.getImage());
+        clonedProduct.setProductName(originalProduct.getName());
+        clonedProduct.setProductPrice(originalProduct.getPrice());
+        clonedProduct.setPoints(originalProduct.getPoints());
+
+        return productCloneRepository.save(clonedProduct);
     }
 
 }

@@ -5,21 +5,12 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 
-import jakarta.validation.constraints.NotBlank;
-
 @Getter
 @Setter
-public class BookingRequest {
+public class BookingResponse {
     private String note;
-
     private Long staffId;
-
-    @NotBlank(message = "Product is required")
     private Long productId;
-
-    @NotBlank(message = "Timeslot is required")
     private Long timeSlotId;
-
-    @NotBlank(message = "Booking date is required")
     private LocalDate bookingDate;
 }
