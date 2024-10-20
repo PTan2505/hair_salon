@@ -106,6 +106,10 @@ public class Account implements UserDetails {
             return authorities;
         }
         if (this.staff != null) {
+            if (!this.staff.isStaff()) {
+                return authorities;
+            }
+
             Role role = this.staff.getRole();
             if (role != null) {
                 if (role == Role.MANAGER) {

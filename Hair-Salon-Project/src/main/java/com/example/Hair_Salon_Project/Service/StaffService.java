@@ -33,11 +33,13 @@ public class StaffService {
     @Autowired
     private ModelMapper modelMapper;
 
+    // TODO: change role
     public List<Staff> getAllStaff() {
         return staffRepository.findAll();
     }
 
     public Staff getStaffById(long id) {
+        // TODO: Check if role != MANAGER, only can get that staff id
         return staffRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Staff not found with id: " + id));
     }
