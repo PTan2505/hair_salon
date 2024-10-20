@@ -42,7 +42,7 @@ public class AuthenticationService {
     @Autowired
     EmailService emailService;
 
-    public AccountResponse register(RegisterRequest registerRequest) {
+    public LoginResponse register(RegisterRequest registerRequest) {
         // Check for existing email or phone
         if (accountRepository.existsByEmail(registerRequest.getEmail())) {
             throw new DuplicateEntity("Email already exists.");
@@ -67,7 +67,7 @@ public class AuthenticationService {
             emailDetail.setLink("https://www.google.com/");
             emailService.sendEmail(emailDetail);
 
-            return modelMapper.map(newAccount, AccountResponse.class);
+            return modelMapper.map(newAccount, LoginResponse.class);
         } catch (ConstraintViolationException e) {
             String violations = e.getConstraintViolations().stream()
                     .map(violation -> "Field: " + violation.getPropertyPath() + ", Message: " + violation.getMessage())
@@ -79,7 +79,7 @@ public class AuthenticationService {
         }
     }
 
-    public AccountResponse login(LoginRequest loginRequest) {
+    public LoginResponse login(LoginRequest loginRequest) {
         try {
             Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                     loginRequest.getEmail(), loginRequest.getPassword()));
@@ -91,11 +91,11 @@ public class AuthenticationService {
             }
 
             Account account = optionalAccount.get();
-            AccountResponse accountResponse = modelMapper.map(account, AccountResponse.class);
-            accountResponse.setToken(tokenService.generateToken(account));
-            accountResponse.setRole(account.getRole());
+            LoginResponse LoginResponse = modelMapper.map(account, LoginResponse.class);
+            LoginResponse.setToken(tokenService.generateToken(account));
+            LoginResponse.setRole(account.getRole());
 
-            return accountResponse;
+            return LoginResponse;
         } catch (Exception e) {
             e.printStackTrace();
             throw new EntityNotFoundException("Username or password is incorrect");

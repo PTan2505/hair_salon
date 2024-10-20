@@ -13,9 +13,4 @@ public class FeedbackService {
     @Autowired
     private FeedbackRepository feedbackRepository;
 
-    @Autowired
-
-    public List<Feedback> getFeedbacksByStaff(long staffId) {
-        return feedbackRepository.findAll();
-    }
 }
