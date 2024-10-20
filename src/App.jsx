@@ -6,6 +6,7 @@ import Customer from "./customer/Customer";
 import Appointment from "./appointment/Appointment";
 import React from "react";
 import Service from "./service/Service";
+import Staff from "./staff/Staff";
 import ServiceType from "./service/ServiceType";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -23,6 +24,7 @@ function App() {
               path={"/appointment/:endpoint"}
               element={<Appointment />}
             ></Route>
+            <Route path={"/staff"} element={<Staff />}></Route>
             <Route path={"/service"} element={<Service />}></Route>
             <Route path={"/serviceType"} element={<ServiceType />}></Route>
           </Routes>
