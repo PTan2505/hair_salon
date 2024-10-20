@@ -4,8 +4,8 @@ import com.example.Hair_Salon_Project.Entity.Account;
 import com.example.Hair_Salon_Project.Exception.DuplicateEntity;
 import com.example.Hair_Salon_Project.Exception.ValidationException;
 import com.example.Hair_Salon_Project.Model.*;
+import com.example.Hair_Salon_Project.Exception.NotFoundException;
 import com.example.Hair_Salon_Project.Repository.AccountRepository;
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.ConstraintViolationException;
 
 import org.modelmapper.ModelMapper;
@@ -88,7 +88,7 @@ public class AuthenticationService {
 
             Optional<Account> optionalAccount = accountRepository.findByEmail(loginRequest.getEmail());
             if (optionalAccount.isEmpty()) {
-                throw new EntityNotFoundException("Username or password is incorrect");
+                throw new NotFoundException("Username or password is incorrect");
             }
 
             Account account = optionalAccount.get();
@@ -98,8 +98,7 @@ public class AuthenticationService {
 
             return LoginResponse;
         } catch (Exception e) {
-            e.printStackTrace();
-            throw new EntityNotFoundException("Username or password is incorrect");
+            throw new NotFoundException("Username or password is incorrect");
         }
     }
 
@@ -117,7 +116,7 @@ public class AuthenticationService {
                     accountRepository.save(account);
                     emailService.sendResetPasswordEmail(account, token);
                 }, () -> {
-                    throw new EntityNotFoundException("Email not found");
+                    throw new NotFoundException("Email not found");
                 });
     }
 
@@ -128,7 +127,7 @@ public class AuthenticationService {
             account.setResetPasswordExpiration(null);
             accountRepository.save(account);
         }, () -> {
-            throw new EntityNotFoundException("Token not found or expired");
+            throw new NotFoundException("Token not found or expired");
         });
 
     }

@@ -5,6 +5,8 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import jakarta.validation.constraints.NotBlank;
 
 @Getter
@@ -21,5 +23,6 @@ public class BookingRequest {
     private Long timeSlotId;
 
     @NotBlank(message = "Booking date is required")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM-dd-yyyy")
     private LocalDate bookingDate;
 }

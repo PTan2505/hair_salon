@@ -2,11 +2,12 @@ package com.example.Hair_Salon_Project.Service;
 
 import com.example.Hair_Salon_Project.Model.BookingRequest;
 import com.example.Hair_Salon_Project.Model.BookingResponse;
+import com.example.Hair_Salon_Project.Model.ProductCloneResponse;
 import com.example.Hair_Salon_Project.Entity.*;
 import com.example.Hair_Salon_Project.Entity.Enums.BookingStatus;
+import com.example.Hair_Salon_Project.Entity.Enums.Role;
 import com.example.Hair_Salon_Project.Exception.NotFoundException;
 import com.example.Hair_Salon_Project.Exception.ValidationException;
-import com.example.Hair_Salon_Project.Repository.AccountRepository;
 import com.example.Hair_Salon_Project.Repository.BookingRepository;
 import com.example.Hair_Salon_Project.Repository.ProductRepository;
 import com.example.Hair_Salon_Project.Repository.StaffRepository;
@@ -14,8 +15,6 @@ import com.example.Hair_Salon_Project.Repository.TimeSlotRepository;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -32,9 +31,6 @@ public class BookingService {
     private BookingRepository bookingRepository;
 
     @Autowired
-    private AccountRepository accountRepository;
-
-    @Autowired
     private StaffRepository staffRepository;
 
     @Autowired
@@ -47,13 +43,13 @@ public class BookingService {
     private TimeSlotRepository timeSlotRepository;
 
     @Autowired
+    private AuthenticationService authenticationService;
+
+    @Autowired
     private ModelMapper modelMapper;
 
-    public BookingResponse createBooking(BookingRequest bookingRequest) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String email = authentication.getName();
-        Account account = accountRepository.findByEmail(email)
-                .orElseThrow(() -> new NotFoundException("Account not found with email: " + email));
+    public Booking createBooking(BookingRequest bookingRequest) {
+        Account account = authenticationService.getCurrentAccount();
 
         Product product = productRepository.findById(bookingRequest.getProductId())
                 .orElseThrow(
@@ -66,7 +62,8 @@ public class BookingService {
         ArrayList<TimeSlot> timeSlots = getRequiredTimeSlots(bookingRequest.getTimeSlotId(), numberOfRequiredTimeSlots);
 
         // Validate the booking time
-        if (LocalDateTime.now().isAfter(bookingRequest.getBookingDate().atStartOfDay())) {
+
+        if (LocalDate.now().isAfter(bookingRequest.getBookingDate())) {
             throw new ValidationException("Cannot create booking in the past.");
         }
 
@@ -83,6 +80,11 @@ public class BookingService {
             staff = staffRepository.findById(bookingRequest.getStaffId())
                     .orElseThrow(
                             () -> new NotFoundException("Staff not found with id: " + bookingRequest.getStaffId()));
+
+            if (staff.getRole() != Role.STYLIST) {
+                throw new ValidationException("Only stylist can receive booking.");
+            }
+
             if (!isStaffAvailable(staff, timeSlots, bookingRequest.getBookingDate())) {
                 throw new ValidationException("Selected staff is not available for the chosen time slot.");
             }
@@ -97,7 +99,7 @@ public class BookingService {
         booking.setTimeSlots(timeSlots);
 
         Booking savedBooking = bookingRepository.save(booking);
-        return modelMapper.map(savedBooking, BookingResponse.class);
+        return savedBooking;
     }
 
     private ArrayList<TimeSlot> getRequiredTimeSlots(Long timeSlotId, int numberOfRequiredTimeSlots) {
@@ -128,7 +130,7 @@ public class BookingService {
     }
 
     private Staff findLeastBusyStaff(ArrayList<TimeSlot> timeSlots, LocalDate bookingDate) {
-        return staffRepository.findAll().stream()
+        return staffRepository.findByRole(Role.STYLIST).stream()
                 .filter(staff -> isStaffAvailable(staff, timeSlots, bookingDate))
                 .min((s1, s2) -> Integer.compare(countBookings(s1, bookingDate), countBookings(s2, bookingDate)))
                 .orElseThrow(() -> new ValidationException("No available staff members for the selected time slots."));
@@ -138,24 +140,17 @@ public class BookingService {
         return bookingRepository.countByStaffAndBookingDateAndStatusNot(staff, bookingDate, BookingStatus.CANCELLED);
     }
 
-    public ArrayList<BookingResponse> getListBookings() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String email = authentication.getName();
-        Account account = accountRepository.findByEmail(email)
-                .orElseThrow(() -> new NotFoundException("Account not found with email: " + email));
+    public ArrayList<Booking> getListBookings() {
+        Account account = authenticationService.getCurrentAccount();
 
-        // Retrieve all bookings associated with the logged account
         ArrayList<Booking> bookings = bookingRepository.findByAccount(account);
         return bookings.stream()
-                .map(booking -> modelMapper.map(booking, BookingResponse.class))
+                .map(booking -> booking)
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
-    public BookingResponse getBookingDetails(Long bookingId) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String email = authentication.getName();
-        Account account = accountRepository.findByEmail(email)
-                .orElseThrow(() -> new NotFoundException("Account not found with email: " + email));
+    public Booking getBookingDetails(Long bookingId) {
+        Account account = authenticationService.getCurrentAccount();
 
         Booking booking = bookingRepository.findById(bookingId)
                 .orElseThrow(() -> new NotFoundException("Booking not found with id: " + bookingId));
@@ -164,7 +159,7 @@ public class BookingService {
             throw new ValidationException("This booking does not belong to the logged-in account.");
         }
 
-        return modelMapper.map(booking, BookingResponse.class);
+        return booking;
     }
 
     public boolean cancelBooking(Long id) {
@@ -176,6 +171,17 @@ public class BookingService {
             return true;
         }
         throw new NotFoundException("Booking not found");
+    }
+
+    public BookingResponse generateBookingResponse(Booking booking) {
+        BookingResponse bookingResponse = modelMapper.map(booking, BookingResponse.class);
+
+        bookingResponse.setStaffName(booking.getStaff().getAccount().getFullName());
+        bookingResponse.setProduct(modelMapper.map(booking.getProduct(), ProductCloneResponse.class));
+        bookingResponse.setStartTime(booking.getFirstStartTime());
+        bookingResponse.setEndTime(booking.getLastEndTime());
+
+        return bookingResponse;
     }
 
 }

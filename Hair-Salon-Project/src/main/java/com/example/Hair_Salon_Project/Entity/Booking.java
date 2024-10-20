@@ -6,8 +6,10 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
+import java.util.Comparator;
 
 @Entity
 @Getter
@@ -40,7 +42,8 @@ public class Booking {
     @Column(nullable = false)
     private LocalDate bookingDate;
 
-    @OneToMany(mappedBy = "booking", cascade = CascadeType.ALL)
+    @ManyToMany
+    @JoinTable(name = "booking_time_slot", joinColumns = @JoinColumn(name = "booking_id"), inverseJoinColumns = @JoinColumn(name = "time_slot_id"))
     private List<TimeSlot> timeSlots;
 
     @PrePersist
@@ -51,5 +54,19 @@ public class Booking {
     @PreUpdate
     protected void onUpdate() {
         this.updateDate = new Date();
+    }
+
+    public LocalTime getFirstStartTime() {
+        return timeSlots.stream()
+                .map(TimeSlot::getStartTime)
+                .min(Comparator.naturalOrder())
+                .orElse(null);
+    }
+
+    public LocalTime getLastEndTime() {
+        return timeSlots.stream()
+                .map(TimeSlot::getEndTime)
+                .max(Comparator.naturalOrder())
+                .orElse(null);
     }
 }

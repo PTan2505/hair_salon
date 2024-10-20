@@ -164,4 +164,8 @@ public class Account implements UserDetails {
 
         return Role.CUSTOMER;
     }
+
+    public String getFullName() {
+        return this.getFirstName() + " " + this.getLastName();
+    }
 }

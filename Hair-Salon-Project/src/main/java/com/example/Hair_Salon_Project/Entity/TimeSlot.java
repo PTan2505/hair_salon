@@ -7,6 +7,8 @@ import lombok.Setter;
 
 import java.time.LocalTime;
 
+import java.util.List;
+
 @Getter
 @Setter
 @Entity
@@ -19,4 +21,7 @@ public class TimeSlot {
     private LocalTime startTime;
 
     private LocalTime endTime;
+
+    @ManyToMany(mappedBy = "timeSlots")
+    private List<Booking> bookings;
 }

@@ -45,8 +45,7 @@ public class Filter extends OncePerRequestFilter {
 
     public boolean checkIsPublicAPI(String uri) {
         AntPathMatcher matcher = new AntPathMatcher();
-        return !uri.startsWith("/api/admin/")
-                || AUTH_PERMISSION.stream().anyMatch(pattern -> matcher.match(pattern, uri));
+        return AUTH_PERMISSION.stream().anyMatch(pattern -> matcher.match(pattern, uri));
     }
 
     private static final String TOKEN_PREFIX = "Bearer ";
@@ -60,8 +59,7 @@ public class Filter extends OncePerRequestFilter {
         } else {
             String token = getTokenFromRequest(request);
             if (token == null) {
-                handlerExceptionResolver.resolveException(request, response, null,
-                        new AuthenException("Token is missing"));
+                handleAuthenticationException(request, response, "Token is missing");
                 return;
             }
 
@@ -97,7 +95,8 @@ public class Filter extends OncePerRequestFilter {
 
     private void handleAuthenticationException(HttpServletRequest request, HttpServletResponse response,
             String message) {
-        handlerExceptionResolver.resolveException(request, response, null, new AuthenException(message));
+        handlerExceptionResolver.resolveException(request, response, null,
+                new AuthenException(message));
     }
 
     public String getTokenFromRequest(HttpServletRequest request) {

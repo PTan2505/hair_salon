@@ -82,10 +82,11 @@ public class ProductService {
 
         ProductClone clonedProduct = new ProductClone();
         clonedProduct.setType(productType.getName());
-        clonedProduct.setImage(productType.getImage());
-        clonedProduct.setProductName(originalProduct.getName());
-        clonedProduct.setProductPrice(originalProduct.getPrice());
+        clonedProduct.setTypeImage(productType.getImage());
+        clonedProduct.setName(originalProduct.getName());
+        clonedProduct.setPrice(originalProduct.getPrice());
         clonedProduct.setPoints(originalProduct.getPoints());
+        clonedProduct.setOriginalProduct(originalProduct);
 
         return productCloneRepository.save(clonedProduct);
     }

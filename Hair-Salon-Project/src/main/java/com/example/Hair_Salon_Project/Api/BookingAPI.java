@@ -1,5 +1,6 @@
 package com.example.Hair_Salon_Project.Api;
 
+import com.example.Hair_Salon_Project.Entity.Booking;
 import com.example.Hair_Salon_Project.Model.BookingRequest;
 import com.example.Hair_Salon_Project.Model.BookingResponse;
 import com.example.Hair_Salon_Project.Service.BookingService;
@@ -9,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/bookings")
@@ -19,8 +21,8 @@ public class BookingAPI {
 
     @PostMapping
     public ResponseEntity<BookingResponse> createBooking(@RequestBody BookingRequest bookingRequest) {
-        BookingResponse bookingResponse = bookingService.createBooking(bookingRequest);
-        return ResponseEntity.ok(bookingResponse);
+        Booking booking = bookingService.createBooking(bookingRequest);
+        return ResponseEntity.ok(bookingService.generateBookingResponse(booking));
     }
 
     @DeleteMapping("/{id}")
@@ -29,13 +31,18 @@ public class BookingAPI {
         return ResponseEntity.ok("Booking has been cancelled.");
     }
 
-    @GetMapping("/bookings")
-    public ArrayList<BookingResponse> getListBookings() {
-        return bookingService.getListBookings();
+    @GetMapping
+    public ResponseEntity<ArrayList<BookingResponse>> getListBookings() {
+        ArrayList<Booking> bookings = bookingService.getListBookings();
+        ArrayList<BookingResponse> bookingResponses = bookings.stream()
+                .map(bookingService::generateBookingResponse)
+                .collect(Collectors.toCollection(ArrayList::new));
+        return ResponseEntity.ok(bookingResponses);
     }
 
-    @GetMapping("/bookings/{id}")
-    public BookingResponse getBookingDetails(@PathVariable Long id) {
-        return bookingService.getBookingDetails(id);
+    @GetMapping("/{id}")
+    public ResponseEntity<BookingResponse> getBookingDetails(@PathVariable Long id) {
+        Booking booking = bookingService.getBookingDetails(id);
+        return ResponseEntity.ok(bookingService.generateBookingResponse(booking));
     }
 }

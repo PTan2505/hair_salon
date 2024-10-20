@@ -20,13 +20,13 @@ public class ProductClone {
 
     private String type;
 
-    private String productName;
+    private String name;
 
-    private float productPrice;
+    private float price;
 
     private int points;
 
-    private String image;
+    private String typeImage;
 
     private Date createDate;
 
