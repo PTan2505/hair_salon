@@ -1,13 +1,15 @@
 package com.example.Hair_Salon_Project.Repository;
 
-import com.example.Hair_Salon_Project.Entity.ProductType;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+
+import com.example.Hair_Salon_Project.Entity.ProductType;
 
 @Repository
 public interface ProductTypeRepository extends JpaRepository<ProductType, Long> {
 
-    ProductType findProductTypeById(Long id);
+    Optional<ProductType> findProductTypeById(Long id);
 
-    ProductType findProductTypeByName(String name);
+    Optional<ProductType> findProductTypeByName(String name);
 }

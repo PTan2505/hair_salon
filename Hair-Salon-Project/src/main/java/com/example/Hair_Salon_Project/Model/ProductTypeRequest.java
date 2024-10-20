@@ -1,10 +1,12 @@
 package com.example.Hair_Salon_Project.Model;
 
 import lombok.Data;
-import java.util.Optional;
+import jakarta.validation.constraints.NotBlank;
 
 @Data
 public class ProductTypeRequest {
-    private Optional<String> name = Optional.empty();
-    private Optional<String> image = Optional.empty();
+    @NotBlank(message = "Name cannot be blank")
+    private String name; // Not nullable and cannot be blank
+    @NotBlank(message = "Image cannot be blank")
+    private String image; // Not nullable and cannot be blank
 }

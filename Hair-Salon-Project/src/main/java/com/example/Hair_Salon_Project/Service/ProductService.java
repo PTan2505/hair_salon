@@ -2,6 +2,7 @@ package com.example.Hair_Salon_Project.Service;
 
 import com.example.Hair_Salon_Project.Entity.Product;
 import com.example.Hair_Salon_Project.Entity.ProductType;
+import com.example.Hair_Salon_Project.Exception.NotFoundException;
 import com.example.Hair_Salon_Project.Model.ProductRequest;
 import com.example.Hair_Salon_Project.Repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,29 +47,24 @@ public class ProductService {
 
     public Product getProductById(long id) {
         return productRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Product not found with id: " + id));
+                .orElseThrow(() -> new NotFoundException("Product not found with id: " + id));
     }
 
     public Product updateProduct(long id, ProductRequest productRequest) {
-        Product product = getProductById(id);
-        if (product != null) {
-            try {
-                modelMapper.map(productRequest, product);
-                ProductType productType = productTypeService.getProductTypeById(productRequest.getProductTypeId());
-                product.setProductType(productType);
+        try {
+            Product product = getProductById(id);
+            modelMapper.map(productRequest, product);
+            ProductType productType = productTypeService.getProductTypeById(productRequest.getProductTypeId());
+            product.setProductType(productType);
 
-                return productRepository.save(product);
-            } catch (ConstraintViolationException e) {
-                String violations = e.getConstraintViolations().stream()
-                        .map(violation -> "Field: " + violation.getPropertyPath() + ", Message: "
-                                + violation.getMessage())
-                        .collect(Collectors.joining(", "));
-                throw new RuntimeException(violations);
-            } catch (Exception e) {
-                throw new RuntimeException("An error occurred during product creation: " + e.getMessage(), e);
-            }
+            return productRepository.save(product);
+        } catch (ConstraintViolationException e) {
+            String violations = e.getConstraintViolations().stream()
+                    .map(violation -> "Field: " + violation.getPropertyPath() + ", Message: "
+                            + violation.getMessage())
+                    .collect(Collectors.joining(", "));
+            throw new RuntimeException(violations);
         }
-        return null;
     }
 
     public void deleteProduct(long id) {
