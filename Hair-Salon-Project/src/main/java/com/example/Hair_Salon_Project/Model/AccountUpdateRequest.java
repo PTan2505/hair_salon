@@ -15,7 +15,7 @@ public class AccountUpdateRequest {
 
     String gender;
 
-    @Pattern(regexp = "(84|0[3|5|7|8|9])+(\\d{8})\\b" , message = "Invalid phone number")
+    @Pattern(regexp = "(84|0[3|5|7|8|9])+(\\d{8})\\b", message = "Invalid phone number")
     @Column(unique = true)
     String phone;
 
