@@ -167,7 +167,15 @@ public class Account implements UserDetails {
         this.isActive = isActive;
     }
 
-    private boolean isStaff() {
-        return true;
+    public Role getRole() {
+        if (this.superUser == true) {
+            return Role.SUPER_USER;
+        }
+
+        if (this.staff != null) {
+            return this.staff.getRole();
+        }
+
+        return Role.CUSTOMER;
     }
 }

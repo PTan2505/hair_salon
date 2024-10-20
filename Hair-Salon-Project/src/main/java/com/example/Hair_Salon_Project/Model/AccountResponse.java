@@ -1,5 +1,7 @@
 package com.example.Hair_Salon_Project.Model;
 
+import com.example.Hair_Salon_Project.Entity.Enums.Role;
+
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,6 +16,7 @@ public class AccountResponse {
     String email;
     String phone;
     String token;
+    Role role;
 
     public AccountResponse(long id,
             @Pattern(regexp = "^[A-Za-z0-9+_.-]+@(.+)$", message = "Invalid email format") String email,
