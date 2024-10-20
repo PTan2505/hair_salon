@@ -1,6 +1,7 @@
 package com.example.Hair_Salon_Project.Entity;
 
 import com.example.Hair_Salon_Project.Entity.Enums.Gender;
+import com.example.Hair_Salon_Project.Entity.Enums.Role;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
@@ -73,22 +74,50 @@ public class Account implements UserDetails {
 
     private LocalDateTime resetPasswordExpiration;
 
-    // Relationships with Booking and Bill
-    @OneToMany(mappedBy = "account") // Reference to Booking's account
+    @OneToMany(mappedBy = "account")
     @JsonIgnore
     private List<Booking> bookings;
 
-    @OneToMany(mappedBy = "account") // Reference to Bill's account
+    @OneToMany(mappedBy = "account")
     @JsonIgnore
     private List<Bill> bills;
 
-    // Implement UserDetails methods
+    @OneToOne(mappedBy = "account")
+    @JsonIgnore
+    private Staff staff;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<SimpleGrantedAuthority> authorities = new ArrayList<>();
-        // if (this.role != null) {
-        // authorities.add(new SimpleGrantedAuthority("ROLE_" + this.role.name()));
-        // }
+
+        authorities.add(new SimpleGrantedAuthority("ROLE_" + Role.CUSTOMER));// Account always has customer permission
+
+        if (this.superUser == true) {
+            authorities.add(new SimpleGrantedAuthority("ROLE_" +
+                    (Role.SUPER_USER.name())));
+            authorities.add(new SimpleGrantedAuthority("ROLE_" +
+                    (Role.MANAGER.name())));
+            authorities.add(new SimpleGrantedAuthority("ROLE_" +
+                    (Role.CASHIER.name())));
+            authorities.add(new SimpleGrantedAuthority("ROLE_" +
+                    (Role.STYLIST.name())));
+            return authorities;
+        }
+        if (this.staff != null) {
+            Role role = this.staff.getRole();
+            if (role != null) {
+                if (role == Role.MANAGER) {
+                    authorities.add(new SimpleGrantedAuthority("ROLE_" +
+                            (Role.CASHIER.name())));
+                    authorities.add(new SimpleGrantedAuthority("ROLE_" +
+                            (Role.STYLIST.name())));
+                } else {
+                    authorities.add(new SimpleGrantedAuthority("ROLE_" +
+                            (role.name())));
+                }
+            }
+        }
+
         return authorities;
     }
 
@@ -136,5 +165,17 @@ public class Account implements UserDetails {
     // Setter for isActive, if needed
     public void setIsActive(boolean isActive) {
         this.isActive = isActive;
+    }
+
+    public Role getRole() {
+        if (this.superUser == true) {
+            return Role.SUPER_USER;
+        }
+
+        if (this.staff != null) {
+            return this.staff.getRole();
+        }
+
+        return Role.CUSTOMER;
     }
 }

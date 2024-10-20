@@ -1,9 +1,11 @@
 package com.example.Hair_Salon_Project.Entity.Enums;
 
 public enum Role {
+    CUSTOMER("Customer"),
     STYLIST("Stylist"),
     CASHIER("Cashier"),
-    MANAGER("Manager");
+    MANAGER("Manager"),
+    SUPER_USER("Super User");
 
     private final String displayName;
 

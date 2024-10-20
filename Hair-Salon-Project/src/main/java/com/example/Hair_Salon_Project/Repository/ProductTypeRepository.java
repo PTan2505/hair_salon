@@ -12,4 +12,6 @@ public interface ProductTypeRepository extends JpaRepository<ProductType, Long> 
     Optional<ProductType> findProductTypeById(Long id);
 
     Optional<ProductType> findProductTypeByName(String name);
+
+    boolean existsByName(String name);
 }

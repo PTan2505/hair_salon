@@ -6,24 +6,28 @@ import com.example.Hair_Salon_Project.Service.ProductService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/admin/products")
+@PreAuthorize("hasRole('MANAGER')")
 public class AdminProductAPI {
 
     @Autowired
     private ProductService productService;
 
     @GetMapping
+    @PreAuthorize("hasRole('STYLIST') || hasRole('CASHIER')")
     public ResponseEntity<List<Product>> getAllProducts() {
         List<Product> products = productService.getAllProducts();
         return ResponseEntity.ok(products);
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasRole('STYLIST') || hasRole('CASHIER')")
     public ResponseEntity<Product> getProductById(@PathVariable long id) {
         Product product = productService.getProductById(id);
         return ResponseEntity.ok(product);

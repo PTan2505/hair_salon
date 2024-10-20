@@ -64,4 +64,12 @@ public class Staff {
         this.isStaff = isStaff;
     }
 
+    // Method to set role with validation
+    public void setRole(Role role) {
+        if (role == Role.SUPER_USER) {
+            throw new IllegalArgumentException("Role cannot be SUPER_USER.");
+        }
+        this.role = role;
+    }
+
 }
