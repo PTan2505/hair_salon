@@ -97,6 +97,7 @@ public class AuthenticationService {
             Account account = optionalAccount.get();
             AccountResponse accountResponse = modelMapper.map(account, AccountResponse.class);
             accountResponse.setToken(tokenService.generateToken(account));
+            accountResponse.setRole(account.getRole());
 
             return accountResponse;
         } catch (Exception e) {
