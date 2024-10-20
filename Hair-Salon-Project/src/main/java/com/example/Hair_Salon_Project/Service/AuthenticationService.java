@@ -4,7 +4,6 @@ import com.example.Hair_Salon_Project.Entity.Account;
 import com.example.Hair_Salon_Project.Exception.DuplicateEntity;
 import com.example.Hair_Salon_Project.Model.*;
 import com.example.Hair_Salon_Project.Repository.AccountRepository;
-import com.example.Hair_Salon_Project.Repository.StaffRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.ConstraintViolationException;
 
@@ -42,9 +41,6 @@ public class AuthenticationService {
 
     @Autowired
     EmailService emailService;
-
-    @Autowired
-    StaffRepository staffRepository;
 
     public AccountResponse register(RegisterRequest registerRequest) {
         // Check for existing email or phone
