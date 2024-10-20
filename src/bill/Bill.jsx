@@ -11,7 +11,15 @@ import CreateBill from "./CreateBill.jsx";
 import EditBill from "./EditBill.jsx";
 
 export default function Bill() {
-  const { bills, loading, handleDeleteBill } = useContext(BillContext);
+  const {
+    bills = [],
+    loading,
+    error,
+    handleDeleteBill,
+  } = useContext(BillContext);
+
+  console.log("Original Bills from API:", bills); // Kiểm tra lại tại đây
+
   const [showModal, setShowModal] = useState(false);
   const [sortOption, changeSortOption] = useState("no-desc");
   const [searchQuery, setSearchQuery] = useState("");
@@ -34,11 +42,35 @@ export default function Bill() {
     setShowConfirm(false);
   };
 
+  // Lọc danh sách hóa đơn dựa trên searchQuery
   const filteredBills = bills.filter((bill) =>
-    bill.customerName.toLowerCase().includes(searchQuery.toLowerCase())
+    bill.CustomerName
+      ? bill.CustomerName.toLowerCase().includes(searchQuery.toLowerCase())
+      : false
   );
 
+  console.log("Filtered Bills:", filteredBills); // Kiểm tra dữ liệu sau khi lọc
+
+  // Sắp xếp danh sách hóa đơn
   const sortedBills = sortData(filteredBills, sortOption);
+  console.log("Sorted Bills after sorting:", sortedBills); // Kiểm tra dữ liệu sau khi sắp xếp
+
+  // Xử lý trạng thái loading và error
+  if (loading) {
+    return (
+      <div style={{ marginTop: "200px" }}>
+        <Spinner animation="border" role="status" />
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div style={{ marginTop: "200px", color: "red" }}>
+        <h2>Error: {error}</h2>
+      </div>
+    );
+  }
 
   return (
     <div>
@@ -116,12 +148,10 @@ export default function Bill() {
               {sortedBills.map((bill, index) => (
                 <tr key={bill.id}>
                   <td>{index + 1}</td>
-                  <td>{bill.customerName}</td>
-                  <td>
-                    {bill.services.map((service) => service.name).join(", ")}
-                  </td>
-                  <td>{bill.totalPrice}</td>
-                  <td>{bill.isPaid ? "Paid" : "Unpaid"}</td>
+                  <td>{bill.CustomerName}</td>
+                  <td>{bill.Service}</td>
+                  <td>{bill.price}</td>
+                  <td>{bill.paymentstatus}</td>
                   <td>
                     <Dropdown>
                       <Dropdown.Toggle
@@ -155,10 +185,6 @@ export default function Bill() {
             </tbody>
           </Table>
         </>
-      ) : loading ? (
-        <div style={{ marginTop: "200px" }}>
-          <Spinner animation="border" role="status" />
-        </div>
       ) : (
         <div style={{ marginTop: "200px" }}>
           <PiSmileySad size={"100px"} />
