@@ -10,6 +10,7 @@ export default function CreateStaff({ showModal, setShowModal }) {
     phone: "", // Thêm trường SĐT
     email: "",
     gender: "", // Thêm trường giới tính
+    role: "", // Thêm trường role
   });
 
   const handleChange = (e) => {
@@ -30,6 +31,7 @@ export default function CreateStaff({ showModal, setShowModal }) {
         phone: "", // Đặt lại trường SĐT
         email: "",
         gender: "", // Đặt lại trường giới tính
+        role: "", // Đặt lại trường role
       });
     } catch (error) {
       console.error("Failed to add staff:", error);
@@ -90,6 +92,17 @@ export default function CreateStaff({ showModal, setShowModal }) {
               <option value="female">Female</option>
               <option value="other">Other</option>
             </Form.Control>
+          </Form.Group>
+          <Form.Group className="mb-3">
+            <Form.Label>Role</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Enter staff role"
+              name="role"
+              value={newStaff.role}
+              onChange={handleChange}
+              required
+            />
           </Form.Group>
           <Button variant="primary" type="submit">
             Add Staff

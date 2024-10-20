@@ -105,7 +105,7 @@ export default function Staff() {
             <tr>
               <th style={{ width: "50px" }}>No</th>
               <th style={{ width: "25%" }}>Name</th>
-              <th style={{ width: "25%" }}>SĐT</th>{" "}
+              <th style={{ width: "25%" }}>Phone</th>{" "}
               {/* Thay đổi cột thành SĐT */}
               <th style={{ width: "25%" }}>Email</th>
               <th style={{ width: "25%" }}>Password</th>{" "}
