@@ -25,7 +25,7 @@ public class Staff {
     @JoinColumn(name = "account_id", referencedColumnName = "id", nullable = false)
     private Account account;
 
-    private boolean isStaff;
+    private boolean isStaff = true;
 
     @Enumerated(EnumType.STRING)
     private Role role;
