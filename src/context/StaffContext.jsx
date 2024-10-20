@@ -20,9 +20,11 @@ export const StaffProvider = ({ children }) => {
     setLoading(true);
     try {
       const data = await fetchStaff();
+      console.log("Fetched staff data:", data); // Kiểm tra dữ liệu từ API trước khi set vào state
       setStaff(data);
       setError(null); // Clear any previous errors
     } catch (error) {
+      console.error("Error fetching staff:", error);
       setError(error.message);
     } finally {
       setLoading(false);
@@ -75,13 +77,14 @@ export const StaffProvider = ({ children }) => {
 
   // Lấy dữ liệu nhân viên khi component mount
   useEffect(() => {
+    console.log("useEffect called: fetching staff data...");
     getStaff();
   }, []);
 
   return (
     <StaffContext.Provider
       value={{
-        staff,
+        staff, // Đây là nơi biến staff từ API được truyền vào context
         loading,
         error,
         getStaff,

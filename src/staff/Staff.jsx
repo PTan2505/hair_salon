@@ -11,8 +11,14 @@ import CreateStaff from "./CreateStaff";
 import EditStaff from "./EditStaff";
 
 export default function Staff() {
-  const { staffs = [], loading, handleDeleteStaff } = useContext(StaffContext);
-  console.log(staffs);
+  const {
+    staff = [], // Sử dụng đúng tên biến 'staff'
+    loading,
+    error,
+    handleDeleteStaff,
+  } = useContext(StaffContext);
+
+  console.log("Original Staffs from API:", staff); // Kiểm tra dữ liệu nhân viên từ API (Bước 1)
 
   const [showModal, setShowModal] = useState(false);
   const [sortOption, changeSortOption] = useState("no-desc");
@@ -36,11 +42,33 @@ export default function Staff() {
     setShowConfirm(false);
   };
 
-  const filteredStaffs = staffs.filter((staff) =>
+  // Lọc danh sách nhân viên dựa trên searchQuery
+  const filteredStaffs = staff.filter((staff) =>
     staff.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
+  console.log("Filtered Staffs:", filteredStaffs); // Kiểm tra dữ liệu sau khi lọc (Bước 2)
+
+  // Sắp xếp danh sách nhân viên
   const sortedStaffs = sortData(filteredStaffs, sortOption);
+  console.log("Sorted Staffs after sorting:", sortedStaffs); // Kiểm tra dữ liệu sau khi sắp xếp (Bước 2)
+
+  // Xử lý trạng thái loading và error
+  if (loading) {
+    return (
+      <div style={{ marginTop: "200px" }}>
+        <Spinner animation="border" role="status" />
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div style={{ marginTop: "200px", color: "red" }}>
+        <h2>Error: {error}</h2>
+      </div>
+    );
+  }
 
   return (
     <div>
@@ -99,28 +127,27 @@ export default function Staff() {
           page={"staff"}
         />
       </div>
+      {/* Kiểm tra xem có nhân viên nào không */}
       {sortedStaffs.length > 0 ? (
         <Table striped borderless hover>
           <thead>
             <tr>
               <th style={{ width: "50px" }}>No</th>
               <th style={{ width: "25%" }}>Name</th>
-              <th style={{ width: "25%" }}>Phone</th>{" "}
-              {/* Thay đổi cột thành SĐT */}
+              <th style={{ width: "25%" }}>Phone</th>
               <th style={{ width: "25%" }}>Email</th>
-              <th style={{ width: "25%" }}>Password</th>{" "}
-              {/* Thêm cột Password */}
+              <th style={{ width: "25%" }}>Password</th>
               <th style={{ width: "150px" }}>Actions</th>
             </tr>
           </thead>
           <tbody>
-            {sortedStaffs.map((staff, index) => (
+            {sortedStaffs.map((staff) => (
               <tr key={staff.id}>
-                <td>{index + 1}</td>
+                <td>{staff.id}</td>
                 <td>{staff.name}</td>
-                <td>{staff.phone}</td> {/* Hiển thị SĐT */}
+                <td>{staff.phone}</td>
                 <td>{staff.email}</td>
-                <td>{staff.password}</td> {/* Hiển thị Password */}
+                <td>{staff.password}</td>
                 <td>
                   <Dropdown>
                     <Dropdown.Toggle
@@ -150,10 +177,6 @@ export default function Staff() {
             ))}
           </tbody>
         </Table>
-      ) : loading ? (
-        <div style={{ marginTop: "200px" }}>
-          <Spinner animation="border" role="status" />
-        </div>
       ) : (
         <div style={{ marginTop: "200px" }}>
           <PiSmileySad size={"100px"} />

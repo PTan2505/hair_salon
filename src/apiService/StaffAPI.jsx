@@ -1,22 +1,25 @@
 export const fetchStaff = async () => {
   try {
     const response = await fetch(
-      "https://67066a87a0e04071d226c4b3.mockapi.io/staff"
+      "https://66f6699f436827ced97704c4.mockapi.io/staff"
     );
+    console.log("API Response Status:", response.status); // Kiểm tra trạng thái phản hồi
     if (!response.ok) {
       throw new Error("Failed to fetch staff");
     }
     const data = await response.json();
+    console.log("Fetched staff data:", data); // Kiểm tra dữ liệu trả về
     return data;
   } catch (error) {
     console.error("Error fetching staff:", error);
     throw error;
   }
 };
+
 export const addStaff = async (newStaff) => {
   try {
     const response = await fetch(
-      `https://67066a87a0e04071d226c4b3.mockapi.io/staff`,
+      `https://66f6699f436827ced97704c4.mockapi.io/staff`,
       {
         method: "POST",
         headers: {
@@ -37,7 +40,7 @@ export const addStaff = async (newStaff) => {
 export const editStaff = async (id, updatedData) => {
   try {
     const response = await fetch(
-      `https://67066a87a0e04071d226c4b3.mockapi.io/staff/${id}`,
+      `https://66f6699f436827ced97704c4.mockapi.io/staff/${id}`,
       {
         method: "PUT",
         headers: {
@@ -58,7 +61,7 @@ export const editStaff = async (id, updatedData) => {
 export const deleteStaff = async (id) => {
   try {
     const response = await fetch(
-      `https://67066a87a0e04071d226c4b3.mockapi.io/staff/${id}`,
+      `https://66f6699f436827ced97704c4.mockapi.io/staff/${id}`,
       {
         method: "PUT",
         headers: {
