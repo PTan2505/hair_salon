@@ -16,7 +16,6 @@
     margin-left: 50px; /* căn lề trái */
     border-radius: 12px; /*độ cong của viền ô đăng nhập */
     padding: 30px ;  /*đẩy nội dung vô trong*/
-    overflow: scroll;
 }
 
 /*flex box */

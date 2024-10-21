@@ -1,35 +1,20 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import api from "../../config/axios";
 import "./index.css";
 import "./reviewlist";
 import "./servicelist";
-import ServicesList from "./servicelist";
+import { useNavigate } from "react-router-dom";
 
-function ServiceWebsite() {
+function HomePage() {
+  const navigate = useNavigate();
+
   return (
     <div>
       {/* Header Section */}
 
-      <header className="navbar">
-        <div className="container">
-          <div className="navbar-brand">
-            <img src="" alt="Logo" />
-            <span>Hair Salon</span>
-          </div>
-          <h1 className="navbar-menu">
-            <a href="#home">HOME</a>
-            <a href="#about">ABOUT US</a>
-            <a href="#partners">SERVICE</a>
-          </h1>
-          <div className="navbar-contact">
-            <a href="tel:login" className="contact-btn">
-              Login
-            </a>
-          </div>
-        </div>
-      </header>
-
       <header className="hero">
         <div className="overlay"></div>
+        <h1 className="salon-name">Modern Hair Salon</h1>
         <div className="hero-content">
           <h1>The Ultimate Convenience for Busy People</h1>
           <p>Experience the Convenience of In-home Barber Services</p>
@@ -41,6 +26,20 @@ function ServiceWebsite() {
               Browse Services
             </a>
           </div>
+          <div className="navbar-contact">
+            <button className="contact-btn" onClick={() => navigate("/login")}>
+              Login
+            </button>
+          </div>
+
+          <div className="navbar">
+            <div className="navbar-brand">
+              <img
+                src="image.png/z5936479637733_515621b0f5a2790d08fe028260980c4c.png"
+                alt="Logo"
+              />
+            </div>
+          </div>
         </div>
       </header>
 
@@ -51,7 +50,7 @@ function ServiceWebsite() {
             <div className="row">
               <div className="col">
                 <img
-                  src="https://s3-alpha-sig.figma.com/img/0b0d/ddc5/2ce05b0747ed7d35db5aa1a8b682ecda?Expires=1730678400&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=BaqucME9fFAT0zTebpFWYMssJWfgBKHUSc-NOQYhKoBS08sPm2QOwO5vvlb9hePRXl8xR7kcYPEILzPARgv3EAVCuk7yxEOKd9ghSL6O2QxGUXEeCpUYwvIOpVKp1kCvL1INjtPWxscajesOGAiZYqEFwNRDGtuEWB-6X~OcKg255q845BkB8H87RyulvMKrOnhsrT1f-QBEBp8SKdqD8Wun5qbS9fNST4jeJOosZBIR5~jRPhW2Cz9INzR5WkreDgCh3fqibyYrchAeE2x2DQF3NDQJI32ZlJJEB9E7VO7Vx1Qpeu5qfn7KTHUpbcPkPRC7HHM70MPd8vdbH0brHQ__"
+                  src="https://s3-alpha-sig.figma.com/img/0b0d/ddc5/2ce05b0747ed7d35db5aa1a8b682ecda?Expires=1728864000&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=iAxOkdFG9yhFZ1BatnN7DELMtMzUc~tilwMJAMivMn0HTefneqPUIc6B69fF1fUDwoOxfG3CydUiBEGKpbgod-A8UV2LcVScUlJPOLMCJx4h1E24ezfJybMAaPBDHRlpXhnfeBd4qyqTFWSb40xiIkFolIaFCguAXfygIcMzVnrp1vup3PvWGhpcf46euZXEnJZy96ngqMFzK1d2zd4BN6XqdYIuPwmqeIZA0s9rvyYwXlwW0voZkjvDnhzPiy-EZ-ku0s7c0XFW~CISPOIj9FRSOc78dITG4-3TvFYG4BsMBUbCEqu2KGDyJI~eB~aTe5jKMUcCpThDT4-uwg4aMg__"
                   alt="Location"
                 />
                 <a href="your-location-link" className="contact-link">
@@ -60,7 +59,7 @@ function ServiceWebsite() {
               </div>
               <div className="col">
                 <img
-                  src="https://s3-alpha-sig.figma.com/img/a788/6c55/528f6e197789a4b7d647dd63cdc250d2?Expires=1730678400&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=PXDM8DN9y7dNCd9o6LYtR4EqHlqsvkWlIujYeTaH6QGmhg3vaRhA4wOWse1Vs88tbaRnYWzHoJXCr3-y3cvycsQTQ9ih3l1ABvmOO87jaDOPZL9Y2zWwN7VG1nrVvSDMkbWebcOc1iVGYx2lj8L6sIjKzAHLITg4s82rcETbp-5yfDQgGk6-hRTq~gntQXrrbWaKWvR1a7w-lNmq43axL9d0WuoRBOiz6gsmGISETtCPT-SohwOrHkaFsf9BcClXL8jVqTpKAPnJWzmYes7nZdzrC6~5A1O0S8dDN8fy0dFpN~piZj4HWDFDq4cKxZ8cDU6JcSoLPHFtxyHiVaw5nQ__"
+                  src="https://s3-alpha-sig.figma.com/img/a788/6c55/528f6e197789a4b7d647dd63cdc250d2?Expires=1728864000&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=hTgp-nSML43hBhYre23mteqKlAzjw4MnLduDun4Dci~2y98AvvKhOKut3mlbeK0pK1sW5dvpcPu4PSdGZ-f1HHc5PARPw49-PjW1nMpD5bs4I-yRS6mnKku8h0WEJLwNT~7AxPP1qPg6sF~Xh-~C~m6FycdCp1QJs1cL3Rmz7tpzMA1j2P0BwQn5rkKEKDuuXyPIDxK6TyCbXXTs4obisUwEDSr5GVCR~pOQ8Pwaa-ElBhRP7HSKTDlJqy8LWi0dov4~pdsaKud2Cr3MAQtzW8SIKEJtCXvRbY9SzBsQ5TCJkjwF1JeShVPAVbN5nNDv6TEJcV84A4X5lPsKTLQ0jA__"
                   alt="Phone"
                 />
                 <a href="tel:your-phone-number" className="contact-link">
@@ -69,7 +68,7 @@ function ServiceWebsite() {
               </div>
               <div className="col">
                 <img
-                  src="https://s3-alpha-sig.figma.com/img/4212/47a6/4d4ffe9584c9b1f509043b4a63f30000?Expires=1730678400&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=LNfcnf86pWF6B62~ofax5ghCalSphqWAVcrvumoPE2Jng27v2CzYq~RuHWgHutHBpVGVnD1GNysxBvDFx56ugoqJW5SZVeEjDEogvMcN-MPkwdPM-wevVDV2HBx-XBVGH1aCjwveOOYNx5-fzS-w1Cr~7qLEMrIU-f97uC2tKDwnz96YNT4vBYmmAXXsK-kYNCNzP6Y4fLZapFOn6BZcIDtzjLd3qjnDIUoxoSRYpkDgBcpH92nXmPAHYiXOzLZk5L5~w~OCkbCyyqNBVZemB9KucHhvl9KdpKRjqF1wSbxEmwcc348KvSKyY5q1c-O8IwPcobLZvgBqrG2Gr6qeWg__"
+                  src="https://s3-alpha-sig.figma.com/img/4212/47a6/4d4ffe9584c9b1f509043b4a63f30000?Expires=1728864000&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=emEw8jmUAF-hiO0NndP5Xbigw0atbiyI8yHIXsI5X88qIQdU1RIe-E5oAQGmqWEipqm9Ofq0ytbSzjL5kNhkcCeIrph4-odegnHGjQ9YJhOeCyoJMyWusaztRw4RTEYcoV1D29-diwt6Re4FNj4RNZhBcI8ZP5Da2JSLaMc7bF-d1NLljN4U-LExumLE11nnU8-H39XCkkCwxSt1nNAb4OWyFDEHaqsqA01vkQr-1Da~x0g-GSNeY4G9rUXdtegGM7NRAMKPf1-DAcdS5Ycg26oCWtQVrK-ac~Wo3bBJIygfVx-CmlWEwOLd7Fyq9hXoqWI10DZqo5s0tGIKysQYSw__"
                   alt="Hours"
                 />
                 <a href="your-hours-link" className="contact-link">
@@ -129,7 +128,7 @@ function ServiceWebsite() {
           <div className="row">
             <div className="col">
               <img
-                src="https://s3-alpha-sig.figma.com/img/652e/25a2/c56f1b1dd6a9f95b94a6b8951fd38637?Expires=1730678400&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=bejTRhOIhN9pVFgCQnM7J2GH-tvo0TMnmYjvRAJ3L7vrLgNpgouJf2Nnde0T7K~MF6KEN0Xbcm5jd14VZm9c9eA947~9MeblS7i1HthhoaIJjFz4h~QjNv2d45Gsl9nEATmtjP7Io5bn2tonJL-HbNKrb7XCM8u9M24n3zKJzkznBpsrK8TjkgYnPeI4j0zT09M7PSEEdaik5EpFeG-XwKuWJQUbSCuENAC3vrU8QR1pj-ZboW1m-dawXXtPPg~Ehe1jqq~5FdQCnR9ph-g3o78wkWjDrIysRgxhHxvCG4RqukJD8Q6n7cBe0c9AH9eRHUmLdCn2UzQBanHAv~CKYw__"
+                src="https://s3-alpha-sig.figma.com/img/652e/25a2/c56f1b1dd6a9f95b94a6b8951fd38637?Expires=1728864000&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=SfYn44pFyTdcdD1RRs5k5Zc3kJE~~ZnJFo~kwArZQEidX-bo69AexlSssn0h5tgTUO6G4hS0txMVNjlnh24pv2zI-ejXwZw-W34V8RI0XF0ec6tOBDPsOdLFStExBg6JZ~oUsBY1fbj-Bm6JVIwhrDAmfuFPBrw8xvtaCvbuufdrCNnNwJl2Pu5S9t3tUrirYEw0l8Y~ct4QPzv0o7W5jBlWID9U~bMkJTf8sSreTtMYHDwLzxl~Do9hTgG0GrpHK3zOIma0TpyjPMzQX8L-NoezpoS7rj8rFvyBaixMGAVNfBuvX-i6PDSd0MkQfKrV7NA2gICHQCNEDhuI6W3nVQ__"
                 alt="Licensed"
               />
               <h4>LICENSED</h4>
@@ -141,7 +140,7 @@ function ServiceWebsite() {
             </div>
             <div className="col">
               <img
-                src="https://s3-alpha-sig.figma.com/img/6cef/fccd/104a3c309a84c17057ab6c482c8003d7?Expires=1730678400&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=AcvsXd-1EsvE1UoqehLWUpq17GIYlxPX-NS8R75hYgsm7LnRxUkNSf9CTk6asPSNllVDdUp2aXaGdw-mQKD6zSsnPp78P3ITUw0mZ9~XRjgvZaBtw1dmiOZkuRu5tBJCXMuGb74HA9Sl8xPr3Z3REzUfTL35RV282ZoFtiM70tLr08BQbCLLEibwB4Y13r08UICr6S6tc05eVF3I94YIm2PiEqZ~463o17HRlvo1u7Yt3he9WjjZohA~NRJQRnxuTL22JQDj410j9kTE3NyxklYNOJ1yeag9MLxo7SycndmEb~0efLvz70wG73zeZGY5sO1zr20uY2qJtvZZ8-SX3g__"
+                src="https://s3-alpha-sig.figma.com/img/6cef/fccd/104a3c309a84c17057ab6c482c8003d7?Expires=1728864000&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=c1XTls7DUxDAWI~b~NSg8hIzaw~~In10I5fQqHDXEdaoFRdEriHLWejo1b4PY0nA6L5dMQZ1uST0VSBQMOwOTk0sf8kC8FwLAcskdeh5s-~4WMAWp6xdOXdInwedMn~M5xwITza3uoYdq89Knj-5z0~dC3AsCqik-CYc5zAg7RoQDpxJwEk8zsvTJMDDEwY-yusmlm4cWM8xl4yPWU2K9g2iGpNYOqbq0NostJISbSuMqwKMa1IzRLdwJjmOhxQzXX553usiR-eyiplV5I7SrNQIkYP9UmA9fCGK0o~DfY24b26HlaUgh97VtR6lKJl4n7QFy2YYvr2xFszVwAhstQ__"
                 alt="Masters"
               />
               <h4>MASTERS</h4>
@@ -152,7 +151,7 @@ function ServiceWebsite() {
             </div>
             <div className="col">
               <img
-                src="https://s3-alpha-sig.figma.com/img/84a3/4ca8/26bc530243f112aee5865ac070c1cc86?Expires=1730678400&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=iIQ5B~PWHVoY1wGWR4ArwICBYJpeMpxTD984JJ8~2btMhiA4Z9ZaILcaOIyczuSdikEVwoOFfND2C4O~fcUM-XHPa6Yvxo6YDj-rk7vZGNjj1pYSj3wrQreB88s4FFzj87Ebi8tk0EVclbklpoMdlbjZNjDt7L4wbTKZ9IGrfAp9X-SwvAAW60Iy5RBVmVgSgBCBb7yUFqp1ZAkO5I3aBA5mM2cKfeiCi26ZX8m8dXRM8LZLTtVeo-8b6izpSUkGNdviM9MNTkJcAtfDt3gHA~ihHOP32L-sxm9iBnYzjsoqwvdpBlHig1whFuJZJsCj41-bLbNvm6jEQT20yL0PUg__"
+                src="https://s3-alpha-sig.figma.com/img/84a3/4ca8/26bc530243f112aee5865ac070c1cc86?Expires=1728864000&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=WEawIWg7OlcoqNwAjk0bf5HWSLVA91G1JrQT-9iLXqWjWLhDtKBHJpxYh7wvwN9~SPrePJ7iw3icyqg7jiCeLvjJrajM8MiOPDpDMNlIPvr5hFa4RC627ybXKnp1C3YEfu5sM-QvbZ2eYJ-QWhJY3vV68mZllCstE7pQMKTjzsxvLnzQr25sCYjZZO4YmjhVOttY-S55rR5Qr1PT~zLBYRUmN-63ur69HJ3xjsQ150HnSIB-0r~hrORJaA2oSXTTLwI9-8gh9NGfIghjDTWwKQvtH7qftNgAGToZX5CM~KZzgpOh3LkLOCyxKgEOyCuwt5tmwWPXNjcC6ehFknlndA__"
                 alt="Trusted"
               />
               <h4>TRUSTED</h4>
@@ -287,4 +286,4 @@ function ServiceWebsite() {
   );
 }
 
-export default ServiceWebsite;
+export default HomePage;
