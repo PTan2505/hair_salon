@@ -1,16 +1,13 @@
 package com.example.Hair_Salon_Project.Model;
 
-import lombok.Getter;
-import lombok.Setter;
-
 import java.time.LocalDate;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import jakarta.validation.constraints.NotBlank;
+import lombok.Data;
 
-@Getter
-@Setter
+@Data
 public class BookingRequest {
     private String note;
 
