@@ -10,12 +10,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.ArrayList;
-import java.util.stream.Collectors;
+import org.springframework.web.bind.annotation.GetMapping;
 
 @RestController
 @RequestMapping("/api/bookings")
-public class BookingAPI {
+public class CustomerBookingAPI {
 
     @Autowired
     private BookingService bookingService;
@@ -35,10 +34,7 @@ public class BookingAPI {
     @GetMapping
     public ResponseEntity<List<BookingResponse>> getListBookings() {
         List<Booking> bookings = bookingService.getListBookings();
-        List<BookingResponse> bookingResponses = bookings.stream()
-                .map(bookingService::generateBookingResponse)
-                .collect(Collectors.toCollection(ArrayList::new));
-        return ResponseEntity.ok(bookingResponses);
+        return ResponseEntity.ok(bookingService.generateBookingResponseList(bookings));
     }
 
     @GetMapping("/{id}")

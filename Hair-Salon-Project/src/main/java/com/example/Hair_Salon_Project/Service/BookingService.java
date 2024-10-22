@@ -2,6 +2,7 @@ package com.example.Hair_Salon_Project.Service;
 
 import com.example.Hair_Salon_Project.Model.BookingRequest;
 import com.example.Hair_Salon_Project.Model.BookingResponse;
+import com.example.Hair_Salon_Project.Model.BookingStatusRequest;
 import com.example.Hair_Salon_Project.Model.ProductCloneResponse;
 import com.example.Hair_Salon_Project.Entity.*;
 import com.example.Hair_Salon_Project.Entity.Enums.BookingStatus;
@@ -17,8 +18,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
 import java.util.List;
+import java.util.Optional;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 import java.time.LocalDate;
@@ -145,14 +146,21 @@ public class BookingService {
         Account account = authenticationService.getCurrentAccount();
 
         List<Booking> bookings = bookingRepository.findByAccount(account);
-        return bookings.stream()
-                .map(booking -> booking)
-                .collect(Collectors.toCollection(ArrayList::new));
+        return bookings;
+    }
+
+    public List<Booking> getListBookingsAdmin() {
+        Account account = authenticationService.getCurrentAccount();
+        if (!account.isSuperUser() && account.getStaff().getRole() == Role.MANAGER) {
+            return bookingRepository.findAll();
+        } else if (account.getStaff().getRole() == Role.STYLIST) {
+            return bookingRepository.findByStaff(account.getStaff());
+        }
+        return null;
     }
 
     public Booking getBookingDetails(Long bookingId) {
         Account account = authenticationService.getCurrentAccount();
-
         Booking booking = bookingRepository.findById(bookingId)
                 .orElseThrow(() -> new NotFoundException("Booking not found with id: " + bookingId));
 
@@ -161,6 +169,26 @@ public class BookingService {
         }
 
         return booking;
+    }
+
+    public Booking getBookingDetailsAdmin(Long bookingId) {
+        Account account = authenticationService.getCurrentAccount();
+        Booking booking = bookingRepository.findById(bookingId)
+                .orElseThrow(() -> new NotFoundException("Booking not found with id: " + bookingId));
+
+        if (!account.isSuperUser() && account.getStaff().getRole() != Role.MANAGER) {
+            if (booking.getStaff().getId() != account.getStaff().getId()) {
+                throw new ValidationException("This booking does not belong to the logged-in account.");
+            }
+        }
+
+        return booking;
+    }
+
+    public Booking updateBookingStatus(Long bookingId, BookingStatusRequest newStatus) {
+        Booking booking = getBookingDetailsAdmin(bookingId);
+        booking.setStatus(newStatus.getBookingEnum());
+        return bookingRepository.save(booking);
     }
 
     public boolean cancelBooking(Long id) {
@@ -183,6 +211,12 @@ public class BookingService {
         bookingResponse.setEndTime(booking.getLastEndTime());
 
         return bookingResponse;
+    }
+
+    public List<BookingResponse> generateBookingResponseList(List<Booking> bookingList) {
+        return bookingList.stream()
+                .map(this::generateBookingResponse)
+                .collect(Collectors.toList());
     }
 
 }
