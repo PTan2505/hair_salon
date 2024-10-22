@@ -6,7 +6,7 @@ import com.example.Hair_Salon_Project.Entity.Account;
 import com.example.Hair_Salon_Project.Exception.DuplicateEntity;
 import com.example.Hair_Salon_Project.Exception.NotFoundException;
 import com.example.Hair_Salon_Project.Model.AccountUpdateRequest;
-import com.example.Hair_Salon_Project.Model.RoleRequest;
+import com.example.Hair_Salon_Project.Model.PartialStaffUpdateRequest;
 import com.example.Hair_Salon_Project.Model.StaffRequest;
 import com.example.Hair_Salon_Project.Model.StaffResponse;
 import com.example.Hair_Salon_Project.Repository.StaffRepository;
@@ -42,27 +42,19 @@ public class StaffService {
     }
 
     public Staff getStaffById(long id) {
-        // TODO: Check if role != MANAGER, only can get that staff id
         return staffRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Staff not found with id: " + id));
     }
 
     public Staff getStaffByIdAuthorize(long id) {
         Account currentAccount = authenticationService.getCurrentAccount();
-        if (!currentAccount.isSuperUser()) {
-            Optional<Staff> staff = staffRepository.getStaffByAccountId(currentAccount.getId());
-            if (staff.isPresent()) {
-                if (staff.get().getRole() == Role.STYLIST || staff.get().getRole() == Role.CASHIER) {
-                    if (staff.get().getId() != id) {
-                        throw new RuntimeException("You do not have permission to get this staff.");
-                    }
-                }
-                return getStaffById(id);
+        Staff staff = getStaffById(id);
+        if (!currentAccount.isSuperUser() && currentAccount.getStaff().getRole() != Role.MANAGER) {
+            if (staff.getAccount() == null || staff.getAccount().getId() != currentAccount.getId()) {
+                throw new RuntimeException("You do not have permission to update this staff member's account.");
             }
-        } else {
-            return getStaffById(id);
         }
-        return null;
+        return staff;
     }
 
     public Staff addStaffByPhone(StaffRequest staffRequest) {
@@ -109,15 +101,22 @@ public class StaffService {
         }
     }
 
-    public Staff updateRoleStaff(long id, RoleRequest roleRequest) {
+    public Staff partialUpdateStaff(long id, PartialStaffUpdateRequest request) {
+        Account currentAccount = authenticationService.getCurrentAccount();
         Staff staff = getStaffById(id);
-        staff.setRole(roleRequest.getRoleEnum());
-        return staffRepository.save(staff);
-    }
 
-    public Staff deactivateStaff(long id) {
-        Staff staff = getStaffById(id);
-        staff.setIsStaff(false);
+        if (request.getRoleEnum() != null) {
+            Role newRole = request.getRoleEnum();
+            if (!currentAccount.isSuperUser() && (staff.getRole() == Role.MANAGER || newRole == Role.MANAGER)) {
+                throw new RuntimeException("You do not have permission to update this role for this staff.");
+            }
+            staff.setRole(newRole);
+        }
+
+        if (request.getIsStaff() != null) {
+            staff.setIsStaff(request.getIsStaff());
+        }
+
         return staffRepository.save(staff);
     }
 

@@ -9,14 +9,14 @@ import org.springframework.web.bind.annotation.*;
 
 import com.example.Hair_Salon_Project.Entity.Staff;
 import com.example.Hair_Salon_Project.Model.AccountUpdateRequest;
-import com.example.Hair_Salon_Project.Model.RoleRequest;
+import com.example.Hair_Salon_Project.Model.PartialStaffUpdateRequest;
 import com.example.Hair_Salon_Project.Model.StaffRequest;
 import com.example.Hair_Salon_Project.Model.StaffResponse;
 import com.example.Hair_Salon_Project.Service.StaffService;
 
 @RestController
 @RequestMapping("/api/admin/staffs")
-@PreAuthorize("hasRole('STYLIST') or hasRole('CASHIER')")
+@PreAuthorize("hasRole('MANAGER')")
 public class AdminStaffAPI {
 
     @Autowired
@@ -50,17 +50,10 @@ public class AdminStaffAPI {
         return ResponseEntity.ok(staffService.generateStaffResponse(updatedStaff));
     }
 
-    @PatchMapping("/update-role/{id}")
-    public ResponseEntity<StaffResponse> updateRoleStaff(
-            @PathVariable long id, @RequestBody RoleRequest roleRequest) {
-        Staff updateStaff = staffService.updateRoleStaff(id, roleRequest);
-        return ResponseEntity.ok(staffService.generateStaffResponse(updateStaff));
-    }
-
     @PatchMapping("/{id}")
     public ResponseEntity<StaffResponse> deactivateStaff(
-            @PathVariable long id) {
-        Staff deactivateStaff = staffService.deactivateStaff(id);
+            @PathVariable long id, @RequestBody PartialStaffUpdateRequest partialUpdateStaff) {
+        Staff deactivateStaff = staffService.partialUpdateStaff(id, partialUpdateStaff);
         return ResponseEntity.ok(staffService.generateStaffResponse(deactivateStaff));
     }
 

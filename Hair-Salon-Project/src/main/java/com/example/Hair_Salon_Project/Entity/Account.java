@@ -112,14 +112,13 @@ public class Account implements UserDetails {
 
             Role role = this.staff.getRole();
             if (role != null) {
+                authorities.add(new SimpleGrantedAuthority("ROLE_" +
+                        (role.name())));
                 if (role == Role.MANAGER) {
                     authorities.add(new SimpleGrantedAuthority("ROLE_" +
                             (Role.CASHIER.name())));
                     authorities.add(new SimpleGrantedAuthority("ROLE_" +
                             (Role.STYLIST.name())));
-                } else {
-                    authorities.add(new SimpleGrantedAuthority("ROLE_" +
-                            (role.name())));
                 }
             }
         }
