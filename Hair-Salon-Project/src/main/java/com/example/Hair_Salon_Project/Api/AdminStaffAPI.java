@@ -51,7 +51,7 @@ public class AdminStaffAPI {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<StaffResponse> deactivateStaff(
+    public ResponseEntity<StaffResponse> partialUpdateStaff(
             @PathVariable long id, @RequestBody PartialStaffUpdateRequest partialUpdateStaff) {
         Staff deactivateStaff = staffService.partialUpdateStaff(id, partialUpdateStaff);
         return ResponseEntity.ok(staffService.generateStaffResponse(deactivateStaff));
