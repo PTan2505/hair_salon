@@ -7,6 +7,8 @@ import lombok.Setter;
 
 import java.time.LocalTime;
 
+import java.util.List;
+
 @Getter
 @Setter
 @Entity
@@ -14,14 +16,12 @@ import java.time.LocalTime;
 public class TimeSlot {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id; // PK for TimeSlot
+    private long id;
 
-    private LocalTime startTime; // Start time of the slot
+    private LocalTime startTime;
 
-    private LocalTime endTime; // End time of the slot
+    private LocalTime endTime;
 
-    @ManyToOne
-    @JoinColumn(name = "staff_id", nullable = false)
-    private Staff staff; // Reference to the associated Staff member
+    @ManyToMany(mappedBy = "timeSlots")
+    private List<Booking> bookings;
 }

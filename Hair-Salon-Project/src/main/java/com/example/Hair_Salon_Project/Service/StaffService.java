@@ -42,6 +42,7 @@ public class StaffService {
     }
 
     public Staff getStaffById(long id) {
+        // TODO: Check if role != MANAGER, only can get that staff id
         return staffRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Staff not found with id: " + id));
     }
