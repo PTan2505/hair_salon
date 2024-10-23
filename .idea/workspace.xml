@@ -4,7 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7ffbebf1-02bf-4003-ae42-4a1f63b4f29c" name="Changes" comment="" />
+    <list default="true" id="7ffbebf1-02bf-4003-ae42-4a1f63b4f29c" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Api/AdminAccountApi.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Hair-Salon-Project/src/main/java/com/example/Hair_Salon_Project/Api/CustomerAccountApi.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Hair-Salon-Project/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/Hair-Salon-Project/src/main/resources/application.properties" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
