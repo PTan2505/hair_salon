@@ -11,12 +11,7 @@ import CreateBill from "./CreateBill.jsx";
 import EditBill from "./EditBill.jsx";
 
 export default function Bill() {
-  const {
-    bills = [],
-    loading,
-    error,
-    handleDeleteBill,
-  } = useContext(BillContext);
+  const { bills = [], loading, error, removeBill } = useContext(BillContext);
 
   console.log("Original Bills from API:", bills); // Kiểm tra lại tại đây
 
@@ -34,7 +29,7 @@ export default function Bill() {
 
   const handleDelete = (object) => {
     setShowConfirm(false);
-    handleDeleteBill(object.id);
+    removeBill(object.id);
     toastSuccess("Delete Bill Successfully");
   };
 

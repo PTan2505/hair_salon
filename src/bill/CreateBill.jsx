@@ -8,7 +8,7 @@ import { toastSuccess } from "../shared/toastify";
 
 const CreateBill = ({ showModal, setShowModal }) => {
   const [formValues, setFormValues] = useState(null);
-  const { services, handleCreateBill } = useContext(BillContext); // Adjust based on your BillContext
+  const { services, createBill } = useContext(BillContext); // Adjust based on your BillContext
   const [showConfirm, setShowConfirm] = useState(false);
 
   const handleConfirm = (resetForm) => {
@@ -18,7 +18,7 @@ const CreateBill = ({ showModal, setShowModal }) => {
         totalAmount:
           Number(formValues.totalAmount) * 1000 - Number(formValues.discount), // Trừ discount
       };
-      handleCreateBill(updatedValues);
+      createBill(updatedValues);
     }
     setShowConfirm(false);
     setShowModal(false);

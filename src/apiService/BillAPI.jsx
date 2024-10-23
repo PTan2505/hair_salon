@@ -4,7 +4,7 @@
 export const fetchBills = async () => {
   try {
     const response = await fetch(
-      "https://66f6699f436827ced97704c4.mockapi.io/Bill"
+      "https://66f6699f436827ced97704c4.mockapi.io/bill"
     );
     if (!response.ok) {
       throw new Error("Failed to fetch bills");
@@ -20,7 +20,7 @@ export const fetchBills = async () => {
 export const addBill = async (newBill) => {
   try {
     const response = await fetch(
-      "https://66f6699f436827ced97704c4.mockapi.io/Bill",
+      "https://66f6699f436827ced97704c4.mockapi.io/bill",
       {
         method: "POST",
         headers: {
@@ -43,7 +43,7 @@ export const addBill = async (newBill) => {
 export const editBill = async (id, updatedData) => {
   try {
     const response = await fetch(
-      `https://66f6699f436827ced97704c4.mockapi.io/Bill/${id}`,
+      `https://66f6699f436827ced97704c4.mockapi.io/bill/${id}`,
       {
         method: "PUT",
         headers: {
@@ -66,7 +66,7 @@ export const editBill = async (id, updatedData) => {
 export const deleteBill = async (id) => {
   try {
     const response = await fetch(
-      `https://66f6699f436827ced97704c4.mockapi.io/Bill/${id}`,
+      `https://66f6699f436827ced97704c4.mockapi.io/bill/${id}`,
       {
         method: "DELETE",
       }
@@ -85,7 +85,7 @@ export const deleteBill = async (id) => {
 export const updateBillPaymentStatus = async (id, updatedStatus) => {
   try {
     const response = await fetch(
-      `https://66f6699f436827ced97704c4.mockapi.io/Bill/${id}`,
+      `https://66f6699f436827ced97704c4.mockapi.io/bill/${id}`,
       {
         method: "PUT",
         headers: {

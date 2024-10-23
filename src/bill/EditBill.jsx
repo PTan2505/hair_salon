@@ -8,7 +8,7 @@ import { BillContext } from "../context/BillContext";
 
 const EditBill = ({ object, showModal, setShowModal }) => {
   const [formValues, setFormValues] = useState(null);
-  const { services, handleEditBill } = useContext(BillContext);
+  const { services, updateBill } = useContext(BillContext);
   const [showConfirm, setShowConfirm] = useState(false);
 
   const handleConfirm = (resetForm) => {
@@ -21,7 +21,7 @@ const EditBill = ({ object, showModal, setShowModal }) => {
       }, {});
 
       if (Object.keys(changes).length > 0) {
-        handleEditBill(object.id, changes);
+        updateBill(object.id, changes);
       }
     }
     setShowConfirm(false);
