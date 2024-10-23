@@ -8,16 +8,21 @@ import { toastSuccess } from "../shared/toastify";
 
 const AddStaff = ({ showModal, setShowModal, currentUserRole }) => {
   const [formValues, setFormValues] = useState(null);
-  const { handleAddStaff } = useContext(StaffContext);
+  const { createStaff } = useContext(StaffContext);
   const [showConfirm, setShowConfirm] = useState(false);
 
   const handleConfirm = (resetForm) => {
     if (formValues) {
-      handleAddStaff(formValues);
+      const updatedValues = {
+        ...formValues,
+        phone: formValues.phone.replace(/-/g, ""),
+        role: formValues.role === "none" ? null : formValues.role,
+      };
+      createStaff(updatedValues); // Gọi hành động thêm staff
     }
-    setShowConfirm(false);
-    setShowModal(false);
-    resetForm();
+    setShowConfirm(false); // Đóng confirm modal
+    setShowModal(false); // Đóng add staff modal
+    resetForm(); // Reset form sau khi submit thành công
     toastSuccess("Add Staff Successfully");
   };
 
@@ -28,12 +33,14 @@ const AddStaff = ({ showModal, setShowModal, currentUserRole }) => {
   const formik = useFormik({
     initialValues: {
       phone: "",
-      role: "",
+      role: "none",
     },
     onSubmit: (values) => {
+      console.log("Submitting form values:", values);
       setFormValues(values);
       setShowConfirm(true);
     },
+
     validationSchema: yup.object().shape({
       phone: yup
         .string()

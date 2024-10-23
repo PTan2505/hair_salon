@@ -15,7 +15,7 @@ export default function Staff() {
     staff = [], // Sử dụng đúng tên biến 'staff'
     loading,
     error,
-    handleDeleteStaff,
+    removeStaff,
   } = useContext(StaffContext);
 
   console.log("Original Staffs from API:", staff); // Kiểm tra dữ liệu nhân viên từ API (Bước 1)
@@ -34,7 +34,7 @@ export default function Staff() {
 
   const handleDelete = (object) => {
     setShowConfirm(false);
-    handleDeleteStaff(object.id);
+    removeStaff(object.id);
     toastSuccess("Delete Staff Successfully");
   };
 
@@ -78,7 +78,11 @@ export default function Staff() {
         onCancel={handleCancel}
         onConfirm={() => handleDelete(object)}
       />
-      <CreateStaff showModal={showModal} setShowModal={setShowModal} />
+      <CreateStaff
+        showModal={showModal}
+        setShowModal={setShowModal}
+        currentUserRole="MANAGER"
+      />
       <EditStaff
         object={object}
         showModal={showEditModal}
@@ -133,21 +137,43 @@ export default function Staff() {
           <thead>
             <tr>
               <th style={{ width: "50px" }}>No</th>
-              <th style={{ width: "25%" }}>Name</th>
               <th style={{ width: "25%" }}>Phone</th>
-              <th style={{ width: "25%" }}>Email</th>
-              <th style={{ width: "25%" }}>Password</th>
+              <th style={{ width: "25%" }}>Role</th>
+              <th style={{ width: "150px" }}>Is-Staff</th>
               <th style={{ width: "150px" }}>Actions</th>
             </tr>
           </thead>
           <tbody>
-            {sortedStaffs.map((staff) => (
+            {sortedStaffs.map((staff, index) => (
               <tr key={staff.id}>
-                <td>{staff.id}</td>
-                <td>{staff.name}</td>
+                <td>{index + 1}</td>
                 <td>{staff.phone}</td>
-                <td>{staff.email}</td>
-                <td>{staff.password}</td>
+                <td>{staff.role}</td>
+                <td>
+                  {staff.isStaff === true ? (
+                    <div
+                      style={{
+                        backgroundColor: "green",
+                        color: "white",
+                        borderRadius: "1rem",
+                        margin: "30px",
+                      }}
+                    >
+                      Active
+                    </div>
+                  ) : (
+                    <div
+                      style={{
+                        backgroundColor: "#cf2626",
+                        color: "white",
+                        borderRadius: "1rem",
+                        margin: "30px",
+                      }}
+                    >
+                      No Active
+                    </div>
+                  )}
+                </td>
                 <td>
                   <Dropdown>
                     <Dropdown.Toggle

@@ -1,0 +1,72 @@
+[
+{
+    "id": 1,
+    "accountId": 1,
+    "phone": "0584088484",
+    "role": "MANAGER",
+    "isStaff": true
+},
+{
+    "id": 2,
+    "accountId": 2,
+    "phone": "0584088485",
+    "role": "STYLIST",
+    "isStaff": true
+},
+{
+    "id": 3,
+    "accountId": 3,
+    "phone": "0584088486",
+    "role": "CASHIER",
+    "isStaff": true
+},
+{
+    "id": 4,
+    "accountId": 4,
+    "phone": "0584088487",
+    "role": "MANAGER",
+    "isStaff": true
+},
+{
+    "id": 5,
+    "accountId": 5,
+    "phone": "0584088488",
+    "role": "STYLIST",
+    "isStaff": true
+},
+{
+    "id": 6,
+    "accountId": 6,
+    "phone": "0584088489",
+    "role": "CASHIER",
+    "isStaff": true
+},
+{
+    "id": 7,
+    "accountId": 7,
+    "phone": "0584088490",
+    "role": "MANAGER",
+    "isStaff": true
+},
+{
+    "id": 8,
+    "accountId": 8,
+    "phone": "0584088491",
+    "role": "STYLIST",
+    "isStaff": true
+},
+{
+    "id": 9,
+    "accountId": 9,
+    "phone": "0584088492",
+    "role": "CASHIER",
+    "isStaff": true
+},
+{
+    "id": 10,
+    "accountId": 10,
+    "phone": "0584088493",
+    "role": "MANAGER",
+    "isStaff": true
+}
+]

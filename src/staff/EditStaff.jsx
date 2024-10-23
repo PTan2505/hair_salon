@@ -4,19 +4,19 @@ import { StaffContext } from "../context/StaffContext";
 import { toastSuccess } from "../shared/toastify";
 
 export default function EditStaff({ showModal, setShowModal, object }) {
-  const { handleEditStaff } = useContext(StaffContext);
+  const { updateStaff } = useContext(StaffContext);
   const [staffData, setStaffData] = useState({
-    name: "",
+    phone: "",
     role: "",
-    email: "",
+    isStaff: false, // Mặc định là false
   });
 
   useEffect(() => {
     if (object) {
       setStaffData({
-        name: object.name,
+        phone: object.phone,
         role: object.role,
-        email: object.email,
+        isStaff: object.isStaff, // Lấy trạng thái từ object
       });
     }
   }, [object]);
@@ -28,10 +28,17 @@ export default function EditStaff({ showModal, setShowModal, object }) {
     });
   };
 
+  const handleToggleStaff = () => {
+    setStaffData((prevData) => ({
+      ...prevData,
+      isStaff: !prevData.isStaff, // Đảo ngược giá trị của isStaff
+    }));
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await handleEditStaff(object.id, staffData);
+      await updateStaff(object.id, staffData);
       toastSuccess("Staff Updated Successfully!");
       setShowModal(false);
     } catch (error) {
@@ -47,12 +54,12 @@ export default function EditStaff({ showModal, setShowModal, object }) {
       <Modal.Body>
         <Form onSubmit={handleSubmit}>
           <Form.Group className="mb-3">
-            <Form.Label>Name</Form.Label>
+            <Form.Label>Phone</Form.Label>
             <Form.Control
               type="text"
-              placeholder="Enter staff name"
-              name="name"
-              value={staffData.name}
+              placeholder="Enter staff phone"
+              name="phone"
+              value={staffData.phone}
               onChange={handleChange}
               required
             />
@@ -69,14 +76,13 @@ export default function EditStaff({ showModal, setShowModal, object }) {
             />
           </Form.Group>
           <Form.Group className="mb-3">
-            <Form.Label>Email</Form.Label>
-            <Form.Control
-              type="email"
-              placeholder="Enter staff email"
-              name="email"
-              value={staffData.email}
-              onChange={handleChange}
-              required
+            <Form.Label>Is Staff</Form.Label>
+            <Form.Check
+              type="switch"
+              id="staff-switch"
+              label="Active"
+              onChange={handleToggleStaff} // Gọi hàm để thay đổi trạng thái
+              checked={staffData.isStaff} // Kiểm tra trạng thái của isStaff
             />
           </Form.Group>
           <Button variant="primary" type="submit">
