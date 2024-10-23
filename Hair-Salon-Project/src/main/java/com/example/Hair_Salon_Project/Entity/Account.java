@@ -39,8 +39,8 @@ public class Account implements UserDetails {
     @NotBlank(message = "Last name is required")
     private String lastName;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM-dd-yyyy")
-    private LocalDate birthDate;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    private LocalDate birthday;
 
     @Enumerated(EnumType.STRING)
     private Gender gender;

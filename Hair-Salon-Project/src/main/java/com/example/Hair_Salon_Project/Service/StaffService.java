@@ -122,7 +122,7 @@ public class StaffService {
 
     public StaffResponse generateStaffResponse(Staff staff) {
         StaffResponse response = new StaffResponse();
-        response.setStaffId(staff.getId());
+        response.setId(staff.getId());
         response.setRole(staff.getRole().name());
         response.setStaff(staff.isStaff());
         Account account = staff.getAccount();
@@ -131,7 +131,7 @@ public class StaffService {
         response.setEmail(account.getEmail());
         response.setPhone(account.getPhone());
         response.setGender(account.getGender().name());
-        response.setBirthDate(account.getBirthDate());
+        response.setBirthday(account.getBirthday());
         return response;
     }
 
