@@ -14,6 +14,8 @@ import java.util.Optional;
 public interface StaffRepository extends JpaRepository<Staff, Long> {
     Optional<Staff> findById(Long id);
 
+    Optional<Staff> findByAccountId(Long id);
+
     @Query("SELECT s FROM Staff s WHERE s.account.phone = :phone")
     Optional<Staff> findByPhone(String phone);
 

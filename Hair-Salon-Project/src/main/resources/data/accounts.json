@@ -1,0 +1,211 @@
+[
+  {
+    "firstName": "Nguyen",
+    "lastName": "Tan",
+    "birthday": "2001-05-25",
+    "gender": "Male",
+    "email": "phuctan@example.com",
+    "password": "12345679",
+    "phone": "0334974582",
+    "isActive": true,
+    "superUser": true
+  },
+  {
+    "firstName": "Jane",
+    "lastName": "Smith",
+    "birthday": "1985-05-15",
+    "gender": "Female",
+    "email": "jane.smith@example.com",
+    "password": "password123",
+    "phone": "0987654321",
+    "isActive": true,
+    "superUser": false
+  },
+  {
+    "firstName": "Emily",
+    "lastName": "Brown",
+    "birthday": "1992-08-12",
+    "gender": "Female",
+    "email": "emily.brown@example.com",
+    "password": "password123",
+    "phone": "0912345678",
+    "isActive": true,
+    "superUser": false
+  },
+  {
+    "firstName": "Michael",
+    "lastName": "Johnson",
+    "birthday": "1988-04-22",
+    "gender": "Male",
+    "email": "michael.johnson@example.com",
+    "password": "password123",
+    "phone": "0981234567",
+    "isActive": true,
+    "superUser": false
+  },
+  {
+    "firstName": "Sarah",
+    "lastName": "Williams",
+    "birthday": "1995-11-30",
+    "gender": "Female",
+    "email": "sarah.williams@example.com",
+    "password": "password123",
+    "phone": "0934567890",
+    "isActive": true,
+    "superUser": false
+  },
+  {
+    "firstName": "David",
+    "lastName": "Jones",
+    "birthday": "1980-06-19",
+    "gender": "Male",
+    "email": "david.jones@example.com",
+    "password": "password123",
+    "phone": "0923456781",
+    "isActive": true,
+    "superUser": false
+  },
+  {
+    "firstName": "Sophia",
+    "lastName": "Taylor",
+    "birthday": "1990-09-13",
+    "gender": "Female",
+    "email": "sophia.taylor@example.com",
+    "password": "password123",
+    "phone": "0956781234",
+    "isActive": true,
+    "superUser": false
+  },
+  {
+    "firstName": "Daniel",
+    "lastName": "Lee",
+    "birthday": "1993-03-07",
+    "gender": "Male",
+    "email": "daniel.lee@example.com",
+    "password": "password123",
+    "phone": "0912345789",
+    "isActive": true,
+    "superUser": false
+  },
+  {
+    "firstName": "Olivia",
+    "lastName": "White",
+    "birthday": "1997-12-23",
+    "gender": "Female",
+    "email": "olivia.white@example.com",
+    "password": "password123",
+    "phone": "0945678123",
+    "isActive": true,
+    "superUser": false
+  },
+  {
+    "firstName": "Liam",
+    "lastName": "Harris",
+    "birthday": "1982-04-18",
+    "gender": "Male",
+    "email": "liam.harris@example.com",
+    "password": "password123",
+    "phone": "0961234567",
+    "isActive": true,
+    "superUser": false
+  },
+  {
+    "firstName": "Charlotte",
+    "lastName": "Clark",
+    "birthday": "1989-07-25",
+    "gender": "Female",
+    "email": "charlotte.clark@example.com",
+    "password": "password123",
+    "phone": "0909876543",
+    "isActive": true,
+    "superUser": false
+  },
+  {
+    "firstName": "James",
+    "lastName": "Lewis",
+    "birthday": "1984-02-14",
+    "gender": "Male",
+    "email": "james.lewis@example.com",
+    "password": "password123",
+    "phone": "0978765432",
+    "isActive": true,
+    "superUser": false
+  },
+  {
+    "firstName": "Amelia",
+    "lastName": "Walker",
+    "birthday": "1991-10-10",
+    "gender": "Female",
+    "email": "amelia.walker@example.com",
+    "password": "password123",
+    "phone": "0912349876",
+    "isActive": true,
+    "superUser": false
+  },
+  {
+    "firstName": "Benjamin",
+    "lastName": "Young",
+    "birthday": "1987-11-21",
+    "gender": "Male",
+    "email": "benjamin.young@example.com",
+    "password": "password123",
+    "phone": "0923456712",
+    "isActive": true,
+    "superUser": false
+  },
+  {
+    "firstName": "Ella",
+    "lastName": "King",
+    "birthday": "1996-05-04",
+    "gender": "Female",
+    "email": "ella.king@example.com",
+    "password": "password123",
+    "phone": "0945678129",
+    "isActive": true,
+    "superUser": false
+  },
+  {
+    "firstName": "Henry",
+    "lastName": "Scott",
+    "birthday": "1983-08-27",
+    "gender": "Male",
+    "email": "henry.scott@example.com",
+    "password": "password123",
+    "phone": "0931234568",
+    "isActive": true,
+    "superUser": false
+  },
+  {
+    "firstName": "Mia",
+    "lastName": "Adams",
+    "birthday": "1994-06-17",
+    "gender": "Female",
+    "email": "mia.adams@example.com",
+    "password": "password123",
+    "phone": "0912345671",
+    "isActive": true,
+    "superUser": false
+  },
+  {
+    "firstName": "Alexander",
+    "lastName": "Nelson",
+    "birthday": "1998-09-09",
+    "gender": "Male",
+    "email": "alexander.nelson@example.com",
+    "password": "password123",
+    "phone": "0956789123",
+    "isActive": true,
+    "superUser": false
+  },
+  {
+    "firstName": "Grace",
+    "lastName": "Carter",
+    "birthday": "1999-01-02",
+    "gender": "Female",
+    "email": "grace.carter@example.com",
+    "password": "password123",
+    "phone": "0901234569",
+    "isActive": true,
+    "superUser": false
+  }
+]

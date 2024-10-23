@@ -1,0 +1,37 @@
+[
+  {
+    "account": {
+      "id": 2
+    },
+    "isStaff": true,
+    "role": "MANAGER"
+  },
+  {
+    "account": {
+      "id": 3
+    },
+    "isStaff": true,
+    "role": "CASHIER"
+  },
+  {
+    "account": {
+      "id": 4
+    },
+    "isStaff": true,
+    "role": "MANAGER"
+  },
+  {
+    "account": {
+      "id": 5
+    },
+    "isStaff": true,
+    "role": "STYLIST"
+  },
+  {
+    "account": {
+      "id": 6
+    },
+    "isStaff": true,
+    "role": "CASHIER"
+  }
+]

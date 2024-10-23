@@ -2,6 +2,7 @@ package com.example.Hair_Salon_Project.Api;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +20,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/admin/bookings")
+@PreAuthorize("hasRole('STYLIST')")
 public class AdminBookingAPI {
     @Autowired
     private BookingService bookingService;
@@ -36,9 +38,9 @@ public class AdminBookingAPI {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<BookingResponse> updateBookingStatus(@PathVariable Long id,
+    public ResponseEntity<BookingResponse> partialUpdateBooking(@PathVariable Long id,
             @RequestBody BookingStatusRequest bookingStatusRequest) {
-        Booking updatedBooking = bookingService.updateBookingStatus(id, bookingStatusRequest);
+        Booking updatedBooking = bookingService.partialUpdateBooking(id, bookingStatusRequest);
         return ResponseEntity.ok(bookingService.generateBookingResponse(updatedBooking));
     }
 }

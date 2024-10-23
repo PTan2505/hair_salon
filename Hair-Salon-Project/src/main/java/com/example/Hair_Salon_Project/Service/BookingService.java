@@ -185,7 +185,7 @@ public class BookingService {
         return booking;
     }
 
-    public Booking updateBookingStatus(Long bookingId, BookingStatusRequest newStatus) {
+    public Booking partialUpdateBooking(Long bookingId, BookingStatusRequest newStatus) {
         Booking booking = getBookingDetailsAdmin(bookingId);
         booking.setStatus(newStatus.getBookingEnum());
         return bookingRepository.save(booking);

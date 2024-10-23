@@ -8,7 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class StaffResponse {
-    private Long staffId;
+    private Long id;
     private String role;
     private boolean isStaff;
     private String firstName;
@@ -16,6 +16,6 @@ public class StaffResponse {
     private String email;
     private String phone;
     private String gender;
-    private LocalDate birthDate;
+    private LocalDate birthday;
 
 }

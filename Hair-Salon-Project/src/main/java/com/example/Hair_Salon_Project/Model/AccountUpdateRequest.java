@@ -4,7 +4,8 @@ import jakarta.persistence.Column;
 import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 
-import java.util.Date;
+import java.time.LocalDate;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Data
 public class AccountUpdateRequest {
@@ -19,6 +20,7 @@ public class AccountUpdateRequest {
     @Column(unique = true)
     String phone;
 
-    Date birthday;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    LocalDate birthday;
 
 }

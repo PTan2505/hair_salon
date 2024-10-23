@@ -56,7 +56,6 @@ public class AuthenticationService {
         // Map the RegisterRequest to Account
         Account newAccount = modelMapper.map(registerRequest, Account.class);
         newAccount.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
-        newAccount.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
 
         // Save the new account and send the email
         try {
