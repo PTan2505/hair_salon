@@ -35,6 +35,7 @@ public class Bill {
     @JoinColumn(name = "staff_id")
     private Staff staff;
 
+    // Product clone instead of product
     @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product;

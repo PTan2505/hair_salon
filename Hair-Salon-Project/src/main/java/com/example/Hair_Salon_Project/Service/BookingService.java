@@ -209,6 +209,7 @@ public class BookingService {
         bookingResponse.setProduct(modelMapper.map(booking.getProduct(), ProductCloneResponse.class));
         bookingResponse.setStartTime(booking.getFirstStartTime());
         bookingResponse.setEndTime(booking.getLastEndTime());
+        bookingResponse.setStatus(booking.getStatus());
 
         return bookingResponse;
     }

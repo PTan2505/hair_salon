@@ -8,13 +8,12 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import com.example.Hair_Salon_Project.Entity.Booking;
 import com.example.Hair_Salon_Project.Model.BookingResponse;
 import com.example.Hair_Salon_Project.Model.BookingStatusRequest;
 import com.example.Hair_Salon_Project.Service.BookingService;
-
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 
 import java.util.List;
 
