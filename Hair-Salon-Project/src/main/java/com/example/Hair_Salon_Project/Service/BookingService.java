@@ -19,7 +19,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 import java.time.LocalDate;
@@ -186,20 +185,14 @@ public class BookingService {
     }
 
     public Booking partialUpdateBooking(Long bookingId, BookingStatusRequest newStatus) {
+        Account account = authenticationService.getCurrentAccount();
+
+        if (account.getRole() == Role.CUSTOMER && newStatus.getStatus() != BookingStatus.CANCELLED.toString()) {
+            throw new ValidationException("Customer can only cancel the booking");
+        }
         Booking booking = getBookingDetailsAdmin(bookingId);
         booking.setStatus(newStatus.getBookingEnum());
         return bookingRepository.save(booking);
-    }
-
-    public boolean cancelBooking(Long id) {
-        Optional<Booking> existingBookingOpt = bookingRepository.findById(id);
-        if (existingBookingOpt.isPresent()) {
-            Booking booking = existingBookingOpt.get();
-            booking.setStatus(BookingStatus.CANCELLED);
-            bookingRepository.save(booking);
-            return true;
-        }
-        throw new NotFoundException("Booking not found");
     }
 
     public BookingResponse generateBookingResponse(Booking booking) {
@@ -218,6 +211,46 @@ public class BookingService {
         return bookingList.stream()
                 .map(this::generateBookingResponse)
                 .collect(Collectors.toList());
+    }
+
+    public List<Staff> getAvailableStaff(LocalDate bookingDate, Long productId, Long timeSlotId) {
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new NotFoundException("Product not found with id: " + productId));
+
+        int numberOfRequiredTimeSlots = (int) Math.ceil(product.getTime() / 30.0);
+
+        List<TimeSlot> timeSlots = getRequiredTimeSlots(timeSlotId, numberOfRequiredTimeSlots);
+
+        List<Staff> allStylists = staffRepository.findByRole(Role.STYLIST);
+
+        List<Staff> availableStaff = allStylists.stream()
+                .filter(staff -> isStaffAvailable(staff, timeSlots, bookingDate))
+                .collect(Collectors.toList());
+
+        return availableStaff;
+    }
+
+    public List<TimeSlot> getAvailableTimeSlots(Long staffId, LocalDate bookingDate, Long productId) {
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new NotFoundException("Product not found with id: " + productId));
+
+        int numberOfRequiredTimeSlots = (int) Math.ceil(product.getTime() / 30.0);
+
+        List<TimeSlot> allTimeSlots = timeSlotRepository.findAll(); // Adjust this based on your implementation
+
+        Staff staff = staffRepository.findById(staffId)
+                .orElseThrow(() -> new NotFoundException("Staff not found with id: " + staffId));
+
+        if (staff.getRole() != Role.STYLIST) {
+            throw new ValidationException("Can't query timeslot for staff that is not Stylist");
+        }
+
+        List<TimeSlot> availableTimeSlots = allTimeSlots.stream()
+                .filter(timeSlot -> isStaffAvailable(staff,
+                        getRequiredTimeSlots(timeSlot.getId(), numberOfRequiredTimeSlots), bookingDate))
+                .collect(Collectors.toList());
+
+        return availableTimeSlots;
     }
 
 }
