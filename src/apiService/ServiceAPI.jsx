@@ -1,15 +1,26 @@
 export const fetchServices = async () => {
+  const token =
+    "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNzI5Nzc5NDAzLCJleHAiOjE3Mjk4NjU4MDN9.-T8W04d2IWeoHzStuU3tAFcCzsGU4T34Eq2guRe0A_g";
   try {
-    const response = await fetch(
-      "https://67066a87a0e04071d226c4b3.mockapi.io/services"
-    );
+    const response = await fetch("http://localhost:8080/api/admin/products", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`, // Include the token here
+      },
+    });
+
+    console.log("API Response Status:", response); // Check response status
+
     if (!response.ok) {
-      throw new Error("Failed to fetch services");
+      throw new Error("Failed to fetch staff");
     }
+
     const data = await response.json();
+    console.log("Fetched service data:", data); // Check the returned data
     return data;
   } catch (error) {
-    console.error("Error fetching services:", error);
+    console.error("Error fetching service:", error);
     throw error;
   }
 };
@@ -17,7 +28,7 @@ export const fetchServices = async () => {
 export const fetchServicesType = async () => {
   try {
     const response = await fetch(
-      "https://67066a87a0e04071d226c4b3.mockapi.io/servicesType"
+      "http://localhost:8080/api/admin/product-types"
     );
     if (!response.ok) {
       throw new Error("Failed to fetch services type");
@@ -32,16 +43,13 @@ export const fetchServicesType = async () => {
 
 export const addService = async (newService) => {
   try {
-    const response = await fetch(
-      `https://67066a87a0e04071d226c4b3.mockapi.io/services`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(newService),
-      }
-    );
+    const response = await fetch(`http://localhost:8080/api/admin/products`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newService),
+    });
     if (!response.ok) {
       throw new Error("Failed to add new Service");
     }
@@ -55,7 +63,7 @@ export const addService = async (newService) => {
 export const addServiceType = async (newServiceType) => {
   try {
     const response = await fetch(
-      `https://67066a87a0e04071d226c4b3.mockapi.io/servicesType`,
+      `http://localhost:8080/api/admin/product-types`,
       {
         method: "POST",
         headers: {
@@ -77,7 +85,7 @@ export const addServiceType = async (newServiceType) => {
 export const editService = async (id, updatedData) => {
   try {
     const response = await fetch(
-      `https://67066a87a0e04071d226c4b3.mockapi.io/services/${id}`,
+      `http://localhost:8080/api/admin/products/${id}`,
       {
         method: "PUT",
         headers: {
@@ -99,7 +107,7 @@ export const editService = async (id, updatedData) => {
 export const editServiceType = async (id, updatedData) => {
   try {
     const response = await fetch(
-      `https://67066a87a0e04071d226c4b3.mockapi.io/servicesType/${id}`,
+      `http://localhost:8080/api/admin/product-types/${id}`,
       {
         method: "PUT",
         headers: {
@@ -121,7 +129,7 @@ export const editServiceType = async (id, updatedData) => {
 export const deleteService = async (id) => {
   try {
     const response = await fetch(
-      `https://67066a87a0e04071d226c4b3.mockapi.io/services/${id}`,
+      `http://localhost:8080/api/admin/products/${id}`,
       {
         method: "PUT",
         headers: {
@@ -143,7 +151,7 @@ export const deleteService = async (id) => {
 export const deleteServiceType = async (id) => {
   try {
     const response = await fetch(
-      `https://67066a87a0e04071d226c4b3.mockapi.io/servicesType/${id}`,
+      `http://localhost:8080/api/admin/product-types/${id}`,
       {
         method: "PUT",
         headers: {

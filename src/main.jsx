@@ -7,19 +7,22 @@ import { BrowserRouter } from "react-router-dom";
 import { CustomerProvider } from "./context/CustomerContext";
 import { AppointmentProvider } from "./context/AppointmentContext.jsx";
 import { ServiceProvider } from "./context/ServiceContext.jsx";
-import { BillProvider } from "./context/BillContext.jsx";
+import { BillProvider } from "./context/BillContext.jsx"; // Giữ cả BillProvider
+import { StaffProvider } from "./context/StaffContext.jsx"; // Giữ cả StaffProvider
 
 createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <BrowserRouter>
       <BillProvider>
-        <CustomerProvider>
-          <AppointmentProvider>
-            <ServiceProvider>
-              <App />
-            </ServiceProvider>
-          </AppointmentProvider>
-        </CustomerProvider>
+        <StaffProvider>
+          <CustomerProvider>
+            <AppointmentProvider>
+              <ServiceProvider>
+                <App />
+              </ServiceProvider>
+            </AppointmentProvider>
+          </CustomerProvider>
+        </StaffProvider>
       </BillProvider>
     </BrowserRouter>
   </React.StrictMode>

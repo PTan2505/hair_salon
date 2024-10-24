@@ -112,34 +112,34 @@ export default function Service() {
               <tr>
                 <th style={{ width: "50px" }}>No</th>
                 <th style={{ width: "20%" }}>Name</th>
-                <th style={{ width: "15%" }}>Type</th>
                 <th style={{ width: "15%" }}>Price</th>
                 <th style={{ width: "15%" }}>Point</th>
                 <th style={{ width: "15%" }}>Time</th>
+                <th style={{ width: "15%" }}>Type</th>
                 <th style={{ width: "150px" }}>Active</th>
                 <th style={{ width: "50px" }}></th>
               </tr>
             </thead>
             <tbody>
-              {sortedServices.map((service) => (
+              {sortedServices.map((service, index) => (
                 <tr key={service.id}>
                   <td style={{ alignContent: "center", height: "100px" }}>
-                    {service.id}
+                    {index + 1}
                   </td>
                   <td style={{ alignContent: "center", height: "100px" }}>
                     {service.name}
                   </td>
                   <td style={{ alignContent: "center", height: "100px" }}>
-                    {findTypeName(service.type)}
-                  </td>
-                  <td style={{ alignContent: "center", height: "100px" }}>
                     {service.price}
                   </td>
                   <td style={{ alignContent: "center", height: "100px" }}>
-                    {service.point}
+                    {service.points}
                   </td>
                   <td style={{ alignContent: "center", height: "100px" }}>
                     {service.time}
+                  </td>
+                  <td style={{ alignContent: "center", height: "100px" }}>
+                    {findTypeName(service.productTypeId)}
                   </td>
                   <td style={{ alignContent: "center", height: "100px" }}>
                     {service.is_active === true ? (
