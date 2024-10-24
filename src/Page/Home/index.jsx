@@ -1,35 +1,18 @@
-import React from "react";
 import "./index.css";
 import "./reviewlist";
 import "./servicelist";
-import ServicesList from "./servicelist";
+import { useNavigate } from "react-router-dom";
 
-function ServiceWebsite() {
+function HomePage() {
+  const navigate = useNavigate();
+
   return (
     <div>
       {/* Header Section */}
 
-      <header className="navbar">
-        <div className="container">
-          <div className="navbar-brand">
-            <img src="" alt="Logo" />
-            <span>Hair Salon</span>
-          </div>
-          <h1 className="navbar-menu">
-            <a href="#home">HOME</a>
-            <a href="#about">ABOUT US</a>
-            <a href="#partners">SERVICE</a>
-          </h1>
-          <div className="navbar-contact">
-            <a href="tel:login" className="contact-btn">
-              Login
-            </a>
-          </div>
-        </div>
-      </header>
-
       <header className="hero">
         <div className="overlay"></div>
+        <h1 className="salon-name">Modern Hair Salon</h1>
         <div className="hero-content">
           <h1>The Ultimate Convenience for Busy People</h1>
           <p>Experience the Convenience of In-home Barber Services</p>
@@ -40,6 +23,20 @@ function ServiceWebsite() {
             <a href="#services" className="btn-secondary">
               Browse Services
             </a>
+          </div>
+          <div className="navbar-contact">
+            <button className="contact-btn" onClick={() => navigate("/login")}>
+              Login
+            </button>
+          </div>
+
+          <div className="navbar">
+            <div className="navbar-brand">
+              <img
+                src="image.png/z5936479637733_515621b0f5a2790d08fe028260980c4c.png"
+                alt="Logo"
+              />
+            </div>
           </div>
         </div>
       </header>
@@ -287,4 +284,4 @@ function ServiceWebsite() {
   );
 }
 
-export default ServiceWebsite;
+export default HomePage;

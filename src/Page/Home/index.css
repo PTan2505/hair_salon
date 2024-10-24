@@ -17,133 +17,125 @@ body {
   padding: 0 15px;
 }
 
-/* Navbar */
-.navbar {
-  background-color: #DEC7A6;
-  padding: 15px 0;
-  border-bottom: 1px solid #DEC7A6;
-}
 
-.navbar .container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.navbar-brand {
-  display: flex;
-  align-items: center;
-}
-
-.navbar-brand img {
-  width: 50px;
-  margin-right: 10px;
-}
-
-.navbar-brand span {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #000000;
-}
-
-.navbar-menu {
-  display: flex;
-  gap: 20px;
-}
-
-.navbar-menu a {
-  text-decoration: none;
-  font-size: 1rem;
-  color: #333;
-  padding: 10px;
-}
-
-.navbar-menu a:hover {
-  color: #0074d9;
-}
-
-.navbar-contact .contact-btn {
-  background-color: black;
-  color: white;
-  padding: 10px 20px;
-  border-radius: 20px;
-  text-decoration: none;
-  font-weight: bold;
-}
-
-.navbar-contact .contact-btn:hover {
-  background-color: #005bb5;
-}
-
-/* Hero Section */
+/* Căn chỉnh hero */
 .hero {
-  position: relative;
-  height: 80vh;
-  background: url('https://i.pinimg.com/originals/fe/b3/14/feb3144bc6e890a08ec063cd7c9912e0.jpg') no-repeat center center/cover;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  color: white;
-}
-
-.overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.6);
+background: url('https://images.unsplash.com/photo-1633681926053-9074b76e21a7?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') no-repeat center center/cover;
+position: relative;
+height: 100vh;
+background-color: #f2f2f2; /* Bạn có thể thay thế bằng màu hoặc hình nền */
+display: flex;
+justify-content: center;
+align-items: center;
+text-align: center;
 }
 
 .hero-content {
-  position: relative;
-  z-index: 2;
-  max-width: 700px;
+z-index: 1;
+color: white;
 }
 
-.hero-content h1 {
-  font-size: 3rem;
-  margin-bottom: 20px;
-}
-
-.hero-content p {
-  font-size: 1.2rem;
-  margin-bottom: 30px;
+.overlay {
+position: absolute;
+top: 0;
+left: 0;
+right: 0;
+bottom: 0;
+background: rgba(0, 0, 0, 0.5); /* Màu overlay */
 }
 
 .hero-buttons {
-  display: flex;
-  gap: 15px;
-  justify-content: center;
+margin-top: 20px;
 }
 
 .btn-primary, .btn-secondary {
-  padding: 10px 25px;
-  font-size: 1rem;
-  border-radius: 30px;
+  margin: 0 10px;
+  padding: 10px 20px;
   text-decoration: none;
-  display: inline-block;
+  color: white;
+  border-radius: 5px; /* Bo góc cho nút */
+  transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Hiệu ứng chuyển động */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Hiệu ứng bóng đổ */
 }
 
 .btn-primary {
-  background-color: white;
-  color: black;
+  background-color: #007bff; /* Màu xanh cho nút chính */
+}
+
+.btn-primary:hover {
+  background-color: #0056b3; /* Màu đậm hơn khi hover */
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15); /* Bóng đổ lớn hơn khi hover */
 }
 
 .btn-secondary {
-  background-color: transparent;
-  border: 2px solid white;
-  color: white;
+  background-color: #6c757d; /* Màu xám cho nút phụ */
 }
 
-.btn {
-  background-color: #ffc107;
-  color: black;
-  border-radius: 30px;
-  text-decoration: none;
-  padding: 10px 25px;
+.btn-secondary:hover {
+  background-color: #5a6268; /* Màu đậm hơn khi hover */
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15); /* Bóng đổ lớn hơn khi hover */
 }
+
+
+/* Căn chỉnh nút login ở góc phải trên */
+.navbar-contact {
+position: absolute;
+top: 20px; /* Cách phía trên một khoảng */
+right: 20px; /* Cách bên phải một khoảng */
+}
+
+.contact-btn {
+padding: 10px 20px;
+background-color: #007bff;
+color: white;
+text-decoration: none;
+border-radius: 5px;
+}
+
+/* Logo và thương hiệu */
+.navbar {
+position: absolute;
+top: 0;
+left: 0;
+width: 100%;
+display: flex;
+align-items: center;
+padding: 10px 20px;
+background-color: transparent; /* Đặt nền trong suốt để thấy phần hero */
+z-index: 1000; /* Nổi trên header */
+}
+
+/* Căn chỉnh logo ở góc trái */
+.navbar-brand {
+position: absolute;
+top: -40px; /* Có thể điều chỉnh để logo gần hơn với nút Login */
+left: -20px; /* Đặt logo sát trái */
+display: flex;
+align-items: center;
+justify-content: flex-start;
+gap: 10px;
+z-index: 1001; /* Nổi lên trên header */
+}
+
+.navbar-brand img {
+width: 200px; /* Tăng kích thước logo */
+height: 250px;
+max-width: 250px; /* Giới hạn kích thước tối đa nếu cần */
+max-height: 250px; /* Giới hạn chiều cao nếu cần */
+}
+
+.salon-name {
+position: absolute;
+top: 20px;
+width: 100%;
+text-align: center;
+font-size: 48px; /* Kích thước lớn cho tên salon */
+font-weight: bold;
+color: white;
+margin: 0;
+line-height: 1;
+}
+
 
 /* Contact Info Section */
 
@@ -352,38 +344,57 @@ body {
 }
 
 /* Form Styling */
+.appointment-wrapper {
+display: flex;
+justify-content: space-between;
+gap: 30px; /* khoảng cách giữa mô tả và form */
+padding: 20px;
+}
+
+.description {
+flex: 1; /* mô tả chiếm 1 phần */
+}
+
+.form-container {
+flex: 1; /* form chiếm 1 phần */
+}
+
 .form {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
+display: flex;
+flex-direction: column;
+gap: 15px; /* khoảng cách giữa các thành phần form */
 }
 
 .form input,
+.form select,
 .form textarea {
-  padding: 10px;
-  font-size: 1rem;
-  border: 1px solid #DEC7A6;
-  border-radius: 5px;
-  width: 100%;
+width: 100%; /* Đảm bảo tất cả các phần tử form chiếm toàn bộ chiều rộng */
+padding: 10px;
+border: 1px solid #ccc;
+border-radius: 5px;
+font-size: 16px;
 }
 
 .form textarea {
-  resize: vertical;
-  height: 100px;
+resize: vertical; /* Chỉ cho phép thay đổi kích thước theo chiều dọc */
+min-height: 100px; /* Chiều cao tối thiểu của textarea */
 }
 
-.form button {
-  padding: 12px;
-  font-size: 1.1rem;
-  border-radius: 30px;
-  background-color: #ffc107;
-  border: none;
-  cursor: pointer;
+.btn {
+padding: 10px 20px;
+background-color: #333; /* Màu nền nút */
+color: #fff;
+border: none;
+cursor: pointer;
+border-radius: 5px;
+font-size: 16px;
+transition: background-color 0.3s;
 }
 
-.form button:hover {
-  background-color: #ff9800;
+.btn:hover {
+background-color: gold; /* Màu nền khi hover */
 }
+
 
 /* Mobile Responsiveness */
 @media (max-width: 768px) {
@@ -396,8 +407,6 @@ body {
     padding-right: 0;
   }
 }
-
-
 
 /* Footer */
 .footer {
