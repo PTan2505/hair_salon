@@ -44,7 +44,9 @@ export default function Staff() {
 
   // Lọc danh sách nhân viên dựa trên searchQuery
   const filteredStaffs = staff.filter((staff) =>
-    staff.name.toLowerCase().includes(searchQuery.toLowerCase())
+    staff.name
+      ? staff.name.toLowerCase().includes(searchQuery.toLowerCase())
+      : false
   );
 
   console.log("Filtered Staffs:", filteredStaffs); // Kiểm tra dữ liệu sau khi lọc (Bước 2)
@@ -136,18 +138,16 @@ export default function Staff() {
         <Table striped borderless hover>
           <thead>
             <tr>
-              <th style={{ width: "50px" }}>No</th>
-              <th style={{ width: "25%" }}>Phone</th>
+              <th style={{ width: "50px" }}>ID</th>
               <th style={{ width: "25%" }}>Role</th>
-              <th style={{ width: "150px" }}>Is-Staff</th>
+              <th style={{ width: "25%" }}>Is Staff</th>
               <th style={{ width: "150px" }}>Actions</th>
             </tr>
           </thead>
           <tbody>
-            {sortedStaffs.map((staff, index) => (
-              <tr key={staff.id}>
-                <td>{index + 1}</td>
-                <td>{staff.phone}</td>
+            {sortedStaffs.map((staff) => (
+              <tr key={staff.account.id}>
+                <td>{staff.account.id}</td>
                 <td>{staff.role}</td>
                 <td>
                   {staff.isStaff === true ? (

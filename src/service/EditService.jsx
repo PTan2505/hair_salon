@@ -43,9 +43,9 @@ const EditService = ({ object, showModal, setShowModal }) => {
     enableReinitialize: true,
     initialValues: {
       name: object.name || "",
-      type: object.type || "none",
+      type: object.productTypeId || "none",
       price: Number(object.price) / 1000 || 0,
-      point: object.point || 0,
+      point: object.points || 0,
       time: object.time || 0,
       is_active: object.is_active || false,
     },

@@ -104,8 +104,8 @@ export default function ServiceType() {
           <Table striped borderless hover>
             <thead>
               <tr>
-                <th style={{ width: "30%" }}>Image</th>
                 <th style={{ width: "30%" }}>Name</th>
+                <th style={{ width: "30%" }}>Image</th>
                 <th style={{ width: "30%" }}>Active</th>
                 <th style={{ width: "10%" }}></th>
               </tr>
@@ -114,10 +114,10 @@ export default function ServiceType() {
               {sortedServicesType.map((type) => (
                 <tr key={type.id}>
                   <td style={{ alignContent: "center", height: "100px" }}>
-                    <Image src={type.image} style={{ width: 50, height: 50 }} />
+                    {type.name}
                   </td>
                   <td style={{ alignContent: "center", height: "100px" }}>
-                    {type.name}
+                    <Image src={type.image} style={{ width: 50, height: 50 }} />
                   </td>
                   <td
                     style={{
